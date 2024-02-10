@@ -1,4 +1,4 @@
-
+apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
@@ -10,10 +10,6 @@ buildscript {
     }
 }
 
-plugins {
-    id "org.sonarqube" version "4.4.1.3373"
-}
-apply plugin: 'com.android.application'
 
 allprojects {
     repositories {
