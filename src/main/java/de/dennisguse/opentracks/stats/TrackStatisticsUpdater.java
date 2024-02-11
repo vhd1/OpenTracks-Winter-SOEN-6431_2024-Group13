@@ -141,11 +141,8 @@ public class TrackStatisticsUpdater {
                 currentSegment.addTotalDistance(movingDistance);
             }
 
-            if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart()) {
-                if (lastTrackPoint != null) {
-                    currentSegment.addMovingTime(trackPoint, lastTrackPoint);
-                }
-            }
+            if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart() && lastTrackPoint != null) {
+                currentSegment.addMovingTime(trackPoint, lastTrackPoint);
 
             if (trackPoint.getType() == TrackPoint.Type.IDLE) {
                 currentSegment.setIdle(true);
