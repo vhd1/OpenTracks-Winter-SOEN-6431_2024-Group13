@@ -32,7 +32,7 @@ public class RecordingLayoutIO {
                 Log.e(TAG, "Invalid CSV layout. It shouldn't happen: " + csvLine);
                 return recordingLayout;
             }
-            recordingLayout.addField(fromCSV(fieldParts, resources));
+            recordingLayout.addField(getFieldFromCSVRecord(fieldParts, resources));
         }
         return recordingLayout;
     }
@@ -41,7 +41,7 @@ public class RecordingLayoutIO {
         return recordingLayouts.stream().map(RecordingLayout::toCsv).collect(Collectors.joining(CsvLayoutUtils.LINE_SEPARATOR));
     }
 
-    private static DataField fromCSV(String[] fieldParts, @NonNull Resources resources) {
+    private static DataField getFieldFromCSVRecord(String[] fieldParts, @NonNull Resources resources) {
         return new DataField(
                 fieldParts[0],
                 YES_VALUE.equals(fieldParts[1]),
