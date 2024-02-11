@@ -23,5 +23,6 @@ public class ClockViewHolder extends StatisticViewHolder<StatsClockItemBinding> 
 
     @Override
     public void onChanged(UnitSystem unitSystem, RecordingData data) {
+        // Do nothing.
     }
 }
