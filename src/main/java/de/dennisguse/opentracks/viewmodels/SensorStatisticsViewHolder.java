@@ -42,7 +42,8 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
             }
 
             //TODO Loads preference every time
-            HeartRateZones zones = PreferencesUtils.getHeartRateZones();
+            
+            //HeartRateZones zones = PreferencesUtils.getHeartRateZones();
             int textColor;
             if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
                 textColor = zones.getTextColorForZone(getContext(), sensorDataSet.getHeartRate().first);
