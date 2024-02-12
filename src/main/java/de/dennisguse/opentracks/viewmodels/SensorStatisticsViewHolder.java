@@ -41,7 +41,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
                 valueAndUnit = StringUtils.getHeartRateParts(getContext(), null);
             }
 
-            // Load heart rate zones preference every time
+            // Load heart rate zones preference every time.
             HeartRateZones zones = PreferencesUtils.getHeartRateZones();
             int textColor;
             if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
