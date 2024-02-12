@@ -59,35 +59,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
             getBinding().statsValue.setTextColor(textColor);
         }
-    //    public void onChanged(UnitSystem unitSystem, RecordingData data) {
-//            SensorDataSet sensorDataSet = data.sensorDataSet();
-//            String sensorName = getContext().getString(R.string.value_unknown);
-//
-//            Pair<String, String> valueAndUnit;
-//            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
-//                valueAndUnit = StringUtils.getHeartRateParts(getContext(), sensorDataSet.getHeartRate().first);
-//                sensorName = sensorDataSet.getHeartRate().second;
-//            } else {
-//                valueAndUnit = StringUtils.getHeartRateParts(getContext(), null);
-//            }
-//
-//            //TODO Loads preference every time
-//            HeartRateZones zones = PreferencesUtils.getHeartRateZones();
-//            int textColor;
-//            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
-//                textColor = zones.getTextColorForZone(getContext(), sensorDataSet.getHeartRate().first);
-//            } else {
-//                textColor = zones.getTextColorForZone(getContext(), null);
-//            }
-//
-//            getBinding().statsValue.setText(valueAndUnit.first);
-//            getBinding().statsUnit.setText(valueAndUnit.second);
-//            getBinding().statsDescriptionMain.setText(R.string.stats_sensors_heart_rate);
-//
-//            getBinding().statsDescriptionSecondary.setText(sensorName);
-//
-//            getBinding().statsValue.setTextColor(textColor);
-//        }
+
     }
 
     public static class SensorCadence extends SensorStatisticsViewHolder {
