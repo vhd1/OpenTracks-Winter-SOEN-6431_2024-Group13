@@ -253,6 +253,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
     }
 
     /**
+     * @deprecated
      * Returns true if the selected track is recording.
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
