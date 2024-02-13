@@ -676,12 +676,12 @@ public class ChartView extends View {
     private record TitlePosition(
             int line, // line number (starts at 1, top to bottom numbering)
             int xPos // x position in points (starts at 0, left to right indexing)
-    ) {};
+    ) {}
     private record TitleDimensions(
             int lineCount, // number of lines the titles will take
             int lineHeight, // height of a line (all lines have the same height)
             List<TitlePosition> titlePositions // positions of visible titles (the order corresponds to seriesList)
-    ) {};
+    ) {}
 
     /**
      * Draws series titles.
