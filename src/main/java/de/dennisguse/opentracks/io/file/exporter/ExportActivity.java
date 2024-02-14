@@ -136,7 +136,7 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
                 }
             });
 
-            viewBinding.exportProgressRightButton.setOnClickListener(view -> {
+            viewBinding.exportProgressRightButton.setOnClickListener((view) -> {
                 setConflictVisibility(View.GONE);
                 conflict.overwrite();
                 conflictsQueue.remove(conflict);
