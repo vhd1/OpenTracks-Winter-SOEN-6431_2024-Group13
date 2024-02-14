@@ -383,6 +383,14 @@ public class TrackStatistics {
         return toString().equals(o.toString());
     }
 
+    @Override
+    public int hashCode() {
+        final int primeNumber = 31;
+        int result = 1;
+        result = result * primeNumber + (startTime == null ? 0 : startTime.hashCode());
+        return result;
+    }
+
     @NonNull
     @Override
     public String toString() {
