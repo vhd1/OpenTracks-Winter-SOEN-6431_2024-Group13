@@ -19,9 +19,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     private static final String TAG = SensorManager.class.getSimpleName();
 
-    //TODO Should be final and not be visible for testing
-    @VisibleForTesting
-    public SensorDataSet sensorDataSet = new SensorDataSet();
+    private final SensorDataSet sensorDataSet = new SensorDataSet();
 
     private final TrackPointCreator observer;
 
