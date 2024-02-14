@@ -64,9 +64,9 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 public class ChartView extends View {
 
-    private static final int Y_AXIS_INTERVALS = 5;
+    static final int Y_AXIS_INTERVALS = 5;
 
-    private static final int X_AXIS_INTERVALS = 4;
+    private static final int TARGET_X_AXIS_INTERVALS = 4;
 
     private static final int MIN_ZOOM_LEVEL = 1;
     private static final int MAX_ZOOM_LEVEL = 10;
@@ -122,10 +122,10 @@ public class ChartView extends View {
     private boolean reportSpeed = true;
     private boolean showPointer = false;
 
-    private final GestureDetectorCompat scrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
+    private final GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
         @Override
-        public boolean onDown(final MotionEvent motionEvent) {
+        public boolean onDown(MotionEvent e) {
             if (!scroller.isFinished()) {
                 scroller.abortAnimation();
             }
@@ -133,9 +133,9 @@ public class ChartView extends View {
         }
 
         @Override
-        public boolean onScroll(final MotionEvent motionEvent1, final MotionEvent motionEvent2, final float distanceX, final float distanceY) {
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             if (Math.abs(distanceX) > 0) {
-                final int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
+                int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
                 if (availableToScroll > 0) {
                     scrollBy(Math.min(availableToScroll, (int) distanceX));
                 }
@@ -144,21 +144,20 @@ public class ChartView extends View {
         }
 
         @Override
-        public boolean onFling(final MotionEvent motionEvent1,final  MotionEvent motionEvent2, final float velocityX,final  float velocityY) {
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             fling((int) -velocityX);
             return true;
         }
 
         @Override
-        public boolean onSingleTapConfirmed(final MotionEvent event) {
-            boolean isTabComfirmed = false;
+        public boolean onSingleTapConfirmed(MotionEvent event) {
             // Check if the y event is within markerHeight of the marker center
             if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
                 int minDistance = Integer.MAX_VALUE;
                 Marker nearestMarker = null;
                 synchronized (markers) {
-                    for (final Marker marker : markers) {
-                        final int distance = Math.abs(getX(getMarkerXValue(marker)) - (int) event.getX() - getScrollX());
+                    for (Marker marker : markers) {
+                        int distance = Math.abs(getX(getMarkerXValue(marker)) - (int) event.getX() - getScrollX());
                         if (distance < minDistance) {
                             minDistance = distance;
                             nearestMarker = marker;
@@ -166,38 +165,38 @@ public class ChartView extends View {
                     }
                 }
                 if (nearestMarker != null && minDistance < markerWidth) {
-                    final Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
+                    Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
                             .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestMarker.getId());
                     getContext().startActivity(intent);
-                    isTabComfirmed = true;
+                    return true;
                 }
             }
-            return isTabComfirmed;
+
+            return false;
         }
     });
 
     private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
         @Override
-        public boolean onScale(final ScaleGestureDetector detector) {
-            boolean isOnScale = false;
-            final float scaleFactor = detector.getScaleFactor();
+        public boolean onScale(ScaleGestureDetector detector) {
+            float scaleFactor = detector.getScaleFactor();
             if (scaleFactor >= 1.1f) {
                 zoomIn();
-                isOnScale = true;
+                return true;
             } else if (scaleFactor <= 0.9) {
                 zoomOut();
-                isOnScale = true;
+                return true;
             }
-            return isOnScale;
+            return false;
         }
     });
 
-    public ChartView(final Context context, final AttributeSet attributeSet) {
+    public ChartView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 
-        final int fontSizeSmall = ThemeUtils.getFontSizeSmallInPx(context);
-        final int fontSizeMedium = ThemeUtils.getFontSizeMediumInPx(context);
+        int fontSizeSmall = ThemeUtils.getFontSizeSmallInPx(context);
+        int fontSizeMedium = ThemeUtils.getFontSizeMediumInPx(context);
 
         seriesList.add(new ChartValueSeries(context,
                 Integer.MIN_VALUE,
@@ -211,7 +210,7 @@ public class ChartView extends View {
                 fontSizeSmall,
                 fontSizeMedium) {
             @Override
-            protected Double extractDataFromChartPoint(final @NonNull ChartPoint chartPoint) {
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.altitude();
             }
 
@@ -233,7 +232,7 @@ public class ChartView extends View {
                 fontSizeSmall,
                 fontSizeMedium) {
             @Override
-            protected Double extractDataFromChartPoint(final @NonNull ChartPoint chartPoint) {
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.speed();
             }
 
@@ -256,7 +255,7 @@ public class ChartView extends View {
                 fontSizeSmall,
                 fontSizeMedium) {
             @Override
-            protected Double extractDataFromChartPoint(final @NonNull ChartPoint chartPoint) {
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.pace();
             }
 
@@ -279,7 +278,7 @@ public class ChartView extends View {
                 fontSizeSmall,
                 fontSizeMedium) {
             @Override
-            protected Double extractDataFromChartPoint(final @NonNull ChartPoint chartPoint) {
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.heartRate();
             }
 
@@ -301,7 +300,7 @@ public class ChartView extends View {
                 fontSizeSmall,
                 fontSizeMedium) {
             @Override
-            protected Double extractDataFromChartPoint(final @NonNull ChartPoint chartPoint) {
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.cadence();
             }
 
@@ -322,7 +321,7 @@ public class ChartView extends View {
                 fontSizeSmall,
                 fontSizeMedium) {
             @Override
-            protected Double extractDataFromChartPoint(final @NonNull ChartPoint chartPoint) {
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.power();
             }
 
@@ -372,11 +371,11 @@ public class ChartView extends View {
     }
 
     @Override
-    public boolean canScrollHorizontally(final int direction) {
+    public boolean canScrollHorizontally(int direction) {
         return true;
     }
 
-    public void setChartByDistance(final boolean chartByDistance) {
+    public void setChartByDistance(boolean chartByDistance) {
         this.chartByDistance = chartByDistance;
     }
 
@@ -384,11 +383,11 @@ public class ChartView extends View {
         return unitSystem;
     }
 
-    public void setUnitSystem(final UnitSystem value) {
+    public void setUnitSystem(UnitSystem value) {
         unitSystem = value;
     }
 
-    public boolean isReportSpeed() {
+    public boolean getReportSpeed() {
         return reportSpeed;
     }
 
@@ -397,39 +396,38 @@ public class ChartView extends View {
      *
      * @param value report speed (true) or pace (false)
      */
-    public void setReportSpeed(final boolean value) {
+    public void setReportSpeed(boolean value) {
         reportSpeed = value;
     }
 
     public boolean applyReportSpeed() {
-        boolean isApplied = false;
         if (reportSpeed) {
             if (!speedSeries.isEnabled()) {
                 speedSeries.setEnabled(true);
                 paceSeries.setEnabled(false);
-                isApplied = true;
+                return true;
             }
         } else {
             if (!paceSeries.isEnabled()) {
                 speedSeries.setEnabled(false);
                 paceSeries.setEnabled(true);
-                isApplied = true;
+                return true;
             }
         }
 
-        return isApplied;
+        return false;
     }
 
-    public void setShowPointer(final boolean value) {
+    public void setShowPointer(boolean value) {
         showPointer = value;
     }
 
-    public void addChartPoints(final List<ChartPoint> dataPoints) {
+    public void addChartPoints(List<ChartPoint> dataPoints) {
         synchronized (chartPoints) {
             chartPoints.addAll(dataPoints);
-            for (final ChartPoint dataPoint : dataPoints) {
+            for (ChartPoint dataPoint : dataPoints) {
                 xExtremityMonitor.update(dataPoint.timeOrDistance());
-                for (final ChartValueSeries i : seriesList) {
+                for (ChartValueSeries i : seriesList) {
                     i.update(dataPoint);
                 }
             }
@@ -458,7 +456,7 @@ public class ChartView extends View {
         scrollTo(0, 0);
     }
 
-    public void addMarker(final Marker marker) {
+    public void addMarker(Marker marker) {
         synchronized (markers) {
             markers.add(marker);
         }
@@ -491,7 +489,7 @@ public class ChartView extends View {
             zoomLevel--;
             scroller.abortAnimation();
             int scrollX = getScrollX();
-            final int maxWidth = effectiveWidth * (zoomLevel - 1);
+            int maxWidth = effectiveWidth * (zoomLevel - 1);
             if (scrollX > maxWidth) {
                 scrollX = maxWidth;
                 scrollTo(scrollX, 0);
@@ -506,8 +504,8 @@ public class ChartView extends View {
      *
      * @param velocityX velocity of fling in pixels per second
      */
-    private void fling(final int velocityX) {
-        final int maxWidth = effectiveWidth * (zoomLevel - 1);
+    private void fling(int velocityX) {
+        int maxWidth = effectiveWidth * (zoomLevel - 1);
         scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
         invalidate();
     }
@@ -517,8 +515,8 @@ public class ChartView extends View {
      *
      * @param disallow Does disallow parent touch event?
      */
-    private void requestDisallowInterceptTouchEventInParent(final boolean disallow) {
-        final ViewParent parent = getParent();
+    private void requestDisallowInterceptTouchEventInParent(boolean disallow) {
+        ViewParent parent = getParent();
         if (parent != null) {
             parent.requestDisallowInterceptTouchEvent(disallow);
         }
@@ -529,13 +527,13 @@ public class ChartView extends View {
      *
      * @param deltaX the number of pixels to scroll
      */
-    private void scrollBy(final int deltaX) {
+    private void scrollBy(int deltaX) {
         int scrollX = getScrollX() + deltaX;
         if (scrollX <= 0) {
             scrollX = 0;
         }
 
-        final int maxWidth = effectiveWidth * (zoomLevel - 1);
+        int maxWidth = effectiveWidth * (zoomLevel - 1);
         if (scrollX >= maxWidth) {
             scrollX = maxWidth;
         }
@@ -550,20 +548,20 @@ public class ChartView extends View {
     @Override
     public void computeScroll() {
         if (scroller.computeScrollOffset()) {
-            final int oldX = getScrollX();
-            final int newX = scroller.getCurrX();
-            scrollTo(newX, 0);
-            if (oldX != newX) {
-                onScrollChanged(newX, 0, oldX, 0);
+            int oldX = getScrollX();
+            int x = scroller.getCurrX();
+            scrollTo(x, 0);
+            if (oldX != x) {
+                onScrollChanged(x, 0, oldX, 0);
                 postInvalidate();
             }
         }
     }
 
     @Override
-    public boolean onTouchEvent(final MotionEvent event) {
-        final boolean isZoom = detectorZoom.onTouchEvent(event);
-        final boolean isScrollTab = scrollFlingTab.onTouchEvent(event);
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean isZoom = detectorZoom.onTouchEvent(event);
+        boolean isScrollTab = detectorScrollFlingTab.onTouchEvent(event);
 
         // ChartView handles zoom gestures (more than one pointer) and all gestures when zoomed itself
         requestDisallowInterceptTouchEventInParent(event.getPointerCount() != 1 || zoomLevel != MIN_ZOOM_LEVEL);
@@ -572,13 +570,13 @@ public class ChartView extends View {
     }
 
     @Override
-    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         updateEffectiveDimensionsIfChanged(View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
-    protected void onDraw(final Canvas canvas) {
+    protected void onDraw(Canvas canvas) {
         synchronized (chartPoints) {
             canvas.save();
 
@@ -610,10 +608,10 @@ public class ChartView extends View {
      *
      * @param canvas the canvas
      */
-    private void clipToGraphArea(final Canvas canvas) {
-        final int xCordinate = getScrollX() + leftBorder;
-        final int yCordinate = topBorder;
-        canvas.clipRect(xCordinate, yCordinate, xCordinate + effectiveWidth, yCordinate + effectiveHeight);
+    private void clipToGraphArea(Canvas canvas) {
+        int x = getScrollX() + leftBorder;
+        int y = topBorder;
+        canvas.clipRect(x, y, x + effectiveWidth, y + effectiveHeight);
     }
 
     /**
@@ -621,30 +619,30 @@ public class ChartView extends View {
      *
      * @param canvas the canvas
      */
-    private void drawDataSeries(final Canvas canvas) {
-        for (final ChartValueSeries chartValueSeries : seriesList) {
+    private void drawDataSeries(Canvas canvas) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
                 chartValueSeries.drawPath(canvas);
             }
         }
     }
 
-    private void drawMarker(final Canvas canvas) {
+    private void drawMarker(Canvas canvas) {
         synchronized (markers) {
-            for (final Marker marker : markers) {
-                final double xValue = getMarkerXValue(marker);
-                final double markerSizeXaxis = maxX*markerWidth/effectiveWidth / zoomLevel;
-                if (xValue > maxX + markerSizeXaxis * (1-MARKER_X_ANCHOR)) {
+            for (Marker marker : markers) {
+                double xValue = getMarkerXValue(marker);
+                double markerIconSizeInXaxisUnits = maxX*markerWidth/effectiveWidth / zoomLevel;
+                if (xValue > maxX + markerIconSizeInXaxisUnits * (1-MARKER_X_ANCHOR)) {
                     continue; // there is no chance that this marker will be visible
                 }
                 canvas.save();
-                final float xCordinate = getX(getMarkerXValue(marker));
-                canvas.drawLine(xCordinate, topBorder + spacer + markerHeight / 2, xCordinate, topBorder + effectiveHeight, markerPaint);
+                float x = getX(getMarkerXValue(marker));
+                canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
                 // if marker is not near the end of the track then draw it normally
-                if (xValue < maxX - markerSizeXaxis*(1-MARKER_X_ANCHOR)) {
-                    canvas.translate(xCordinate - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
+                if (xValue < maxX - markerIconSizeInXaxisUnits*(1-MARKER_X_ANCHOR)) {
+                    canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
                 } else { // marker at the end needs to be drawn mirrored so that it is more visible
-                    canvas.translate(xCordinate + (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
+                    canvas.translate(x + (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
                     canvas.scale(-1, 1);
                 }
                 markerPin.draw(canvas);
@@ -658,48 +656,48 @@ public class ChartView extends View {
      *
      * @param canvas the canvas
      */
-    private void drawGrid(final Canvas canvas) {
+    private void drawGrid(Canvas canvas) {
         // X axis grid
-        final List<Double> xMarkerPositions = getXAxisMarkerPositions(getXAxisInterval());
-        for (final double position : xMarkerPositions) {
-            final int xCordinate = getX(position);
-            canvas.drawLine(xCordinate, topBorder, xCordinate, topBorder + effectiveHeight, gridPaint);
+        List<Double> xAxisMarkerPositions = getXAxisMarkerPositions(getXAxisInterval());
+        for (double position : xAxisMarkerPositions) {
+            int x = getX(position);
+            canvas.drawLine(x, topBorder, x, topBorder + effectiveHeight, gridPaint);
         }
         // Y axis grid
-        final float rightEdge = getX(maxX);
+        float rightEdge = getX(maxX);
         for (int i = 0; i <= Y_AXIS_INTERVALS; i++) {
-            final double percentage = (double) i / Y_AXIS_INTERVALS;
-            final int range = effectiveHeight - 2 * yAxisOffset;
-            final int yCordinate = topBorder + yAxisOffset + (int) (percentage * range);
-            canvas.drawLine(leftBorder, yCordinate, rightEdge, yCordinate, gridPaint);
+            double percentage = (double) i / Y_AXIS_INTERVALS;
+            int range = effectiveHeight - 2 * yAxisOffset;
+            int y = topBorder + yAxisOffset + (int) (percentage * range);
+            canvas.drawLine(leftBorder, y, rightEdge, y, gridPaint);
         }
     }
 
     private record TitlePosition(
             int line, // line number (starts at 1, top to bottom numbering)
             int xPos // x position in points (starts at 0, left to right indexing)
-    ) {}
+    ) {};
     private record TitleDimensions(
             int lineCount, // number of lines the titles will take
             int lineHeight, // height of a line (all lines have the same height)
             List<TitlePosition> titlePositions // positions of visible titles (the order corresponds to seriesList)
-    ) {}
+    ) {};
 
     /**
      * Draws series titles.
      *
      * @param canvas the canvas
      */
-    private void drawSeriesTitles(final Canvas canvas) {
-        final TitleDimensions titleDimensions = getTitleDimensions();
-        final Iterator<TitlePosition> tpI = titleDimensions.titlePositions.iterator();
-        for (final ChartValueSeries chartValueSeries : seriesList) {
+    private void drawSeriesTitles(Canvas canvas) {
+        TitleDimensions td = getTitleDimensions();
+        Iterator<TitlePosition> tpI = td.titlePositions.iterator();
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
-                final String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
-                final Paint paint = chartValueSeries.getTitlePaint();
-                final TitlePosition titlePosition = tpI.next();
-                final int yCordinate = topBorder - spacer - (titleDimensions.lineCount - titlePosition.line) * (titleDimensions.lineHeight + spacer);
-                canvas.drawText(title, titlePosition.xPos + getScrollX(), yCordinate, paint);
+                String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
+                Paint paint = chartValueSeries.getTitlePaint();
+                TitlePosition tp = tpI.next();
+                int y = topBorder - spacer - (td.lineCount - tp.line) * (td.lineHeight + spacer);
+                canvas.drawText(title, tp.xPos + getScrollX(), y, paint);
             }
         }
     }
@@ -711,16 +709,14 @@ public class ChartView extends View {
     private TitleDimensions getTitleDimensions() {
         int lineCnt = 1;
         int lineHeight = 0;
-        final List<TitlePosition> tps = new ArrayList();
+        List<TitlePosition> tps = new ArrayList<TitlePosition>();
         int xPosInLine = spacer;
-        for (final ChartValueSeries chartValueSeries : seriesList) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
-                final String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
-                final Rect rect = getRect(chartValueSeries.getTitlePaint(), title);
-                if (rect.height() > lineHeight) {
-                    lineHeight = rect.height();
-                }
-                final int xNextPosInLine = xPosInLine + rect.width() + 2*spacer;
+                String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
+                Rect rect = getRect(chartValueSeries.getTitlePaint(), title);
+                if (rect.height() > lineHeight) lineHeight = rect.height();
+                int xNextPosInLine = xPosInLine + rect.width() + 2*spacer;
                 // if second or later title does not fully fit on this line then print it on the next line
                 if (xPosInLine > spacer && xNextPosInLine-spacer > width) {
                     lineCnt++;
@@ -738,25 +734,25 @@ public class ChartView extends View {
      *
      * @param canvas the canvas
      */
-    private void drawXAxis(final Canvas canvas) {
-        final int xCordinate = getScrollX() + leftBorder;
-        final int yCordinate = topBorder + effectiveHeight;
-        canvas.drawLine(xCordinate, yCordinate, xCordinate + effectiveWidth, yCordinate, axisPaint);
-        final String label = getXAxisLabel();
-        final Rect rect = getRect(axisPaint, label);
-        final int yOffset = rect.height() / 2;
-        canvas.drawText(label, xCordinate + effectiveWidth - rect.width(), yCordinate + 3 * yOffset, axisPaint);
+    private void drawXAxis(Canvas canvas) {
+        int x = getScrollX() + leftBorder;
+        int y = topBorder + effectiveHeight;
+        canvas.drawLine(x, y, x + effectiveWidth, y, axisPaint);
+        String label = getXAxisLabel();
+        Rect rect = getRect(axisPaint, label);
+        int yOffset = rect.height() / 2;
+        canvas.drawText(label, x + effectiveWidth - rect.width(), y + 3 * yOffset, axisPaint);
 
-        final double interval = getXAxisInterval();
-        final NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
+        double interval = getXAxisInterval();
+        NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
 
-        for (final double markerPosition : getXAxisMarkerPositions(interval)) {
+        for (double markerPosition : getXAxisMarkerPositions(interval)) {
             drawXAxisMarker(canvas, markerPosition, numberFormat, spacer + rect.width(), spacer + yOffset);
         }
     }
 
     private String getXAxisLabel() {
-        final Context context = getContext();
+        Context context = getContext();
         if (chartByDistance) {
             return switch (unitSystem) {
                 case METRIC -> context.getString(R.string.unit_kilometer);
@@ -777,19 +773,17 @@ public class ChartView extends View {
      * @param xRightSpace  the space taken up by the x axis label
      * @param yBottomSpace the space between x axis and marker
      */
-    private void drawXAxisMarker(final Canvas canvas, final double value,final  NumberFormat numberFormat,final  int xRightSpace, final int yBottomSpace) {
-        final String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime(Duration.ofMillis((long) value));
-        final Rect rect = getRect(xAxisMarkerPaint, marker);
-        final int markerXPos = getX(value);
-        final int markerEndXPos = markerXPos + rect.width()/2;
-        if (markerEndXPos > getScrollX() + leftBorder + effectiveWidth - xRightSpace){
-            return;
-        }
+    private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int xRightSpace, int yBottomSpace) {
+        String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((Duration.ofMillis((long) value)));
+        Rect rect = getRect(xAxisMarkerPaint, marker);
+        int markerXPos = getX(value);
+        int markerEndXPos = markerXPos + rect.width()/2;
+        if (markerEndXPos > getScrollX() + leftBorder + effectiveWidth - xRightSpace) return;
         canvas.drawText(marker, markerXPos, topBorder + effectiveHeight + yBottomSpace + rect.height(), xAxisMarkerPaint);
     }
 
     private double getXAxisInterval() {
-        double interval = maxX / zoomLevel / X_AXIS_INTERVALS;
+        double interval = maxX / zoomLevel / TARGET_X_AXIS_INTERVALS;
         if (interval < 1) {
             interval = .5;
         } else if (interval < 5) {
@@ -802,8 +796,8 @@ public class ChartView extends View {
         return interval;
     }
 
-    private List<Double> getXAxisMarkerPositions(final double interval) {
-        final List<Double> markers = new ArrayList<>();
+    private List<Double> getXAxisMarkerPositions(double interval) {
+        List<Double> markers = new ArrayList<>();
         markers.add(0d);
         for (int i = 1; i * interval < maxX; i++) {
             markers.add(i * interval);
@@ -820,16 +814,16 @@ public class ChartView extends View {
      *
      * @param canvas the canvas
      */
-    private void drawYAxis(final Canvas canvas) {
-        final int xCordinate = getScrollX() + leftBorder;
-        final int yCordinate = topBorder;
-        canvas.drawLine(xCordinate, yCordinate, xCordinate, yCordinate + effectiveHeight, axisPaint);
+    private void drawYAxis(Canvas canvas) {
+        int x = getScrollX() + leftBorder;
+        int y = topBorder;
+        canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
 
         //TODO
-        int markerXPosition = xCordinate - spacer;
+        int markerXPosition = x - spacer;
         for (int i = 0; i < seriesList.size(); i++) {
-            final int index = seriesList.size() - 1 - i;
-            final ChartValueSeries chartValueSeries = seriesList.get(index);
+            int index = seriesList.size() - 1 - i;
+            ChartValueSeries chartValueSeries = seriesList.get(index);
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 markerXPosition -= drawYAxisMarkers(chartValueSeries, canvas, markerXPosition) + spacer;
             }
@@ -844,8 +838,8 @@ public class ChartView extends View {
      * @param xPosition        the right most x position
      * @return the maximum marker width.
      */
-    private float drawYAxisMarkers(final ChartValueSeries chartValueSeries, final Canvas canvas, final int xPosition) {
-        final int interval = chartValueSeries.getInterval();
+    private float drawYAxisMarkers(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition) {
+        int interval = chartValueSeries.getInterval();
         float maxMarkerWidth = 0;
         for (int i = 0; i <= Y_AXIS_INTERVALS; i++) {
             maxMarkerWidth = Math.max(maxMarkerWidth, drawYAxisMarker(chartValueSeries, canvas, xPosition,
@@ -863,33 +857,33 @@ public class ChartView extends View {
      * @param yValue           the y value
      * @return the marker width.
      */
-    private float drawYAxisMarker(final ChartValueSeries chartValueSeries, final Canvas canvas, final int xPosition,final  int yValue) {
-        final String marker = chartValueSeries.formatMarker(yValue);
-        final Paint paint = chartValueSeries.getMarkerPaint();
-        final Rect rect = getRect(paint, marker);
-        final int yPosition = getY(chartValueSeries, yValue) + (rect.height() / 2);
+    private float drawYAxisMarker(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yValue) {
+        String marker = chartValueSeries.formatMarker(yValue);
+        Paint paint = chartValueSeries.getMarkerPaint();
+        Rect rect = getRect(paint, marker);
+        int yPosition = getY(chartValueSeries, yValue) + (rect.height() / 2);
         canvas.drawText(marker, xPosition, yPosition, paint);
         return paint.measureText(marker);
     }
 
-    private void drawPointer(final Canvas canvas) {
+    private void drawPointer(Canvas canvas) {
         if (chartPoints.isEmpty()) {
             return;
         }
-        final ChartPoint last = chartPoints.getLast();
+        ChartPoint last = chartPoints.getLast();
 
-        ChartValueSeries firstChartSeries = null;
-        for (final ChartValueSeries chartValueSeries : seriesList) {
+        ChartValueSeries firstChartValueSeries = null;
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() && chartValueSeries.isChartPointValid(last)) {
-                firstChartSeries = chartValueSeries;
+                firstChartValueSeries = chartValueSeries;
                 break;
             }
         }
-        if (firstChartSeries != null && chartPoints.isEmpty()) {
-            final int drawXCordinate = getX(maxX) - pointer.getIntrinsicWidth() / 2;
-            final double value = firstChartSeries.extractDataFromChartPoint(last);
-            final int drawYCordinate = getY(firstChartSeries, value) - pointer.getIntrinsicHeight();
-            canvas.translate(drawXCordinate, drawYCordinate);
+        if (firstChartValueSeries != null && chartPoints.size() > 0) {
+            int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
+            double value = firstChartValueSeries.extractDataFromChartPoint(last);
+            int dy = getY(firstChartValueSeries, value) - pointer.getIntrinsicHeight();
+            canvas.translate(dx, dy);
             pointer.draw(canvas);
         }
     }
@@ -903,7 +897,7 @@ public class ChartView extends View {
         }
     }
 
-    private void updateSerie(final ChartValueSeries series) {
+    private void updateSerie(ChartValueSeries series) {
         final int yCorner = topBorder + effectiveHeight;
         final Path path = series.getPath();
 
@@ -912,25 +906,25 @@ public class ChartView extends View {
 
         Integer finalX = null;
 
-        for (final ChartPoint point : chartPoints) {
+        for (ChartPoint point : chartPoints) {
             if (!series.isChartPointValid(point)) {
                 continue;
             }
 
-            final double value = series.extractDataFromChartPoint(point);
-            final int xCordinate = getX(point.timeOrDistance());
-            final int yCordinate = getY(series, value);
+            double value = series.extractDataFromChartPoint(point);
+            int x = getX(point.timeOrDistance());
+            int y = getY(series, value);
 
             // start from lower left corner
             if (!drawFirstPoint) {
-                path.moveTo(xCordinate, yCorner);
+                path.moveTo(x, yCorner);
                 drawFirstPoint = true;
             }
 
             // draw graph
-            path.lineTo(xCordinate, yCordinate);
+            path.lineTo(x, y);
 
-            finalX = xCordinate;
+            finalX = x;
         }
 
         // last point: move to lower right
@@ -947,25 +941,25 @@ public class ChartView extends View {
      */
     private void updateDimensions() {
         maxX = xExtremityMonitor.hasData() ? xExtremityMonitor.getMax() : 1.0;
-        for (final ChartValueSeries chartValueSeries : seriesList) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
             chartValueSeries.updateDimension();
         }
-        final float density = getResources().getDisplayMetrics().density;
+        float density = getResources().getDisplayMetrics().density;
         spacer = (int) (density * SPACER);
         yAxisOffset = (int) (density * Y_AXIS_OFFSET);
 
         int markerLength = 0;
-        for (final ChartValueSeries chartValueSeries : seriesList) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
-                final Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
+                Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
                 markerLength += rect.width() + spacer;
             }
         }
 
         leftBorder = (int) (density * BORDER + markerLength);
-        final TitleDimensions titleDimensions = getTitleDimensions();
-        topBorder = (int) (density * BORDER + titleDimensions.lineCount * (titleDimensions.lineHeight + spacer));
-        final Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
+        TitleDimensions td = getTitleDimensions();
+        topBorder = (int) (density * BORDER + td.lineCount * (td.lineHeight + spacer));
+        Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
         // border + x axis marker + spacer + .5 x axis label
         bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer + (xAxisLabelRect.height() / 2));
         rightBorder = (int) (density * BORDER + spacer);
@@ -986,7 +980,7 @@ public class ChartView extends View {
      * @param newWidth  the new width
      * @param newHeight the new height
      */
-    private void updateEffectiveDimensionsIfChanged(final int newWidth, final int newHeight) {
+    private void updateEffectiveDimensionsIfChanged(int newWidth, int newHeight) {
         if (width != newWidth || height != newHeight) {
             width = newWidth;
             height = newHeight;
@@ -1004,7 +998,7 @@ public class ChartView extends View {
         if (value > maxX) {
             value = maxX;
         }
-        final double percentage = value / maxX;
+        double percentage = value / maxX;
         return leftBorder + (int) (percentage * effectiveWidth * zoomLevel);
     }
 
@@ -1014,19 +1008,19 @@ public class ChartView extends View {
      * @param chartValueSeries the chart value series
      * @param value            the value
      */
-    private int getY(final ChartValueSeries chartValueSeries,final  double value) {
-        final int effectiveSpread = chartValueSeries.getInterval() * Y_AXIS_INTERVALS;
-        final double percentage = (value - chartValueSeries.getMinMarkerValue()) / effectiveSpread;
-        final int rangeHeight = effectiveHeight - 2 * yAxisOffset;
+    private int getY(ChartValueSeries chartValueSeries, double value) {
+        int effectiveSpread = chartValueSeries.getInterval() * Y_AXIS_INTERVALS;
+        double percentage = (value - chartValueSeries.getMinMarkerValue()) / effectiveSpread;
+        int rangeHeight = effectiveHeight - 2 * yAxisOffset;
         return topBorder + yAxisOffset + (int) ((1 - percentage) * rangeHeight);
     }
 
-    private double getMarkerXValue(final Marker marker) {
-        int xCordinate = marker.getDuration().toMillis();
+    private double getMarkerXValue(Marker marker) {
         if (chartByDistance) {
-            xCordinate = marker.getLength().toKM_Miles(unitSystem);
+            return marker.getLength().toKM_Miles(unitSystem);
+        } else {
+            return marker.getDuration().toMillis();
         }
-        return xCordinate;
     }
 
     /**
@@ -1035,8 +1029,8 @@ public class ChartView extends View {
      * @param paint  the paint
      * @param string the string
      */
-    private Rect getRect(final Paint paint,final  String string) {
-        final Rect rect = new Rect();
+    private Rect getRect(Paint paint, String string) {
+        Rect rect = new Rect();
         paint.getTextBounds(string, 0, string.length(), rect);
         return rect;
     }
@@ -1044,11 +1038,11 @@ public class ChartView extends View {
     /**
      * Returns true if the index is allowed when the chartData is empty.
      */
-    private boolean allowIfEmpty(final ChartValueSeries chartValueSeries) {
-        boolean isAllowed = chartValueSeries.drawIfChartPointHasNoData();
+    private boolean allowIfEmpty(ChartValueSeries chartValueSeries) {
         if (!chartPoints.isEmpty()) {
-            isAllowed = false;
+            return false;
         }
-        return isAllowed;
+
+        return chartValueSeries.drawIfChartPointHasNoData();
     }
 }
