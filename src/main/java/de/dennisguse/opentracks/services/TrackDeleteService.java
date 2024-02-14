@@ -54,16 +54,13 @@ public class TrackDeleteService extends JobIntentService {
 
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
-            try{
+            
                 if(resultCode==RESULT_CODE_SUCCESS){
                     receiver.onDeleteFinished();
                 }
                 else{
-                    throw new RuntimeException("Unknown resultCode.");
+                    throw new IllegalArgumentException("Unknown resultCode.");
                 }
-            }catch(RuntimeException ex){
-                ex.getMessage();
-            }
             
         }
 
