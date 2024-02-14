@@ -675,7 +675,7 @@ public class ContentProviderUtils {
     }
 
     //TODO Set trackId in this method.
-    public int bulkInsertMarkers(List<Marker> markers, Track.Id trackId) {
+    public int bulkInsertMarkers(List<Marker> markers) {
         ContentValues[] values = new ContentValues[markers.size()];
         for (int i = 0; i < markers.size(); i++) {
             values[i] = createContentValues(markers.get(i));
