@@ -73,7 +73,7 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String EXTENDED_DATA_TYPE_ALTITUDE_LOSS = "elevation_loss";
     public static final String EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL = "accuracy_horizontal";
     public static final String EXTENDED_DATA_TYPE_ACCURACY_VERTICAL = "accuracy_vertical";
-
+    public static final String constant_var = "<open>1</open>";
     private static final NumberFormat SENSOR_DATA_FORMAT = NumberFormat.getInstance(Locale.US);
 
     static {
