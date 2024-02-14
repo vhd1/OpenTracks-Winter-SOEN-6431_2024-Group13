@@ -185,7 +185,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
             });
         }
     }
-
+    @Override
     public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics) {
         if (isResumed()) {
             ChartPoint point = ChartPoint.create(trackStatistics, trackPoint, trackPoint.getSpeed(), chartByDistance, viewBinding.chartView.getUnitSystem());
@@ -253,6 +253,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
     }
 
     /**
+     * @deprecated
      * Returns true if the selected track is recording.
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
