@@ -885,7 +885,7 @@ public class ChartView extends View {
                 break;
             }
         }
-        if (firstChartSeries != null && chartPoints.size() > 0) {
+        if (firstChartSeries != null && chartPoints.isEmpty() > 0) {
             final int drawXCordinate = getX(maxX) - pointer.getIntrinsicWidth() / 2;
             final double value = firstChartSeries.extractDataFromChartPoint(last);
             final int drawYCordinate = getY(firstChartSeries, value) - pointer.getIntrinsicHeight();
