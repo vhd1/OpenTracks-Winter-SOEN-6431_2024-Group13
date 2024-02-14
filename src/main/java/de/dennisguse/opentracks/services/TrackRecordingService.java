@@ -75,7 +75,17 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private final Runnable updateRecordingData = new Runnable() {
         @Override
         public void run() {
-            updateRecordingDataWhileRecording();
+            if (!isRecording()) {
+                Log.w(TAG, "Currently not recording; cannot update data.");
+                return;
+            }
+
+            // Compute temporary track statistics using sensorData and update time.
+            Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
+
+            voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
+
+            recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
 
             TrackRecordingService.this.handler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
         }
@@ -303,20 +313,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     public LiveData<RecordingData> getRecordingDataObservable() {
         return recordingDataObservable;
-    }
-
-    private void updateRecordingDataWhileRecording() {
-        if (!isRecording()) {
-            Log.w(TAG, "Currently not recording; cannot update data.");
-            return;
-        }
-
-        // Compute temporary track statistics using sensorData and update time.
-        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
-
-        voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
-
-        recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
     }
 
     public void onIdle() {
