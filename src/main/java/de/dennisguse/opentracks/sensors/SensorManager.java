@@ -41,7 +41,6 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
         @Override
         public void onDisconnect(Aggregator<?, ?> aggregator) {
-            sensorDataSet.add(aggregator);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
 
