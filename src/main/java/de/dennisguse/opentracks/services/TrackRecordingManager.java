@@ -71,7 +71,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
     Track.Id startNewTrack() {
         TrackPoint segmentStartTrackPoint = trackPointCreator.createSegmentStartManual();
 
-        ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartTrackPoint.getTime());
+        ZoneOffset zoneOffset = java.time.ZoneId.systemDefault().getRules().getOffset(segmentStartTrackPoint.getTime());
         Track track = new Track(zoneOffset);
         trackId = contentProviderUtils.insertTrack(track);
         track.setId(trackId);
