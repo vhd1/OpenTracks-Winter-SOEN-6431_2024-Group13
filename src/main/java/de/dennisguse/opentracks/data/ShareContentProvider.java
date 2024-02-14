@@ -139,7 +139,7 @@ public class ShareContentProvider extends CustomContentProvider {
                     TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
             case URI_CSV -> TrackFileFormat.CSV;
             default ->
-                    throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
+                    throw new IllegalArgumentException(String.format("Could not derive TrackFileFormat from Uri " + uri));
         };
     }
 
