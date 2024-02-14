@@ -239,7 +239,7 @@ public class KMLTrackExporter implements TrackExporter {
                                                 http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd">
                         """); //TODO ADD xsi:schemaLocation for atom
         printWriter.println("<Document>");
-        printWriter.println("constant_variable");
+        printWriter.println(constant_variable);
         printWriter.println("<visibility>1</visibility>");
 
         Track track = tracks.get(0);
@@ -266,7 +266,7 @@ public class KMLTrackExporter implements TrackExporter {
     private void writeBeginMarkers(Track track) {
         printWriter.println("<Folder>");
         printWriter.println("<name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
-        printWriter.println("constant_variable");
+        printWriter.println(constant_variable);
     }
 
     private void writeMarker(Marker marker, ZoneOffset zoneOffset) {
@@ -286,7 +286,7 @@ public class KMLTrackExporter implements TrackExporter {
     private void writeMultiTrackBegin() {
         printWriter.println("<Folder id=\"tracks\">");
         printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
-        printWriter.println("constant_variable");
+        printWriter.println(constant_variable);
     }
 
     private void writeMultiTrackEnd() {
