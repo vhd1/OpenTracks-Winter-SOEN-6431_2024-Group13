@@ -83,7 +83,6 @@ public class KmzTrackExporter implements TrackExporter {
             return true;
         } catch (InterruptedException | IOException e) {
             Log.e(TAG, "Unable to write track", e);
-            Thread.currentThread().interrupt();
             return false;
         }
     }
