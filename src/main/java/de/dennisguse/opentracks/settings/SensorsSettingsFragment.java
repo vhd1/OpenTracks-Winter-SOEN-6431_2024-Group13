@@ -16,7 +16,7 @@ import de.dennisguse.opentracks.util.PermissionRequester;
 
 public class SensorsSettingsFragment extends PreferenceFragmentCompat {
 
-    private final static String TAG = SensorsSettingsFragment.class.getSimpleName();
+    private static final String TAG = SensorsSettingsFragment.class.getSimpleName();
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
