@@ -88,7 +88,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
             }
             if (PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
                 boolean reportSpeed = PreferencesUtils.isReportSpeed(activityTypeLocalized);
-                if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
+                if (reportSpeed != viewBinding.chartView.isReportSpeed()) {
                     viewBinding.chartView.setReportSpeed(reportSpeed);
                     viewBinding.chartView.applyReportSpeed();
 
@@ -166,7 +166,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
 
             activityTypeLocalized = track.getActivityTypeLocalized();
             boolean reportSpeed = PreferencesUtils.isReportSpeed(activityTypeLocalized);
-            if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
+            if (reportSpeed != viewBinding.chartView.isReportSpeed()) {
                 viewBinding.chartView.setReportSpeed(reportSpeed);
                 viewBinding.chartView.applyReportSpeed();
             }

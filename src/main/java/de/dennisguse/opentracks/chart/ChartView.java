@@ -64,7 +64,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 public class ChartView extends View {
 
-    private static final int Y_AXIS_INTERVALS = 5;
+    public static final int Y_AXIS_INTERVALS = 5;
 
     private static final int X_AXIS_INTERVALS = 4;
 
@@ -112,15 +112,15 @@ public class ChartView extends View {
     private int getSpacer = SPACER;
     private int yAxisOffset = Y_AXIS_OFFSET;
 
-    private int width = 0;
-    private int height = 0;
-    private int effectiveWidth = 0;
-    private int effectiveHeight = 0;
+    private int width;
+    private int height;
+    private int effectiveWidth;
+    private int effectiveHeight;
 
-    private boolean chartByDistance = false;
+    private boolean chartByDistance;
     private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
     private boolean reportSpeed = true;
-    private boolean showPointer = false;
+    private boolean showPointer;
 
     private final GestureDetectorCompat scrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
@@ -1022,7 +1022,7 @@ public class ChartView extends View {
     }
 
     private double getMarkerXValue(final Marker marker) {
-        int xCordinate = marker.getDuration().toMillis();
+        double xCordinate = marker.getDuration().toMillis();
         if (chartByDistance) {
             xCordinate = marker.getLength().toKM_Miles(unitSystem);
         }
