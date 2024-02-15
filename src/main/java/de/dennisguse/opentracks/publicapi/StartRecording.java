@@ -12,7 +12,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
-public class StartRecording extends AbstractAPIActivity {
+public final class StartRecording extends AbstractAPIActivity {
 
     public static final String EXTRA_TRACK_NAME = "TRACK_NAME";
     public static final String EXTRA_TRACK_ACTIVITY_TYPE_LOCALIZED = "TRACK_CATEGORY"; //TODO Update constant
