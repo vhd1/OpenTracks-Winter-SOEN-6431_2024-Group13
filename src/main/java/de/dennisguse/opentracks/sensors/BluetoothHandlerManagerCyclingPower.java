@@ -50,7 +50,6 @@ public class BluetoothHandlerManagerCyclingPower implements SensorHandlerInterfa
 
         int index = 0;
         int flags1 = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index++);
-        int flags2 = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index++);
         boolean hasPedalPowerBalance = (flags1 & 0x01) > 0;
         boolean hasAccumulatedTorque = (flags1 & 0x04) > 0;
         boolean hasWheel = (flags1 & 16) > 0;
