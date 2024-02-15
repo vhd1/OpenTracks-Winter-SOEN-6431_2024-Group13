@@ -125,7 +125,6 @@ public class CustomContentProvider extends ContentProvider {
         CustomSQLiteOpenHelper databaseHelper = new CustomSQLiteOpenHelper(context);
         try {
             db = databaseHelper.getWritableDatabase();
-            // Necessary to enable cascade deletion from Track to TrackPoints and Markers
             db.setForeignKeyConstraintsEnabled(true);
           } catch (SQLiteException e) {
             Log.e(TAG, "Unable to open database for writing.", e);
