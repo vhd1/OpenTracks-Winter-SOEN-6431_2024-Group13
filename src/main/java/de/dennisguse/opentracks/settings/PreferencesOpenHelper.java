@@ -34,7 +34,8 @@ class PreferencesOpenHelper {
             switch (i) {
                 case 1 -> upgradeFrom0to1();
                 case 2 -> upgradeFrom1to2();
-                default -> throw new RuntimeException("Not implemented: upgrade to " + version);
+                default -> throw new UnsupportedOperationException("Upgrade to version " + version + " not implemented");
+
             }
         }
     }
