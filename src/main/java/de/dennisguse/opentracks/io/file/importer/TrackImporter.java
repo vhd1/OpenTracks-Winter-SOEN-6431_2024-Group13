@@ -162,7 +162,7 @@ public class TrackImporter {
         for (Marker marker : markers)
             marker.setTrackId(trackId); //TODO Should happen in bulkInsertMarkers
 
-        contentProviderUtils.bulkInsertMarkers(markers, trackId);
+        contentProviderUtils.bulkInsertMarkers(markers);
 
         //Clear up.
         trackPoints.clear();
