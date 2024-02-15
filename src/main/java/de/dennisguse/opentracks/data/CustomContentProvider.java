@@ -122,7 +122,8 @@ public class CustomContentProvider extends ContentProvider {
      */
     @VisibleForTesting
     boolean onCreate(Context context) {
-        try (CustomSQLiteOpenHelper databaseHelper = new CustomSQLiteOpenHelper(context)) {
+        CustomSQLiteOpenHelper databaseHelper = new CustomSQLiteOpenHelper(context);
+        try {
             db = databaseHelper.getWritableDatabase();
             // Necessary to enable cascade deletion from Track to TrackPoints and Markers
             db.setForeignKeyConstraintsEnabled(true);
