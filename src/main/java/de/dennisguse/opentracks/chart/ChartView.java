@@ -78,7 +78,7 @@ public class ChartView extends View {
     private static final int Y_AXIS_OFFSET = 16;
 
     //TODO Determine from actual size of the used drawable
-    private static final float MARKER_X_ANCHOR = 13f / 48f;
+    private static final float MARKER_X_ANCHOR = 0.27083333f;
 
     static {
         X_FRACTION_FORMAT.setMaximumFractionDigits(1);
