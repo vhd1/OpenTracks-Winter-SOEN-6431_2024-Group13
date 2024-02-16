@@ -125,36 +125,7 @@ public class TrackStatisticsUpdater {
             currentSegment.setAverageHeartRate(HeartRate.of(averageHeartRateBPM));
         }
 
-        {
-            // Update total distance
-            Distance movingDistance = null;
-            if (trackPoint.hasSensorDistance()) {
-                movingDistance = trackPoint.getSensorDistance();
-            } else if (lastTrackPoint != null
-                    && lastTrackPoint.hasLocation()
-                    && trackPoint.hasLocation()) {
-                // GPS-based distance/speed
-                movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
-            }
-            if (movingDistance != null) {
-                currentSegment.setIdle(false);
-                currentSegment.addTotalDistance(movingDistance);
-            }
-
-            if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart()) {
-                if (lastTrackPoint != null) {
-                    currentSegment.addMovingTime(trackPoint, lastTrackPoint);
-                }
-            }
-
-            if (trackPoint.getType() == TrackPoint.Type.IDLE) {
-                currentSegment.setIdle(true);
-            }
-
-            if (trackPoint.hasSpeed()) {
-                updateSpeed(trackPoint);
-            }
-        }
+        updateDistanceAndSpeed(trackPoint);
 
         if (trackPoint.isSegmentManualEnd()) {
             reset(trackPoint);
@@ -162,6 +133,30 @@ public class TrackStatisticsUpdater {
         }
 
         lastTrackPoint = trackPoint;
+    }
+
+    // Extracted method for updating total distance and speed
+    private void updateDistanceAndSpeed(TrackPoint trackPoint) {
+        Distance movingDistance = null;
+        if (trackPoint.hasSensorDistance()) {
+            movingDistance = trackPoint.getSensorDistance();
+        } else if (lastTrackPoint != null && lastTrackPoint.hasLocation() && trackPoint.hasLocation()) {
+            // GPS-based distance/speed
+            movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
+        }
+        if (movingDistance != null) {
+            currentSegment.setIdle(false);
+            currentSegment.addTotalDistance(movingDistance);
+        }
+        if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart() && lastTrackPoint != null) {
+            currentSegment.addMovingTime(trackPoint, lastTrackPoint);
+        }
+        if (trackPoint.getType() == TrackPoint.Type.IDLE) {
+            currentSegment.setIdle(true);
+        }
+        if (trackPoint.hasSpeed()) {
+            updateSpeed(trackPoint);
+        }
     }
 
     private void reset(TrackPoint trackPoint) {
