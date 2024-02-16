@@ -22,7 +22,6 @@ public final class StartRecording extends AbstractAPIActivity {
     public static final String EXTRA_STATS_TARGET_PACKAGE = "STATS_TARGET_PACKAGE";
     public static final String EXTRA_STATS_TARGET_CLASS = "STATS_TARGET_CLASS";
 
-    
 
     protected void execute(TrackRecordingService service) {
         Track.Id trackId = service.startNewTrack();
@@ -42,12 +41,11 @@ public final class StartRecording extends AbstractAPIActivity {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackUtils.updateTrack(this, track,
-                bundle.getString(EXTRA_TRACK_NAME, null),
-                bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_LOCALIZED, null),
-                ActivityType.findBy(bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_ID, null)),
-                bundle.getString(EXTRA_TRACK_DESCRIPTION, null),
-                contentProviderUtils);
+        
+
+        contentProviderUtils.updateTrack(track);
+
+        
     }
 
     private void startDashboardAPI(@NonNull Track.Id trackId, @NonNull Bundle bundle) {
