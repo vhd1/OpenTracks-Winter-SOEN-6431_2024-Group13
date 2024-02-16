@@ -228,7 +228,7 @@ public class StringUtils {
      * @param text the given text
      */
     public static String formatCData(String text) {
-        return "<![CDATA[" + text.replace("]]>", "]]]]><![CDATA[>") + "]]>";
+        return "<![CDATA[" + text.replaceAll("]]>", "]]]]><![CDATA[>") + "]]>";
     }
 
     /**
@@ -252,22 +252,22 @@ public class StringUtils {
     }
 
     /**
-     * @return the formatted altitude_m (or null) and it's unit as {@link Pair}
+     * @return the formatted altitudeM (or null) and it's unit as {@link Pair}
      */
     //TODO altitude_m should be double or a value object
-    public static Pair<String, String> getAltitudeParts(Context context, Float altitude_m, UnitSystem unitSystem) {
+    public static Pair<String, String> getAltitudeParts(Context context, Float altitudeM, UnitSystem unitSystem) {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
                 .setThreshold(Double.MAX_VALUE)
                 .setUnit(unitSystem)
                 .build(context);
 
-        Distance distance = altitude_m != null ? Distance.of(altitude_m) : Distance.of((Double) null);
+        Distance distance = altitudeM != null ? Distance.of(altitudeM) : Distance.of((Double) null);
         return formatter.getDistanceParts(distance);
     }
 
-    public static String formatAltitude(Context context, Float altitude_m, UnitSystem unitSystem) {
-        Pair<String, String> altitudeParts = getAltitudeParts(context, altitude_m, unitSystem);
+    public static String formatAltitude(Context context, Float altitudeM, UnitSystem unitSystem) {
+        Pair<String, String> altitudeParts = getAltitudeParts(context, altitudeM, unitSystem);
 
         return context.getString(R.string.altitude_with_unit, altitudeParts.first, altitudeParts.second);
     }
