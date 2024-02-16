@@ -213,10 +213,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && !PermissionRequester.RECORDING.hasPermission(this)) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (!PermissionRequester.RECORDING.hasPermission(this)) {
                 throw new RuntimeException("Android14: Please grant permissions LOCATION and NEARBY DEVICES (manually)");
-
+            }
         }
 
         ServiceCompat.startForeground(this, TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
@@ -285,7 +285,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return trackRecordingManager.insertMarker(name, category, description, photoUrl);
     }
 
-    @Deprecated(since = "14.0.0", forRemoval = true)
+    @Deprecated
     @VisibleForTesting
     public TrackPointCreator getTrackPointCreator() {
         return trackPointCreator;
