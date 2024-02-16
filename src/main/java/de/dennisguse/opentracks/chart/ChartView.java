@@ -76,8 +76,7 @@ public class ChartView extends View {
     private static final int BORDER = 8;
     private static final int SPACER = 4;
     private static final int Y_AXIS_OFFSET = 16;
-
-    //TODO Determine from actual size of the used drawable
+    
     private static final float MARKER_X_ANCHOR = 0.27083333f;
 
     static {
