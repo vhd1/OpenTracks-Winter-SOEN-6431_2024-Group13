@@ -54,12 +54,13 @@ public class TrackDeleteService extends JobIntentService {
 
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
-            switch (resultCode) {
-                case RESULT_CODE_SUCCESS -> receiver.onDeleteFinished();
-                default -> throw new RuntimeException("Unknown resultCode.");
-            }
+                if(resultCode==RESULT_CODE_SUCCESS){
+                    receiver.onDeleteFinished();
+                } else{
+                    throw new RuntimeException("Unknown resultCode.");
+                } 
+            
         }
-
         public interface Receiver {
             void onDeleteFinished();
         }
