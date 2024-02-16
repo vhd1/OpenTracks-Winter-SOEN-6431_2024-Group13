@@ -32,13 +32,15 @@ import de.dennisguse.opentracks.data.models.BatteryLevel;
  */
 public class BluetoothUtils {
 
+    private BluetoothUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
 
     public static final ServiceMeasurementUUID BATTERY = new ServiceMeasurementUUID(
             new UUID(0x180F00001000L, 0x800000805f9b34fbL),
-            new UUID(0x2A1900001000L, 0x800000805f9b34fbL)
-    );
-
+            new UUID(0x2A1900001000L, 0x800000805f9b34fbL));
 
     private static final String TAG = BluetoothUtils.class.getSimpleName();
 
