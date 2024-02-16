@@ -71,6 +71,9 @@ public class BluetoothConnectionManager implements Driver {
                     }
                     clearData();
                 }
+                default:
+                    Log.w(TAG, "Unknown connection state: " + newState);
+                    break;
             }
         }
 
