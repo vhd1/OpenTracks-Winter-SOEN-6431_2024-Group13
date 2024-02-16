@@ -254,7 +254,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
      * Returns true if the selected track is recording.
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
-    @Deprecated
+    @Deprecated(since = "verision x.x",forRemoval = true)
     //TODO Should not be dynamic but instead set while instantiating, i.e., newFragment().
     private synchronized boolean isSelectedTrackRecording() {
         return trackDataHub != null && trackDataHub.isSelectedTrackRecording();
