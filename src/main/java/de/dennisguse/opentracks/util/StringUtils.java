@@ -228,7 +228,7 @@ public class StringUtils {
      * @param text the given text
      */
     public static String formatCData(String text) {
-        return "<![CDATA[" + text.replace("]]>", "]]]]><![CDATA[>") + "]]>";
+        return "<![CDATA[" + text.replaceAll("]]>", "]]]]><![CDATA[>") + "]]>";
     }
 
     /**
