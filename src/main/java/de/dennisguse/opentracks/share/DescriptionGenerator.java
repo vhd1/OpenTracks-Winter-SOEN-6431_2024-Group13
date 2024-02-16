@@ -221,16 +221,16 @@ public class DescriptionGenerator {
     }
 
     /**
-     * @param altitude_m altitude_m in meters
+     * @param altitude_M altitude_M in meters
      * @param builder    StringBuilder to append
      * @param resId      resource id of altitude string
      * @param lineBreak  line break string
      */
     @VisibleForTesting
-    void writeAltitude(double altitude_m, StringBuilder builder, int resId, String lineBreak) {
-        long altitudeInM = Math.round(altitude_m);
-        long altitudeInFt = Math.round(Distance.of(altitude_m).toFT());
-        builder.append(context.getString(resId, altitudeInM, altitudeInFt));
+    void writeAltitude(double altitude_M, StringBuilder builder, int resId, String lineBreak) {
+        long altitude_M = Math.round(altitude_M);
+        long altitudeInFt = Math.round(Distance.of(altitude_M).toFT());
+        builder.append(context.getString(resId, altitude_M, altitudeInFt));
         builder.append(lineBreak);
     }
 }
