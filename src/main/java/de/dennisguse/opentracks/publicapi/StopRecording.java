@@ -6,7 +6,9 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.util.ExportUtils;
 
 public class StopRecording extends AbstractAPIActivity {
-
+    private StopRecording() {
+        //Private constructor is introduced to prevent instantiation from outside.
+    }
     protected void execute(TrackRecordingService service) {
         RecordingData recordingData = service.getRecordingDataObservable().getValue();
         Track.Id trackId = null;
