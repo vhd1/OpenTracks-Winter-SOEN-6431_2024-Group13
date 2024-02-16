@@ -55,22 +55,27 @@ public class BluetoothConnectionManager implements Driver {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             switch (newState) {
-                case BluetoothProfile.STATE_CONNECTING ->
-                        Log.i(TAG, gatt.getDevice() + ": connecting to sensor");
-                case BluetoothProfile.STATE_CONNECTED -> {
+                case BluetoothProfile.STATE_CONNECTING:
+                    Log.i(TAG, gatt.getDevice() + ": connecting to sensor");
+                    break;
+                case BluetoothProfile.STATE_CONNECTED:
                     Log.i(TAG, gatt.getDevice() + ": connected to sensor; discovering services");
                     gatt.discoverServices();
-                }
-                case BluetoothProfile.STATE_DISCONNECTING ->
-                        Log.i(TAG, gatt.getDevice() + ": disconnecting from sensor: ");
-                case BluetoothProfile.STATE_DISCONNECTED -> {
-                    //This is also triggered, if no connection was established (ca. 30s)
+                    break;
+                case BluetoothProfile.STATE_DISCONNECTING:
+                    Log.i(TAG, gatt.getDevice() + ": disconnecting from sensor");
+                    break;
+                case BluetoothProfile.STATE_DISCONNECTED:
+                    // This is also triggered if no connection was established (ca. 30s)
                     Log.i(TAG, gatt.getDevice() + ": disconnected from sensor: trying to reconnect");
-                    if (gatt.connect()) {
+                    if (!gatt.connect()) {
                         Log.e(TAG, gatt.getDevice() + ": could not trigger reconnect for sensor");
                     }
                     clearData();
-                }
+                    break;
+                default:
+                    Log.w(TAG, "Unknown connection state: " + newState);
+                    break;
             }
         }
 
