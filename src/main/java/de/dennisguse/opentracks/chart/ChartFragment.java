@@ -105,17 +105,14 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
     /**
      * A runnable that will setFrequency the orange pointer as appropriate and redraw.
      */
-    private final Runnable updateChart = new Runnable() {
-        @Override
-        public void run() {
+    private final Runnable updateChart = ()->{
             if (!isResumed()) {
                 return;
             }
 
             viewBinding.chartView.setShowPointer(isSelectedTrackRecording());
             viewBinding.chartView.invalidate();
-        }
-    };
+        };
 
 
     @Override
