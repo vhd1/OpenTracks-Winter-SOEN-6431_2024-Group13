@@ -5,7 +5,7 @@ import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.util.ExportUtils;
 
-public class StopRecording extends AbstractAPIActivity {
+public final class StopRecording extends AbstractAPIActivity {
     protected void execute(TrackRecordingService service) {
         RecordingData recordingData = service.getRecordingDataObservable().getValue();
         Track.Id trackId = null;
@@ -23,10 +23,5 @@ public class StopRecording extends AbstractAPIActivity {
     @Override
     protected boolean isPostExecuteStopService() {
         return true;
-    }
-    // Empty finalizer declared as final
-    @Override
-    public final void finalize() {
-        // Empty finalizer
     }
 }
