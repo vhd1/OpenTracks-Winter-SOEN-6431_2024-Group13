@@ -291,7 +291,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return trackPointCreator;
     }
 
-    @Deprecated
+    @Deprecated (forRemoval = false)
     @VisibleForTesting
     public TrackRecordingManager getTrackRecordingManager() {
         return trackRecordingManager;
