@@ -23,10 +23,10 @@ public class TrackDeleteService extends JobIntentService {
 
     private static final String EXTRA_TRACK_IDS = "extra_track_ids";
 
-    public static void enqueue(Context context, TrackDeleteResultReceiver receiver, ArrayList<Track.Id> toBeDeleted) {
+    public static void enqueue(Context context, TrackDeleteResultReceiver receiver, List<Track.Id> toBeDeleted) {
         Intent intent = new Intent(context, JobService.class);
         intent.putExtra(EXTRA_RECEIVER, receiver);
-        intent.putParcelableArrayListExtra(EXTRA_TRACK_IDS, toBeDeleted);
+        intent.putParcelableArrayListExtra(EXTRA_TRACK_IDS, new ArrayList<>(toBeDeleted));
         enqueueWork(context, TrackDeleteService.class, JOB_ID, intent);
     }
 
