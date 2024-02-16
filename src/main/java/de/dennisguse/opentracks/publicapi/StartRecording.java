@@ -41,12 +41,11 @@ public class StartRecording extends AbstractAPIActivity {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackUtils.updateTrack(this, track,
-                bundle.getString(EXTRA_TRACK_NAME, null),
-                bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_LOCALIZED, null),
-                ActivityType.findBy(bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_ID, null)),
-                bundle.getString(EXTRA_TRACK_DESCRIPTION, null),
-                contentProviderUtils);
+        
+
+        contentProviderUtils.updateTrack(track);
+
+        
     }
 
     private void startDashboardAPI(@NonNull Track.Id trackId, @NonNull Bundle bundle) {
