@@ -49,7 +49,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     private void loadData(List<DocumentFile> documentFiles) {
         List<ArrayList<DocumentFile>> nestedFileList = documentFiles.stream()
                 .map(FileUtils::getFiles)
-                .collect(Collectors.toList());
+                .toList();
 
         List<DocumentFile> fileList = new ArrayList<>();
         nestedFileList.forEach(fileList::addAll);
