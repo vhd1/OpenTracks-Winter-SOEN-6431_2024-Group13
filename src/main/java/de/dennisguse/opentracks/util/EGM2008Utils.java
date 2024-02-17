@@ -121,9 +121,8 @@ public class EGM2008Utils {
                         - (int) ((-location.getLatitude() + 90) * RESOLUTION_IN_MINUTES);
 
                 // Bilinear interpolation (optimized; taken from GeopgrahicLib/Geoid.cpp)
-                double
-                        a = (1 - fLongitude) * v00 + fLongitude * v01,
-                        b = (1 - fLongitude) * v10 + fLongitude * v11;
+                double a = (1 - fLongitude) * v00 + fLongitude * v01;
+                double b = (1 - fLongitude) * v10 + fLongitude * v11;
                 undulationRaw = (1 - fLatitude) * a + fLatitude * b;
             }
             // Bilinear interpolation (not optimized)

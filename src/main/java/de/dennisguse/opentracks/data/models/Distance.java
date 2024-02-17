@@ -48,8 +48,8 @@ public record Distance(double distance_m) {
         return of(0.01 * distance_cm);
     }
 
-    public static Distance ofDM(double distance_dm) {
-        return of(0.1 * distance_dm);
+    public static Distance ofDM(double distanceDm) {
+        return of(0.1 * distanceDm);
     }
 
     public static Distance one(UnitSystem unitSystem) {
