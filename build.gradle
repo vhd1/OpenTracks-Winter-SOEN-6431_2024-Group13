@@ -146,4 +146,3 @@ dependencies {
 
     androidTestUtil 'androidx.test:orchestrator:1.4.2'
 }
-
