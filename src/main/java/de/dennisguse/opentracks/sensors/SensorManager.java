@@ -104,12 +104,11 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         sensorDataSet.reset();
     }
 
-    @Deprecated
     @VisibleForTesting
     public void onChanged(Raw<?> data) {
         listener.onChange(data);
     }
-
+    
     public GPSManager getGpsManager() {
         return gpsManager;
     }
