@@ -227,9 +227,9 @@ public class DescriptionGenerator {
      * @param lineBreak  line break string
      */
     @VisibleForTesting
-    void writeAltitude(double altitudeM, StringBuilder builder, int resId, String lineBreak) {
-        long altitudeInM = Math.round(altitudeM);
-        long altitudeInFt = Math.round(Distance.of(altitudeM).toFT());
+    void writeAltitude(double altitude_m, StringBuilder builder, int resId, String lineBreak) {
+        long altitudeInM = Math.round(altitude_m);
+        long altitudeInFt = Math.round(Distance.of(altitude_m).toFT());
         builder.append(context.getString(resId, altitudeInM, altitudeInFt));
         builder.append(lineBreak);
     }

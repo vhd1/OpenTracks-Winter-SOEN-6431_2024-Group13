@@ -75,7 +75,17 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private final Runnable updateRecordingData = new Runnable() {
         @Override
         public void run() {
-            updateRecordingDataWhileRecording();
+            if (!isRecording()) {
+                Log.w(TAG, "Currently not recording; cannot update data.");
+                return;
+            }
+
+            // Compute temporary track statistics using sensorData and update time.
+            Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
+
+            voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
+
+            recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
 
             TrackRecordingService.this.handler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
         }
@@ -169,7 +179,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         // Set recording status
         Track.Id trackId = trackRecordingManager.startNewTrack();
-        updateRecordingStatus(RecordingStatus.record(trackId));
+        updateRecordingStatus(RecordingStatus.create(trackId));
 
         startRecording();
         return trackId;
@@ -182,7 +192,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
         Log.i(TAG, "resumeTrack");
 
-        updateRecordingStatus(RecordingStatus.record(trackId));
+        updateRecordingStatus(RecordingStatus.create(trackId));
 
         startRecording();
     }
@@ -216,7 +226,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             if (!PermissionRequester.RECORDING.hasPermission(this)) {
                 throw new RuntimeException("Android14: Please grant permissions LOCATION and NEARBY DEVICES (manually)");
-            }
+            
         }
 
         ServiceCompat.startForeground(this, TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
@@ -291,7 +301,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return trackPointCreator;
     }
 
-    @Deprecated
+    @Deprecated(since = "14.0.0", forRemoval = true)
     @VisibleForTesting
     public TrackRecordingManager getTrackRecordingManager() {
         return trackRecordingManager;
@@ -303,20 +313,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     public LiveData<RecordingData> getRecordingDataObservable() {
         return recordingDataObservable;
-    }
-
-    private void updateRecordingDataWhileRecording() {
-        if (!isRecording()) {
-            Log.w(TAG, "Currently not recording; cannot update data.");
-            return;
-        }
-
-        // Compute temporary track statistics using sensorData and update time.
-        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
-
-        voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
-
-        recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
     }
 
     public void onIdle() {
