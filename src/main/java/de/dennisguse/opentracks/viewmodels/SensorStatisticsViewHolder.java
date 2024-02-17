@@ -29,6 +29,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
     public static class SensorHeartRate extends SensorStatisticsViewHolder {
 
         @Override
+
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             SensorDataSet sensorDataSet = data.sensorDataSet();
             String sensorName = getContext().getString(R.string.value_unknown);
@@ -41,7 +42,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
                 valueAndUnit = StringUtils.getHeartRateParts(getContext(), null);
             }
 
-            //TODO Loads preference every time
+            // Load heart rate zones preference every time.
             HeartRateZones zones = PreferencesUtils.getHeartRateZones();
             int textColor;
             if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
@@ -58,6 +59,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
             getBinding().statsValue.setTextColor(textColor);
         }
+
     }
 
     public static class SensorCadence extends SensorStatisticsViewHolder {
