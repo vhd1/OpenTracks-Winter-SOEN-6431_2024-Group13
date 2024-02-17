@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
