@@ -226,7 +226,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             if (!PermissionRequester.RECORDING.hasPermission(this)) {
                 throw new RuntimeException("Android14: Please grant permissions LOCATION and NEARBY DEVICES (manually)");
-            
+            }
         }
 
         ServiceCompat.startForeground(this, TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
