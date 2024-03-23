@@ -366,6 +366,9 @@ limitations under the License.
     <string name="settings_units_category">Units</string>
     <string name="settings_activity_defaults_category">Activity\'s Defaults</string>
 
+    <string name="ski_season_start_title">Ski Season Start Date</string>
+    <string name="ski_season_start_summary">Specify the start date of the ski season.</string>
+
     <string name="settings_reset_summary">Reset Settings to Default Values</string>
 
     <!-- Settings Advanced -->
