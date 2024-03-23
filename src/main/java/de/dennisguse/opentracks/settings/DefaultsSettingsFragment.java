@@ -1,12 +1,17 @@
 package de.dennisguse.opentracks.settings;
-
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.NumberPicker;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import java.text.DateFormatSymbols;
+import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
@@ -22,6 +27,14 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
             getActivity().runOnUiThread(this::updateUnits);
         }
     };
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if (preference.getKey().equals(getString(R.string.ski_season_start_key))) {
+            showCustomDatePickerDialog(); // Call method to show the dialog
+            return true;
+        }
+        return super.onPreferenceTreeClick(preference);
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -63,6 +76,37 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
 
         super.onDisplayPreferenceDialog(preference);
     }
+    private void showCustomDatePickerDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.custom_date_picker_dialog, null);
+        builder.setView(dialogView);
+
+        NumberPicker monthPicker = dialogView.findViewById(R.id.monthPicker);
+        NumberPicker dayPicker = dialogView.findViewById(R.id.dayPicker);
+
+        // Customize month picker
+        String[] months = new DateFormatSymbols().getShortMonths();
+        monthPicker.setMinValue(0);
+        monthPicker.setMaxValue(months.length - 1);
+        monthPicker.setDisplayedValues(months);
+
+        // Customize day picker
+        dayPicker.setMinValue(1);
+        dayPicker.setMaxValue(31);
+
+        builder.setTitle("Select Date");
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            int selectedMonth = monthPicker.getValue();
+            int selectedDay = dayPicker.getValue();
+
+            String selectedDate = String.format(Locale.getDefault(), "%02d-%02d", selectedDay, selectedMonth + 1);
+
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     private void updateUnits() {
         UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
@@ -74,7 +118,7 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
             case IMPERIAL_FEET, IMPERIAL_METER ->
                     R.array.stats_rate_imperial_options;
             case NAUTICAL_IMPERIAL ->
-                R.array.stats_rate_nautical_options;
+                    R.array.stats_rate_nautical_options;
         };
 
         String[] entries = getResources().getStringArray(entriesId);
