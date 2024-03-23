@@ -1,8 +1,6 @@
 package de.dennisguse.opentracks.settings;
 
-
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputFilter;
 
@@ -11,19 +9,15 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
-
 import de.dennisguse.opentracks.R;
 
-
 public class ProfileSettingsFragment extends PreferenceFragmentCompat {
-
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.night_mode_key, key)) {
             getActivity().runOnUiThread(PreferencesUtils::applyNightMode);
         }
     };
-
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -44,17 +38,24 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         });
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
         ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.settings_profile_title);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
+
+        EditTextPreference nickNameInput = findPreference(getString(R.string.settings_profile_nickname_key));
+        nickNameInput.setDialogTitle(getString(R.string.settings_profile_nickname_dialog_title));
+        nickNameInput.setOnBindEditTextListener(editText -> {
+            editText.setSingleLine(true);
+            editText.selectAll(); // select all text
+            int maxNicknameLength = 20;
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxNicknameLength)});
+        });
 
         ListPreference countryPreference = findPreference(getString(R.string.settings_profile_country_key));
         String selectedCountryValue = PreferencesUtils.getSelectedCountry();
@@ -62,8 +63,9 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             // Update summary with saved selected country
             countryPreference.setSummary(selectedCountryValue);
         }
-    }
 
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
 
     @Override
     public void onPause() {
