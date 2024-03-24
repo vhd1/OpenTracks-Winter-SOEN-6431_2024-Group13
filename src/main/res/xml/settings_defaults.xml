@@ -35,4 +35,36 @@
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Discard Records">
+        <SwitchPreferenceCompat
+            android:title="@string/auto_discard_title"
+            android:summary="@string/auto_discard_summary"
+            android:defaultValue="@string/auto_discard_default" />
+
+        <!--    <SwitchPreferenceCompat-->
+        <!--            android:key="@string/auto_discard_key"-->
+        <!--    android:title="@string/auto_discard_title"-->
+        <!--    android:summary="@string/auto_discard_summary"-->
+        <!--            android:icon="@drawable/ic_auto_discard"-->
+        <!--    android:defaultValue="@string/auto_discard_default" />-->
+
+        <ListPreference
+            android:key="@string/record_length_options"
+            android:title="@string/record_length_title"
+            android:summary="@string/record_length_summary"
+            android:entries="@array/record_length_options"
+            android:entryValues="@array/record_length_values"
+            android:defaultValue="@string/record_length_default" />
+
+
+        <!--    <ListPreference-->
+        <!--        android:key="@string/record_length_key"-->
+        <!--        android:title="@string/record_length_title"-->
+        <!--        android:summary="@string/record_length_summary"-->
+        <!--        android:icon="@drawable/ic_record_length"-->
+        <!--        android:entries="@array/record_length_options"-->
+        <!--        android:entryValues="@array/record_length_values"-->
+        <!--        android:defaultValue="@string/record_length_default" />-->
+    </PreferenceCategory>
+
 </PreferenceScreen>

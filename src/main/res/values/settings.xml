@@ -422,4 +422,29 @@
 
     <string name="prefs_last_version_key" translatable="false">lastVersionKey</string>
 
+    <!-- Default value for automatic record discarding -->
+    <string name="auto_discard_default">true</string>
+    <string name="auto_discard_title">Auto Discard</string>
+    <string name="auto_discard_summary">Enable automatic record discarding</string>
+
+    <!-- Default value for record length preference -->
+    <string name="record_length_options">3</string>
+    <string name="record_length_default">5</string>
+    <string name="record_length_title">Record Length</string>
+    <string name="record_length_summary">Select the duration for each record</string>
+
+    <!-- Array of record length options -->
+    <string-array name="record_length_options">
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>20 seconds</item>
+    </string-array>
+
+    <!-- Array of corresponding record length values -->
+    <string-array name="record_length_values">
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+    </string-array>
+
 </resources>
