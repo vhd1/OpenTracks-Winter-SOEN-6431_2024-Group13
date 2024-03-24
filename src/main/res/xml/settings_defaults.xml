@@ -35,7 +35,7 @@
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Discard Records">
+    <PreferenceCategory android:title="Auto Discard Records">
         <SwitchPreferenceCompat
             android:title="@string/auto_discard_title"
             android:summary="@string/auto_discard_summary"

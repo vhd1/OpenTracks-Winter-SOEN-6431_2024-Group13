@@ -430,8 +430,8 @@
     <!-- Default value for record length preference -->
     <string name="record_length_options">3</string>
     <string name="record_length_default">5</string>
-    <string name="record_length_title">Record Length</string>
-    <string name="record_length_summary">Select the duration for each record</string>
+    <string name="record_length_title">Discard Record Length</string>
+    <string name="record_length_summary">Select the duration for each record to be discarded</string>
 
     <!-- Array of record length options -->
     <string-array name="record_length_options">
