@@ -94,6 +94,10 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
         dayPicker.setMinValue(1);
         dayPicker.setMaxValue(31);
 
+        //default date
+        monthPicker.setValue(8);
+        dayPicker.setValue(1);
+
         builder.setTitle("Select Date");
         builder.setPositiveButton("OK", (dialog, which) -> {
             int selectedMonth = monthPicker.getValue();
