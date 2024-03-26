@@ -85,8 +85,7 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat
     }
 
     private void showCustomDatePickerDialog() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String defaultStartDate = prefs.getString(getString(R.string.ski_season_start_key), "09-01");
+        String defaultStartDate = PreferencesUtils.getSkiSeasonStartDate();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = getLayoutInflater().inflate(R.layout.custom_date_picker_dialog, null);
@@ -117,9 +116,7 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat
             int selectedMonth = monthPicker.getValue();
             int selectedDay = dayPicker.getValue();
             String selectedDate = String.format(Locale.getDefault(), "%02d-%02d", selectedMonth + 1, selectedDay);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(getString(R.string.ski_season_start_key), selectedDate);
-            editor.apply();
+            PreferencesUtils.setSkiSeasonStartDate(selectedDate);
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 

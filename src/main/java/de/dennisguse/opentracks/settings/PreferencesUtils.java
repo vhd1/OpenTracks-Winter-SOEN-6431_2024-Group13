@@ -814,6 +814,9 @@ public class PreferencesUtils {
     public static List<String> getAllCustomLayoutNames() {
         return getAllCustomLayouts().stream().map(RecordingLayout::getName).collect(Collectors.toList());
     }
+    public static String getSkiSeasonStartDate() {
+        return getString(R.string.ski_season_start_key, "09-01");
+    }
 
     public static void resetCustomLayoutPreferences() {
         if (sharedPreferences.contains(resources.getString(R.string.stats_custom_layouts_key))) {
@@ -836,6 +839,10 @@ public class PreferencesUtils {
 
     public static void setShowOnMapFormat(final String showOnMapFormat) {
         setString(R.string.show_on_map_format_key, showOnMapFormat);
+    }
+
+    public static void setSkiSeasonStartDate(String newStartDate) {
+        setString(R.string.ski_season_start_key, newStartDate);
     }
 
     public static String getShowOnMapFormat() {
