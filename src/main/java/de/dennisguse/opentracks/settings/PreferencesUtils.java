@@ -101,6 +101,14 @@ public class PreferencesUtils {
         setString(R.string.default_activity_key, newDefaultActivity);
     }
 
+    public static String getSkiSeasonStartDate() {
+        return getString(R.string.ski_season_start_key, "09-01");
+    }
+
+    public static void setSkiSeasonStartDate(String newStartDate) {
+        setString(R.string.ski_season_start_key, newStartDate);
+    }
+
     /**
      * Gets a preference key
      *
