@@ -104,6 +104,10 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat
         dayPicker.setMinValue(1);
         dayPicker.setMaxValue(31);
 
+        //default date
+        monthPicker.setValue(8);
+        dayPicker.setValue(1);
+
         // Set picker values to saved date or default
         String[] dateParts = defaultStartDate.split("-");
         int defaultMonth = Integer.parseInt(dateParts[0]) - 1;
