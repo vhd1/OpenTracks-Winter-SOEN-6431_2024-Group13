@@ -1,12 +1,10 @@
 package de.dennisguse.opentracks.settings;
-
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
@@ -14,6 +12,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
@@ -130,24 +130,21 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat
 
     private void updateUnits() {
         UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
+
         ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
 
-        // Check for null to avoid NullPointerException
-        if (statsRatePreferences != null) {
-            int entriesId = switch (unitSystem) {
-                case METRIC -> R.array.stats_rate_metric_options;
-                case IMPERIAL_FEET, IMPERIAL_METER -> R.array.stats_rate_imperial_options;
-                case NAUTICAL_IMPERIAL -> R.array.stats_rate_nautical_options;
-            };
+        int entriesId = switch (unitSystem) {
+            case METRIC -> R.array.stats_rate_metric_options;
+            case IMPERIAL_FEET, IMPERIAL_METER ->
+                    R.array.stats_rate_imperial_options;
+            case NAUTICAL_IMPERIAL ->
+                    R.array.stats_rate_nautical_options;
+        };
 
-            String[] entries = getResources().getStringArray(entriesId);
-            statsRatePreferences.setEntries(entries);
+        String[] entries = getResources().getStringArray(entriesId);
+        statsRatePreferences.setEntries(entries);
 
-            // Further actions could be added here if needed, e.g., updating other related
-            // preferences.
-        } else {
-            Log.w("DefaultsSettingsFragment", "Stats rate preference is not found.");
-        }
+        HackUtils.invalidatePreference(statsRatePreferences);
     }
 
     @Override
