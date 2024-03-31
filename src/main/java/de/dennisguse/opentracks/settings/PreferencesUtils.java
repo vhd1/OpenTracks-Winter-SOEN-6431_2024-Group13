@@ -82,12 +82,14 @@ public class PreferencesUtils {
         PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
     }
 
-    public static void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
+    public static void registerOnSharedPreferenceChangeListener(
+            SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
         sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener);
         changeListener.onSharedPreferenceChanged(sharedPreferences, null);
     }
 
-    public static void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
+    public static void unregisterOnSharedPreferenceChangeListener(
+            SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener);
     }
 
@@ -97,6 +99,14 @@ public class PreferencesUtils {
 
     public static void setDefaultActivityLocalized(String newDefaultActivity) {
         setString(R.string.default_activity_key, newDefaultActivity);
+    }
+
+    public static String getSkiSeasonStartDate() {
+        return getString(R.string.ski_season_start_key, "09-01");
+    }
+
+    public static void setSkiSeasonStartDate(String newStartDate) {
+        setString(R.string.ski_season_start_key, newStartDate);
     }
 
     /**
@@ -301,7 +311,8 @@ public class PreferencesUtils {
     }
 
     public static boolean shouldShowStatsOnLockscreen() {
-        final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = resources.getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
+        final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = resources
+                .getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
         return getBoolean(R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
     }
 
