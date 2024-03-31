@@ -719,4 +719,5 @@ limitations under the License.
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_Date_Key">1 Sep</string>
 </resources>
