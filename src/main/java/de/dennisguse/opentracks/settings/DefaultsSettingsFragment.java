@@ -20,29 +20,16 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 
+public class DefaultsSettingsFragment extends PreferenceFragmentCompat implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
-public class DefaultsSettingsFragment extends PreferenceFragmentCompat
-        implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
-
-    // Used to forward update from ChooseActivityTypeDialogFragment; TODO Could be
-    // replaced with LiveData.y
+    // Used to forward update from ChooseActivityTypeDialogFragment; TODO Could be replaced with LiveData.
     private ActivityTypePreference.ActivityPreferenceDialog activityPreferenceDialog;
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (
-            sharedPreferences, key) -> {
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
             getActivity().runOnUiThread(this::updateUnits);
         }
     };
-    @Override
-    public boolean onPreferenceTreeClick(Preference preference) {
-        if (preference.getKey().equals(getString(R.string.ski_season_start_key))) {
-            showCustomDatePickerDialog(); // Call method to show the dialog
-            return true;
-        }
-        return super.onPreferenceTreeClick(preference);
-    }
-
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         if (preference.getKey().equals(getString(R.string.ski_season_start_key))) {
@@ -152,54 +139,6 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat
         calendar.set(Calendar.MONTH, month);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
-
-
-
-
-    private void showCustomDatePickerDialog() {
-        String defaultStartDate = PreferencesUtils.getSkiSeasonStartDate();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.custom_date_picker_dialog, null);
-        builder.setView(dialogView);
-
-        NumberPicker monthPicker = dialogView.findViewById(R.id.monthPicker);
-        NumberPicker dayPicker = dialogView.findViewById(R.id.dayPicker);
-
-        // Customize month picker with retrieved date or default
-        String[] months = new DateFormatSymbols().getShortMonths();
-        monthPicker.setMinValue(0);
-        monthPicker.setMaxValue(months.length - 1);
-        monthPicker.setDisplayedValues(months);
-
-        // Customize day picker
-        dayPicker.setMinValue(1);
-        dayPicker.setMaxValue(31);
-
-        //default date
-        monthPicker.setValue(8);
-        dayPicker.setValue(1);
-
-        // Set picker values to saved date or default
-        String[] dateParts = defaultStartDate.split("-");
-        int defaultMonth = Integer.parseInt(dateParts[0]) - 1;
-        int defaultDay = Integer.parseInt(dateParts[1]);
-        monthPicker.setValue(defaultMonth);
-        dayPicker.setValue(defaultDay);
-
-        builder.setTitle("Select Date");
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            int selectedMonth = monthPicker.getValue();
-            int selectedDay = dayPicker.getValue();
-            String selectedDate = String.format(Locale.getDefault(), "%02d-%02d", selectedMonth + 1, selectedDay);
-            PreferencesUtils.setSkiSeasonStartDate(selectedDate);
-        });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
     private void updateUnits() {
         UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
 
