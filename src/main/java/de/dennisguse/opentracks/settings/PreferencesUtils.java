@@ -866,4 +866,12 @@ public class PreferencesUtils {
         setInt(R.string.total_rows_deleted_key, 0);
     }
 
+    public static String getSelectedCountry() {
+        return getString(R.string.settings_profile_country_key, "");
+    }
+
+    public static void setSelectedCountry(final String selectedCountry) {
+        setString(R.string.settings_profile_country_key, selectedCountry);
+    }
+
 }
