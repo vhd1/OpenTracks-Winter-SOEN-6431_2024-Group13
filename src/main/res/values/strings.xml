@@ -366,6 +366,9 @@ limitations under the License.
     <string name="settings_units_category">Units</string>
     <string name="settings_activity_defaults_category">Activity\'s Defaults</string>
 
+    <string name="ski_season_start_title">Ski Season Start Date</string>
+    <string name="ski_season_start_summary">Specify the start date of the ski season.</string>
+
     <string name="settings_reset_summary">Reset Settings to Default Values</string>
 
     <!-- Settings Advanced -->
@@ -411,6 +414,17 @@ limitations under the License.
     <string name="settings_announcements_lap_heart_rate">Lap heart rate</string>
     <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
+    <string name="default_country_value">Canada</string>
+
+    <!-- Settings Profile -->
+    <string name="settings_profile_title">Profile</string>
+    <string name="settings_profile_summary">Profile management</string>
+    <string name="settings_profile_key" translatable="false">settingsProfile</string>
+    <string name="settings_profile_nickname">Nickname</string>
+    <string name="settings_profile_nickname_dialog_title">Nickname (max 20 char)</string>
+    <string name="settings_profile_nickname_key" translatable="false">nickname</string>
+    <string name="settings_profile_country">Country</string>
+    <string name="settings_profile_country_key" translatable="false">country</string>
 
     <!-- Custom Layout -->
 
@@ -709,4 +723,5 @@ limitations under the License.
     <string name="always">Always</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+    <string name="default_Date_Key">1 Sep</string>
 </resources>
