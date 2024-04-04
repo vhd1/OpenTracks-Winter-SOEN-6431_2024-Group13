@@ -43,6 +43,7 @@ class VoiceAnnouncementUtils {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
+        Speed maxSpeed = trackStatistics.getMaxSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
 
         int perUnitStringId;
@@ -106,6 +107,14 @@ class VoiceAnnouncementUtils {
                 appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
                 builder.append(".");
             }
+            if (shouldVoiceAnnounceMaxSpeedRun()) {
+                double speedInUnit = maxSpeed.to(unitSystem);
+                builder.append(" ")
+                        .append(context.getString(R.string.speed));
+                String template = context.getResources().getString(speedId);
+                appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
+                builder.append(".");
+            }
             if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
                 double currentDistancePerTimeInUnit = currentDistancePerTime.to(unitSystem);
                 if (currentDistancePerTimeInUnit > 0) {
@@ -119,6 +128,16 @@ class VoiceAnnouncementUtils {
         } else {
             if (shouldVoiceAnnounceAverageSpeedPace()) {
                 Duration time = averageMovingSpeed.toPace(unitSystem);
+                builder.append(" ")
+                        .append(context.getString(R.string.pace));
+                appendDuration(context, builder, time);
+                builder.append(" ")
+                        .append(context.getString(perUnitStringId))
+                        .append(".");
+            }
+
+            if (shouldVoiceAnnounceMaxSpeedRun()) {
+                Duration time = maxSpeed.toPace(unitSystem);
                 builder.append(" ")
                         .append(context.getString(R.string.pace));
                 appendDuration(context, builder, time);
