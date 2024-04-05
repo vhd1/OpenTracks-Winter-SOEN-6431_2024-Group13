@@ -353,6 +353,8 @@ limitations under the License.
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
 
+    <string name="ski_profile_statistics_title">Ski Maintenance Statistics</string>
+
     <string name="settings_sensors_title">Bluetooth Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
 
@@ -727,4 +729,6 @@ limitations under the License.
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
     <string name="default_Date_Key">1 Sep</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

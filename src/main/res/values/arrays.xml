@@ -3,6 +3,10 @@
 
 
 
+    <string-array name="time_periods">
+        <item>Season</item>
+        <item>Total</item>
+    </string-array>
 
     <string-array name="countries_array">
         <item>Canada</item>
