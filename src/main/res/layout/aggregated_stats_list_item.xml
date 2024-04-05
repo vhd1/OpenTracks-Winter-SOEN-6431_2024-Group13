@@ -174,4 +174,17 @@
         app:layout_constraintEnd_toStartOf="@id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/aggregated_stats_max_rate_label" />
 
+    <!-- <com.google.android.material.button.MaterialButton
+        android:id="@+id/show_calendar_button"
+        android:layout_width="161dp"
+        android:layout_height="51dp"
+        android:layout_gravity="center"
+        android:text="Modify date"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_horizontal_line" /> -->
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

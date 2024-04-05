@@ -1,4 +1,5 @@
 package de.dennisguse.opentracks;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -26,12 +27,22 @@ public class CalendarActivity extends AppCompatActivity {
             calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
                 public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                    // Display the selected date
                     setSelectedDate(new Date(year-1900, month, dayOfMonth));
                 }
             });
             dateSelectButton.setOnClickListener((view)->{
-                // Navigate to a new screen with passing the date;
+//                Intent intent = new Intent(getApplicationContext(), classname.class);
+                //startActivity(intent);
+//                intent.putExtra("Year", selectedDate.getYear());
+//                intent.putExtra("Month", selectedDate.getMonth());
+//                intent.putExtra("Day", selectedDate.getDay());
+
+                // To extract
+//                Bundle extras = getIntent().getExtras();
+//                if (extras != null) {
+//                    String value = extras.getString("key");
+//                    //The key argument here must match that used in the other activity
+//                }
             });
     }
 

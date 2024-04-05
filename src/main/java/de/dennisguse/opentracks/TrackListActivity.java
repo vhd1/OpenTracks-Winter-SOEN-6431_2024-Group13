@@ -43,6 +43,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -162,15 +163,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 } else {
                     TrackRecordingServiceConnection.execute(this, (service, connection) -> service.tryStartSensors());
                 }
-            }
-        });
-
-        viewBinding.showCalendarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Navigate to the CalendarActivity
-                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
-                startActivity(intent);
             }
         });
 
