@@ -76,7 +76,11 @@ public class UserProfileSettingsFragment extends PreferenceFragmentCompat {
                 }
             });
         });
+        EditTextPreference countryInput = findPreference("Country");
+        countryInput.setDialogTitle("Country");
 
+        EditTextPreference provinceInput = findPreference("Province");
+        provinceInput.setDialogTitle("Province");
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
