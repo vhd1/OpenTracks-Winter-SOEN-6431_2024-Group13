@@ -42,12 +42,20 @@ public interface TracksColumns extends BaseColumns {
     /** see {@link de.dennisguse.opentracks.data.models.ActivityType}.id */
     String ACTIVITY_TYPE = "activity_type";
     String ACTIVITY_TYPE_LOCALIZED = "category"; // track activity type
+    /**
+     * This attribute is marked as Deprecated as it uses outdated functionality.
+     * @deprecated
+     */
     @Deprecated
     String ICON = "icon"; // track activity type icon
     String STARTTIME = "starttime"; // track start time
     String STARTTIME_OFFSET = "starttime_offset"; // in plus/minus in seconds
     String STOPTIME = "stoptime"; // track stop time
     String MARKER_COUNT = "markerCount"; // the numbers of markers (virtual column)
+    /**
+     * This attribute is marked as Deprecated as it uses outdated functionality.
+     * @deprecated
+     */
     @Deprecated
     String NUMPOINTS = "numpoints"; // number of track points //TODO UNUSED
     String TOTALDISTANCE = "totaldistance"; // total distance

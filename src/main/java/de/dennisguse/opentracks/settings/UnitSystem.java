@@ -20,6 +20,9 @@ public enum UnitSystem {
         return preferenceIdentifier;
     }
 
+    /**
+     * @deprecated (when, why, etc...)
+     */
     @Deprecated //TODO used to initialize before loading from preferences; should be loaded first
     public static UnitSystem defaultUnitSystem() {
         return METRIC;
