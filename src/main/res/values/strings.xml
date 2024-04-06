@@ -349,6 +349,13 @@ limitations under the License.
 
     <string name="settings_ski_profile_title">Ski Profile</string>
     <string name="settings_ski_profile_summary">Favorite Ski Resorts, Sharpening Info, Waxing Info, Ski Info, Statistics</string>
+    <string name="settings_ski_profile_name">Name</string>
+    <string name="settings_ski_profile_name_dialog_title">Name (max 20 char)</string>
+    <string name="settings_ski_profile_name_key" translatable="false">Name</string>
+    <string name="settings_ski_profile_phone">Phone</string>
+    <string name="settings_ski_profile_phone_dialog_title">Enter your phone number</string>
+    <string name="settings_ski_profile_phone_error">Phone number must contain at least 10 digits</string>
+    <string name="settings_ski_profile_phone_key" translatable="false">Phone</string>
 
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>

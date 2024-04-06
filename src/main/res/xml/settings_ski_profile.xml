@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings_ski_profile_title">
+    <EditTextPreference
+        android:inputType="text"
+        android:key="@string/settings_ski_profile_name_key"
+        android:title="@string/settings_ski_profile_name"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        android:inputType="phone"
+        android:key="@string/settings_ski_profile_phone_key"
+        android:title="@string/settings_ski_profile_phone"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="Country"
+        android:title="Country"
+        app:useSimpleSummaryProvider="true" />
+    
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="Province"
+        android:title="Province"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceScreen>
