@@ -24,6 +24,11 @@ public class UserProfileSettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         addPreferencesFromResource(R.xml.settings_ski_profile);
+
+        findPreference(getString(R.string.ski_profile_statistics_title)).setOnPreferenceClickListener(preference -> {
+            ((SettingsActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, new SkiProfileStatisticsFragment()).addToBackStack(getString(R.string.ski_profile_statistics_title)).commit();
+            return true;
+        });
     }
 
     @Override
