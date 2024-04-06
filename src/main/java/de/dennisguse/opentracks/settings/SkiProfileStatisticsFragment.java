@@ -17,4 +17,5 @@ public class SkiProfileStatisticsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.fragment_ski_profile_statistics);
     }
+
 }

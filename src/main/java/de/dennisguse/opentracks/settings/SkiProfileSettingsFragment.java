@@ -14,7 +14,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 
-public class UserProfileSettingsFragment extends PreferenceFragmentCompat {
+public class SkiProfileSettingsFragment extends PreferenceFragmentCompat {
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.night_mode_key, key)) {
@@ -29,7 +29,13 @@ public class UserProfileSettingsFragment extends PreferenceFragmentCompat {
             ((SettingsActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, new SkiProfileStatisticsFragment()).addToBackStack(getString(R.string.ski_profile_statistics_title)).commit();
             return true;
         });
+
+        findPreference(getString(R.string.ski_profile_sharpening_info_title)).setOnPreferenceClickListener(preference -> {
+            ((SettingsActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, new SkiProfileSharpeningFragment()).addToBackStack(getString(R.string.ski_profile_sharpening_info_title)).commit();
+            return true;
+        });
     }
+
 
     @Override
     public void onStart() {

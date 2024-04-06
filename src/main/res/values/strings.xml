@@ -361,6 +361,7 @@ limitations under the License.
     <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
 
     <string name="ski_profile_statistics_title">Ski Maintenance Statistics</string>
+    <string name="ski_profile_sharpening_info_title">Sharpening information</string>
 
     <string name="settings_sensors_title">Bluetooth Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
