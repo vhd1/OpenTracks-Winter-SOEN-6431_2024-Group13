@@ -28,4 +28,9 @@
         android:title="Province"
         app:useSimpleSummaryProvider="true" />
 
+    <Preference
+        android:key="@string/ski_profile_statistics_title"
+        android:summary="Number of Waxing/Sharpening activities performed on Ski"
+        android:title="Maintenance Statistics" />
+
 </PreferenceScreen>
