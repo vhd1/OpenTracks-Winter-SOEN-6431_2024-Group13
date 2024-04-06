@@ -33,4 +33,9 @@
         android:summary="Number of Waxing/Sharpening activities performed on Ski"
         android:title="Maintenance Statistics" />
 
+    <Preference
+        android:key="@string/ski_profile_sharpening_info_title"
+        android:summary="Information related to sharpening skis"
+        android:title="Sharpening Information" />
+
 </PreferenceScreen>

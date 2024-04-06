@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Last Sharpening Date">
+
+        <ListPreference
+            android:key="year"
+            android:title="Year"
+            android:summary="Choose the year of the last sharpening date"
+            android:entries="@array/time_year"
+            android:entryValues="@array/time_year"
+            android:defaultValue="yearly" />
+
+        <ListPreference
+            android:key="month"
+            android:title="Monty"
+            android:summary="Choose the month of the last sharpening date"
+            android:entries="@array/time_month"
+            android:entryValues="@array/time_month"
+            android:defaultValue="monthly" />
+
+        <ListPreference
+            android:key="day"
+            android:title="Day"
+            android:summary="Choose the day of the last sharpening date"
+            android:entries="@array/time_day"
+            android:entryValues="@array/time_day"
+            android:defaultValue="daily" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Sharpening info">
+
+        <ListPreference
+            android:key="day"
+            android:title="Interval"
+            android:summary="Sharpening intervals for the edges (in Km)"
+            android:entries="@array/time_day"
+            android:entryValues="@array/time_day"
+            android:defaultValue="km"/>
+
+        <ListPreference
+            android:key="base_angle"
+            android:title="Base Angle"
+            android:summary="Base angle being used"
+            android:entries="@array/base_angle"
+            android:entryValues="@array/base_angle"
+            android:defaultValue="degrees"/>
+
+        <ListPreference
+            android:key="edge_angle"
+            android:title="Edge Angle"
+            android:summary="Edge angle being used"
+            android:entries="@array/edge_angle"
+            android:entryValues="@array/edge_angle"
+            android:defaultValue="degrees"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
