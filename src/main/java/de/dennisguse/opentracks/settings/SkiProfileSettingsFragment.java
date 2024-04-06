@@ -92,6 +92,10 @@ public class SkiProfileSettingsFragment extends PreferenceFragmentCompat {
 
         EditTextPreference provinceInput = findPreference("Province");
         provinceInput.setDialogTitle("Province");
+
+        ListPreference ski_type = findPreference("ski_type");
+        ski_type.setDialogTitle("Type of Skiing");
+
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 

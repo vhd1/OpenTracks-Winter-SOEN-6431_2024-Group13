@@ -107,6 +107,11 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="ski_type">
+        <item>Downhill</item>
+        <item>Snowpark</item>
+        <item>Touring</item>
+    </string-array>
 
     <string-array name="countries_array">
         <item>Canada</item>
@@ -353,8 +358,6 @@
     </string-array>
     <string-array name="countries_array_values">
         <item>Canada</item>
-
-
         <item>Afghanistan</item>
         <item>Albania</item>
         <item>Algeria</item>
