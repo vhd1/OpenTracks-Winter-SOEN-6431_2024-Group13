@@ -424,10 +424,12 @@
 
     <!-- Default value for automatic record discarding -->
     <string name="auto_discard_default">true</string>
+    <string name="auto_discard_key">Discard Records</string>
     <string name="auto_discard_title">Auto Discard</string>
     <string name="auto_discard_summary">Enable automatic record discarding</string>
 
     <!-- Default value for record length preference -->
+    <string name="record_length_key">3</string>
     <string name="record_length_options">3</string>
     <string name="record_length_default">5</string>
     <string name="record_length_title">Discard Record Length</string>
