@@ -90,6 +90,13 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
                     v.getContext().startActivity(intent);
                 }
             });
+            viewBinding.button3.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    Intent intent=new Intent(v.getContext(), NewActivity.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
