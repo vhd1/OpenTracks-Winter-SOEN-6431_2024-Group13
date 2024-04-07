@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -78,7 +79,7 @@ public class PreferencesUtils {
     public static void initPreferences(final Context context, final Resources resources) {
         PreferencesUtils.resources = resources;
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
+        setDefaultActivityLocalized(context.getString(R.string.activity_type_skiing));
         PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
     }
 
@@ -877,5 +878,37 @@ public class PreferencesUtils {
     public static void setSelectedCountry(final String selectedCountry) {
         setString(R.string.settings_profile_country_key, selectedCountry);
     }
+
+    public static void addCustomActivity(Context context, String activityName) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String existingActivities = prefs.getString(context.getString(R.string.key_custom_activities), "");
+        if (!existingActivities.contains(activityName)) {
+            existingActivities += (existingActivities.isEmpty() ? "" : ";") + activityName;
+            prefs.edit().putString(context.getString(R.string.key_custom_activities), existingActivities).apply();
+        }
+    }
+
+    public static List<String> getCustomActivities(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String activitiesString = prefs.getString(context.getString(R.string.key_custom_activities), "");
+        return Arrays.asList(activitiesString.split(";"));
+    }
+
+    public static List<String> getAllActivityTypes(Context context) {
+        // Predefined activities
+        List<String> predefinedActivities = Arrays.stream(ActivityType.values())
+                .map(type -> context.getString(type.getLocalizedStringId()))
+                .collect(Collectors.toList());
+
+        // Custom activities
+        List<String> customActivities = getCustomActivities(context);
+
+        // Combine both lists
+        List<String> allActivities = new ArrayList<>(predefinedActivities);
+        allActivities.addAll(customActivities);
+
+        return allActivities;
+    }
+
 
 }
