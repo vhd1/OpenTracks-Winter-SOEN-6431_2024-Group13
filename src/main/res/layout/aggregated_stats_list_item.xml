@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:onClick="startPostponedEnterTransitionWith"
+    android:paddingStart="8dp"
     android:paddingTop="8dp"
     android:paddingEnd="8dp"
-    android:paddingStart="8dp"
-    android:paddingBottom="8dp">
+    android:paddingBottom="8dp"
+    android:visibility="visible">
 
     <!-- Guidelines -->
     <androidx.constraintlayout.widget.Guideline
@@ -47,8 +49,8 @@
         style="@style/TextAppearance.OpenTracks.PrimaryHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/activity_icon"
         app:layout_constraintStart_toEndOf="@+id/activity_icon"
         app:layout_constraintTop_toTopOf="@+id/activity_icon"
@@ -59,8 +61,8 @@
         style="@style/TextAppearance.OpenTracks.PrimaryHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_type_label"
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_type_label"
         app:layout_constraintTop_toTopOf="@+id/aggregated_stats_type_label"
@@ -170,9 +172,33 @@
         android:id="@+id/aggregated_stats_horizontal_line"
         style="@style/HorizontalLine"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/aggregated_stats_max_rate_label" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="119dp"
+        android:layout_marginBottom="10dp"
+        android:background="#E66400"
+        android:text="Runs and Lifts"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_horizontal_line"
+        app:layout_constraintVertical_bias="0.05"
+        app:rippleColor="#FFFFFF"
+        tools:ignore="MissingConstraints"
+        tools:visibility="visible" />
+
 
     <!-- <com.google.android.material.button.MaterialButton
         android:id="@+id/show_calendar_button"
