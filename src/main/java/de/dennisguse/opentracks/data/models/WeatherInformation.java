@@ -11,23 +11,40 @@ public final class WeatherInformation implements Parcelable {
     private Track.Id id;
     private double temperature;
 
-    public WeatherInfo(double temperature) {
-        this.temperature = temperature;
-    }
+//    public WeatherInfo(double temperature) {
+//        this.temperature = temperature;
+//    }
 
-    protected WeatherInfo(Parcel in) {
+//    protected WeatherInfo(Parcel in) {
+//        temperature = in.readDouble();
+//    }
+
+//    public static final Creator<WeatherInfo> CREATOR = new Creator<WeatherInfo>() {
+//        @Override
+//        public WeatherInfo createFromParcel(Parcel in) {
+//            return new WeatherInfo(in);
+//        }
+//
+//        @Override
+//        public WeatherInfo[] newArray(int size) {
+//            return new WeatherInfo[size];
+//        }
+//    };
+
+    protected WeatherInformation(Parcel in) {
+        id = in.readParcelable(Track.Id.class.getClassLoader());
         temperature = in.readDouble();
     }
 
-    public static final Creator<WeatherInfo> CREATOR = new Creator<WeatherInfo>() {
+    public static final Creator<WeatherInformation> CREATOR = new Creator<WeatherInformation>() {
         @Override
-        public WeatherInfo createFromParcel(Parcel in) {
-            return new WeatherInfo(in);
+        public WeatherInformation createFromParcel(Parcel in) {
+            return new WeatherInformation(in);
         }
 
         @Override
-        public WeatherInfo[] newArray(int size) {
-            return new WeatherInfo[size];
+        public WeatherInformation[] newArray(int size) {
+            return new WeatherInformation[size];
         }
     };
 
