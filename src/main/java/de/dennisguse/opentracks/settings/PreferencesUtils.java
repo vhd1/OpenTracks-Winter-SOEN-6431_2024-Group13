@@ -894,21 +894,7 @@ public class PreferencesUtils {
         return Arrays.asList(activitiesString.split(";"));
     }
 
-    public static List<String> getAllActivityTypes(Context context) {
-        // Predefined activities
-        List<String> predefinedActivities = Arrays.stream(ActivityType.values())
-                .map(type -> context.getString(type.getLocalizedStringId()))
-                .collect(Collectors.toList());
 
-        // Custom activities
-        List<String> customActivities = getCustomActivities(context);
-
-        // Combine both lists
-        List<String> allActivities = new ArrayList<>(predefinedActivities);
-        allActivities.addAll(customActivities);
-
-        return allActivities;
-    }
 
 
 }
