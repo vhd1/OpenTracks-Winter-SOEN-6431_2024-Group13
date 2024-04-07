@@ -440,6 +440,16 @@ public class PreferencesUtils {
         setBoolean(R.string.voice_announce_average_heart_rate_key, value);
     }
 
+    // recoding related setting helper methods
+    public static boolean shouldVoiceAnnounceMaxSpeedRecording() {
+        return getBoolean(R.string.voice_announce_max_speed_recording_key, true);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceMaxSpeedRecording(boolean value) {
+        setBoolean(R.string.voice_announce_max_speed_recording_key, value);
+    }
+
     public static Distance getRecordingDistanceInterval() {
         return Distance.of(getInt(R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal()));
     }
