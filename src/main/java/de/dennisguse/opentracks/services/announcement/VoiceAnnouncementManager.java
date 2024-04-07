@@ -118,6 +118,19 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         voiceAnnouncement.announce(VoiceAnnouncementUtils.createIdle(context));
     }
 
+    public void announceAfterRecording(@NonNull Track track) {
+        if (shouldNotAnnounce()) {
+            return;
+        }
+
+        // add other check with and here
+        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording()) {
+            return;
+        }
+
+        voiceAnnouncement.announce(VoiceAnnouncementUtils.createAfterRecording(context,track.getTrackStatistics(),PreferencesUtils.getUnitSystem()));
+    }
+
     public void announceStatisticsIfNeeded(@NonNull Track track) {
         if (shouldNotAnnounce()) {
             return;

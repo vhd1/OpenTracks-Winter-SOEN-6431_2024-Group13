@@ -9,6 +9,8 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceRunAvgSpeed;
 
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
+
 import android.content.Context;
 import android.icu.text.MessageFormat;
 import android.text.Spannable;
@@ -37,6 +39,54 @@ class VoiceAnnouncementUtils {
     static Spannable createIdle(Context context) {
         return new SpannableStringBuilder()
                 .append(context.getString(R.string.voiceIdle));
+    }
+
+    static Spannable createAfterRecording(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        Speed maxSpeed = trackStatistics.getMaxSpeed();
+
+        int perUnitStringId;
+        int distanceId;
+        int speedId;
+        String unitDistanceTTS;
+        String unitSpeedTTS;
+        switch (unitSystem) {
+            case METRIC -> {
+                perUnitStringId = R.string.voice_per_kilometer;
+                distanceId = R.string.voiceDistanceKilometersPlural;
+                speedId = R.string.voiceSpeedKilometersPerHourPlural;
+                unitDistanceTTS = "kilometer";
+                unitSpeedTTS = "kilometer per hour";
+            }
+            case IMPERIAL_FEET, IMPERIAL_METER -> {
+                perUnitStringId = R.string.voice_per_mile;
+                distanceId = R.string.voiceDistanceMilesPlural;
+                speedId = R.string.voiceSpeedMilesPerHourPlural;
+                unitDistanceTTS = "mile";
+                unitSpeedTTS = "mile per hour";
+            }
+            case NAUTICAL_IMPERIAL -> {
+                perUnitStringId = R.string.voice_per_nautical_mile;
+                distanceId = R.string.voiceDistanceNauticalMilesPlural;
+                speedId = R.string.voiceSpeedMKnotsPlural;
+                unitDistanceTTS = "nautical mile";
+                unitSpeedTTS = "knots";
+            }
+            default -> throw new RuntimeException("Not implemented");
+        }
+
+
+        if (shouldVoiceAnnounceMaxSpeedRecording()) {
+            double speedInUnit = maxSpeed.to(unitSystem);
+            builder.append(" ")
+                    .append(context.getString(R.string.speed));
+            String template = context.getResources().getString(speedId);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
+            builder.append(".");
+        }
+
+
+        return builder;
     }
 
     static Spannable createStatistics(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
