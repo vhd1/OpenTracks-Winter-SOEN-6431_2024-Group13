@@ -10,10 +10,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackDataHub;
 import de.dennisguse.opentracks.data.TrackPointIterator;
-<<<<<<< HEAD
-=======
 import de.dennisguse.opentracks.data.models.Distance;
->>>>>>> 08fc483e8 (Pre-processed data)
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.models.TrackSegment;
