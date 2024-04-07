@@ -58,10 +58,14 @@ public class TrackStatistics {
     private Speed maxSpeed;
     private Float totalAltitudeGain_m = null;
     private Float totalAltitudeLoss_m = null;
+
     // The average heart rate seen on this track
     private HeartRate avgHeartRate = null;
 
     private boolean isIdle;
+
+    // Slope % between this point and the previous point
+    private Float slopePercent_m;
 
     public TrackStatistics() {
         reset();
@@ -84,6 +88,7 @@ public class TrackStatistics {
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
         avgHeartRate = other.avgHeartRate;
         isIdle = other.isIdle;
+        slopePercent_m = other.slopePercent_m;
     }
 
     @VisibleForTesting
@@ -171,6 +176,7 @@ public class TrackStatistics {
         setMaxSpeed(Speed.zero());
         setTotalAltitudeGain(null);
         setTotalAltitudeLoss(null);
+        setSlopePercent(null);
 
         isIdle = false;
     }
@@ -367,6 +373,18 @@ public class TrackStatistics {
         this.totalAltitudeLoss_m = totalAltitudeLoss_m;
     }
 
+    public Float getSlopePercent() {
+        return slopePercent_m;
+    }
+
+    public void setSlopePercent(Float slopePercent) {
+        this.slopePercent_m = slopePercent;
+    }
+
+    public boolean hasSlope() {
+        return slopePercent_m != null;
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addTotalAltitudeLoss(float loss_m) {
         if (totalAltitudeLoss_m == null) {
@@ -391,6 +409,7 @@ public class TrackStatistics {
                 + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
                 + "; Min Altitude: " + getMinAltitude() + "; Max Altitude: " + getMaxAltitude()
                 + "; Altitude Gain: " + getTotalAltitudeGain()
-                + "; Altitude Loss: " + getTotalAltitudeLoss() + "}";
+                + "; Altitude Loss: " + getTotalAltitudeLoss()
+                + "; Slope%: " + getSlopePercent() + "}";
     }
 }
