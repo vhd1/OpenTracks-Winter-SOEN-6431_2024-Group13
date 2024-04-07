@@ -212,12 +212,13 @@ public class PreferencesUtils {
     public static boolean shouldDiscardRecord(int recordDuration) {
         boolean autoDiscardEnabled = getBoolean(R.string.auto_discard_key, false);
         int selectedLength = Integer.parseInt(getString(R.string.record_length_default, "0"));
-
+        int customLength = Integer.parseInt(getString(R.string.custom_record_length_key, "5"));
         Log.d("DefaultsSettingsFragment", "Auto discard enabled: " + autoDiscardEnabled);
         Log.d("DefaultsSettingsFragment", "Selected record length: " + selectedLength);
+        Log.d("DefaultsSettingsFragment", "Custom record length: " + customLength);
         Log.d("DefaultsSettingsFragment", "Record duration: " + recordDuration);
 
-        return autoDiscardEnabled && (recordDuration < selectedLength);
+        return autoDiscardEnabled && (recordDuration < selectedLength|| recordDuration < customLength);
     }
 
     public static UnitSystem getUnitSystem() {

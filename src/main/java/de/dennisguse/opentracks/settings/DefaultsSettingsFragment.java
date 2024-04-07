@@ -24,6 +24,7 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
     private SwitchPreferenceCompat autoDiscardSwitch;
     private ListPreference recordLengthList;
 
+
     private int minDuration = 5;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
