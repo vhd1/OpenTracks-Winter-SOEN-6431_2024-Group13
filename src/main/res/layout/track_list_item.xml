@@ -29,6 +29,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Main Text" />
 
+    <!-- Activity-Type -->
+    <TextView
+        android:id="@+id/track_list_item_activity"
+        style="?attr/textAppearanceBodySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/track_list_item_name"
+        app:layout_constraintStart_toStartOf="@id/track_list_item_name"
+        tools:text="Activity Type" />
+
     <!-- Date -->
     <TextView
         android:id="@+id/track_list_item_date"
@@ -47,7 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/track_list_item_name"
-        app:layout_constraintTop_toBottomOf="@id/track_list_item_name"
+        app:layout_constraintTop_toBottomOf="@id/track_list_item_activity"
         tools:text="50:43 (50.00km)" />
 
     <!-- Marker Count Icon -->
