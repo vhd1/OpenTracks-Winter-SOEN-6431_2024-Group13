@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import de.dennisguse.opentracks.R;
 
@@ -21,10 +22,16 @@ public class ChairsStatFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_SEASON_NAME = "seasonName";
+    private static final String ARG_SEASON_days = "days";
+    private static final String ARG_SEASON_tallestChair = "tallestChair";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static String mSeasonName;
+    private static String mDays;
+    private static String mTallestChair;
 
     public ChairsStatFragment() {
         // Required empty public constructor
@@ -44,6 +51,9 @@ public class ChairsStatFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_SEASON_NAME, mSeasonName);
+        args.putString(ARG_SEASON_days, mDays);
+        args.putString(ARG_SEASON_tallestChair, mTallestChair);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +71,25 @@ public class ChairsStatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chairs_stat, container, false);
+        View view = inflater.inflate(R.layout.fragment_chairs_stat, container, false);
+        Bundle args = getArguments();
+        if (args != null) {
+            mSeasonName = args.getString(ARG_SEASON_NAME);
+            mDays = args.getString(ARG_SEASON_days);
+            mTallestChair = args.getString(ARG_SEASON_tallestChair);
+        }
+
+        TextView seasonName = view.findViewById(R.id.seasonNameTextView);
+        TextView days = view.findViewById(R.id.days_tv);
+        TextView tallestChair = view.findViewById(R.id.tallestChair_tv);
+
+        if (mSeasonName != null) {
+            seasonName.setText(mSeasonName);
+            days.setText(mDays);
+            tallestChair.setText(mTallestChair);
+
+        }
+        return view;
     }
 
     public void setArguments(Bundle args) {

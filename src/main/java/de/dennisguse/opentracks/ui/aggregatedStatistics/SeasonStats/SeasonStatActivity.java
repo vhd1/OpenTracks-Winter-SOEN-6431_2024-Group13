@@ -36,7 +36,7 @@ public class SeasonStatActivity extends AppCompatActivity {
         String[] seasonNames = {"Season 2020 - 2021", "Season 2021 - 2022", "Season 2022 - 2023", "Season 2023 - 2024"};
         ArrayList<DummySeason> seasonArrayList = new ArrayList<>();
         for (int i = 0; i < seasonNames.length ; i++){
-            seasonArrayList.add(new DummySeason(seasonNames[i],i,i,i,i,i,"10:10:10", i,i,i,i));
+            seasonArrayList.add(new DummySeason(seasonNames[i],i,i,i,i,i,"10:10:10", i,i,i,i, i, new String[]{"Chair1","Chair2","Chair3", "Chair4", "Chair5"}));
         }
 
         SeasonListAdapter listAdapter = new SeasonListAdapter(SeasonStatActivity.this, seasonArrayList);
@@ -58,6 +58,8 @@ public class SeasonStatActivity extends AppCompatActivity {
                 intent.putExtra("max_alt",seasonArrayList.get(position).max_alt);
                 intent.putExtra("tallestRun",seasonArrayList.get(position).tallestRun);
                 intent.putExtra("longestRun",seasonArrayList.get(position).longestRun);
+                intent.putExtra("tallestChair",seasonArrayList.get(position).tallestChair);
+                intent.putExtra("favoriteChairs",seasonArrayList.get(position).favoriteChairs);
                 startActivity(intent);
             }
         });
@@ -78,7 +80,11 @@ class DummySeason {
     int tallestRun;
     double longestRun;
 
-    public DummySeason(String seasonName, int days, int runs, int resort, int vertical_m, double distance, String active, double max_Speed, int max_alt, int tallestRun, double longestRun) {
+    int tallestChair;
+    String[] favoriteChairs;
+
+
+    public DummySeason(String seasonName, int days, int runs, int resort, int vertical_m, double distance, String active, double max_Speed, int max_alt, int tallestRun, double longestRun, int tallestChair, String[] favoriteChairs) {
         this.seasonName = seasonName;
         this.days = days;
         this.runs = runs;
@@ -90,5 +96,7 @@ class DummySeason {
         this.max_alt = max_alt;
         this.tallestRun = tallestRun;
         this.longestRun = longestRun;
+        this.favoriteChairs = favoriteChairs;
+        this.tallestChair = tallestChair;
     }
 }
