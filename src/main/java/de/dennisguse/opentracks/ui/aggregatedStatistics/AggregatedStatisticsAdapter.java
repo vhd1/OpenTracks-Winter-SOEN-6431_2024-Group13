@@ -1,8 +1,10 @@
 package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.databinding.AggregatedStatsListItemBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.SeasonStats.SeasonStatActivity;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -79,6 +82,15 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
         public ViewHolder(AggregatedStatsListItemBinding viewBinding) {
             super(viewBinding.getRoot());
             this.viewBinding = viewBinding;
+
+            viewBinding.listOfSeasonsBtn234.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = viewBinding.getRoot().getContext();
+                    Intent intent = new Intent(context, SeasonStatActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
