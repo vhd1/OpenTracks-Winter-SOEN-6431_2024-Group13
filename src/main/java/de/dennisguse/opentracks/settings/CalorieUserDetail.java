@@ -86,12 +86,28 @@ public class CalorieUserDetail {
         this.heartRate = heartRate;
     }
 
-    // Method to get data from GUI
-    public void getDataFromGUI(Map<String, Object> guiData) {
-        setHeight((int) guiData.getOrDefault("height", height));
-        setWeight((int) guiData.getOrDefault("weight", weight));
-        setAge((int) guiData.getOrDefault("age", age));
-        setSport((String) guiData.getOrDefault("sport", sport));
-        setHeartRate((int) guiData.getOrDefault("heartRate", heartRate));
+    public double getCalorieComputation() {
+
+        // Calculate Basal Metabolic Rate (BMR)
+        double bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        double activityLevelMultiplier;
+        switch (sport) {
+            case "Running":
+                activityLevelMultiplier = 1.55; 
+                break;
+	        case "Biking" :activityLevelMultiplier = 1.75;
+		        break;
+	        case "RoadBiking " :activityLevelMultiplier = 2.00;
+		        break;
+	        case "MountainBiking" :activityLevelMultiplier = 2.55;
+		        break;
+            default:
+                activityLevelMultiplier = 1.55; 
+                break;
+        }
+        
+        double totalCalorieExpenditure = bmr * activityLevelMultiplier;
+        return totalCalorieExpenditure;
     }
+
 }
