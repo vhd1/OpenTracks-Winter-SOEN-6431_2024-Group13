@@ -22,7 +22,7 @@ import java.util.Date;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.ArrayList;
-import android.widget.Toast;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class DaySpecificActivity extends AbstractTrackDeleteActivity {
 
@@ -34,6 +34,7 @@ public class DaySpecificActivity extends AbstractTrackDeleteActivity {
     private TrackDataHub trackDataHub;
     private Track.Id trackId;
     private List<TrackSegment> trackSegments;
+    private DaySpecificAdapter adapter;
 
 
     @Override
@@ -45,6 +46,13 @@ public class DaySpecificActivity extends AbstractTrackDeleteActivity {
         trackDataHub = new TrackDataHub(this);
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
         trackSegments = new ArrayList<>();
+
+        viewBinding = DaySpecificActivityBinding.inflate(getLayoutInflater());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new DaySpecificAdapter(this, viewBinding.segmentList);
+        viewBinding.segmentList.setLayoutManager(layoutManager);
+        viewBinding.segmentList.setAdapter(adapter);
+
     }
 
     @Override
@@ -56,6 +64,7 @@ public class DaySpecificActivity extends AbstractTrackDeleteActivity {
     protected void onResume() {
         super.onResume();
         updateTrackSegments();
+        adapter.swapData(trackSegments);
     }
 
     public void updateTrackSegments() {

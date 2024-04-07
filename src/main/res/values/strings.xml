@@ -557,6 +557,7 @@ limitations under the License.
     <!-- Value -->
     <!-- Day-Specific Activities -->
     <string name="day_specific_calendar">Calendar</string>
+    <string name="day_specific_title">Day Specific Run/Lift</string>
     <!-- Day-Specific Activities -->
 
     <string name="value_integer_feet_excellent_gps">%1$d ft (excellent GPS)</string>

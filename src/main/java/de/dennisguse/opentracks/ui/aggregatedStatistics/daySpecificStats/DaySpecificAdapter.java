@@ -13,14 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackSegment;
 import de.dennisguse.opentracks.databinding.DaySpecificActivityItemBinding;
 import de.dennisguse.opentracks.ui.TrackListAdapter;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
 
 public class DaySpecificAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ActionMode.Callback {
 
+    private static final String TAG = DaySpecificAdapter.class.getSimpleName();
+    DaySpecificActivityItemBinding viewBinding;
     private final AppCompatActivity context;
     private final RecyclerView recyclerView;
 
@@ -28,8 +33,8 @@ public class DaySpecificAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private Cursor cursor;
 
-    private boolean selectionMode = false;
     private ActivityUtils.ContextualActionModeCallback actionModeCallback;
+    private List<TrackSegment> trackSegments;
 
     public DaySpecificAdapter(AppCompatActivity context, RecyclerView recyclerView) {
         this.context = context;
@@ -65,15 +70,18 @@ public class DaySpecificAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        TrackListAdapter.ViewHolder viewHolder = (TrackListAdapter.ViewHolder) holder;
-
-        cursor.moveToPosition(position);
-        viewHolder.bind(cursor);
+        DaySpecificAdapter.ViewHolder viewHolder = (DaySpecificAdapter.ViewHolder) holder;
+        TrackSegment segment = trackSegments.get(position);
+        viewHolder.bind(segment);
     }
 
+    public void swapData(List<TrackSegment> segments) {
+        this.trackSegments = segments;
+        this.notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
-        return 0;
+        return trackSegments.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -93,7 +101,7 @@ public class DaySpecificAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             view.setOnLongClickListener(this);
         }
 
-        public void bind(Cursor cursor){
+        public void bind(TrackSegment segment){
             viewBinding.daySpecificActivity.setText("Run");
             viewBinding.daySpecificActivityDisplacement.setText("0 m");
             viewBinding.daySpecificActivityDistance.setText("0.14 km");
