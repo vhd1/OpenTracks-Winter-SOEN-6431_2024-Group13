@@ -67,6 +67,40 @@ public class TrackStatistics {
     // Slope % between this point and the previous point
     private Float slopePercent_m;
 
+
+    /**
+     * Total time user spent for waiting for chairlift
+     */
+    private Duration totalChairliftWaitingTime;
+
+    /**
+     * this function can be used to fetch Total Chairlift Waiting time for display in UI
+     * */
+    public Duration getTotalChairliftWaitingTime() {
+        return totalChairliftWaitingTime;
+    }
+
+    public void setTotalChairliftWaitingTime(Duration totalChairliftWaitingTime) {
+        this.totalChairliftWaitingTime = totalChairliftWaitingTime;
+    }
+
+    /**
+     * this counter is to check how many continuous trackpoints the user is stagnant near lower base of track.
+     * once the threshold of this counter is reached, we start adding the parsed time to totalChairliftWaitingTime until counter is again reset.
+     */
+    private int endOfRunCounter;
+
+    public int getEndOfRunCounter() {
+        return this.endOfRunCounter;
+    }
+    public void incrementEndOfRunCounter() {
+         this.endOfRunCounter++;
+    }
+
+    public void resetEndOfRunCounter() {
+        this.endOfRunCounter = 0;
+    }
+
     public TrackStatistics() {
         reset();
     }
@@ -89,6 +123,8 @@ public class TrackStatistics {
         avgHeartRate = other.avgHeartRate;
         isIdle = other.isIdle;
         slopePercent_m = other.slopePercent_m;
+        totalChairliftWaitingTime=other.totalChairliftWaitingTime;
+        endOfRunCounter=other.endOfRunCounter;
     }
 
     @VisibleForTesting
@@ -160,6 +196,9 @@ public class TrackStatistics {
                 totalAltitudeLoss_m += other.totalAltitudeLoss_m;
             }
         }
+
+        totalChairliftWaitingTime = totalChairliftWaitingTime.plus(other.totalChairliftWaitingTime);
+        endOfRunCounter+= other.endOfRunCounter;
     }
 
     public boolean isInitialized() {
@@ -177,6 +216,9 @@ public class TrackStatistics {
         setTotalAltitudeGain(null);
         setTotalAltitudeLoss(null);
         setSlopePercent(null);
+
+        setTotalChairliftWaitingTime(Duration.ofSeconds(0));
+        resetEndOfRunCounter();
 
         isIdle = false;
     }
@@ -412,5 +454,5 @@ public class TrackStatistics {
                 + "; Altitude Loss: " + getTotalAltitudeLoss()
                 + "; Slope%: " + getSlopePercent() + "}";
     }
-    
+
 }
