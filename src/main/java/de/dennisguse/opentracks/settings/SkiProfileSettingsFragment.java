@@ -34,6 +34,11 @@ public class SkiProfileSettingsFragment extends PreferenceFragmentCompat {
             ((SettingsActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, new SkiProfileSharpeningFragment()).addToBackStack(getString(R.string.ski_profile_sharpening_info_title)).commit();
             return true;
         });
+
+        findPreference(getString(R.string.ski_profile_waxing_info_title)).setOnPreferenceClickListener(preference -> {
+            ((SettingsActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, new SkiProfileWaxingFragment()).addToBackStack(getString(R.string.ski_profile_waxing_info_title)).commit();
+            return true;
+        });
     }
 
 

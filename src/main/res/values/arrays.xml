@@ -39,6 +39,12 @@
         <item>December</item>
     </string-array>
 
+    <string-array name="waxing_types">
+        <item>Warm</item>
+        <item>Cold</item>
+        <item>Universal</item>
+    </string-array>
+
     <string-array name="time_day">
         <item>1</item>
         <item>2</item>
