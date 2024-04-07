@@ -17,6 +17,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.CalendarActivity;
+import de.dennisguse.opentracks.NewActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.TrackSelection;
 import de.dennisguse.opentracks.data.models.Track;
@@ -49,6 +50,7 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
         if (trackIds != null && !trackIds.isEmpty()) {
             trackIds.stream().forEach(selection::addTrackId);
         }
+
         viewBinding.showCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

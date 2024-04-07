@@ -1,8 +1,10 @@
 package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.dennisguse.opentracks.NewActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
@@ -79,6 +82,14 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
         public ViewHolder(AggregatedStatsListItemBinding viewBinding) {
             super(viewBinding.getRoot());
             this.viewBinding = viewBinding;
+
+            viewBinding.button2.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    Intent intent=new Intent(v.getContext(), NewActivity.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
