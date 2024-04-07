@@ -238,6 +238,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             return;
         }
 
+        // announce after recording
+        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
+
+        voiceAnnouncementManager.announceAfterRecording(data.first);
+
         // Set recording status
         updateRecordingStatus(STATUS_DEFAULT);
 

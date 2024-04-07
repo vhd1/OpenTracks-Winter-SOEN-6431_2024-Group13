@@ -152,7 +152,16 @@ public class TTSManager {
     }
 
     public void stop() {
+        // Shutdown the TextToSpeech engine after the current task is done
         if (tts != null) {
+            while (tts.isSpeaking()) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             tts.shutdown();
             tts = null;
         }
