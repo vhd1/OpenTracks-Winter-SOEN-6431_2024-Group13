@@ -131,6 +131,16 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         voiceAnnouncement.announce(VoiceAnnouncementUtils.createAfterRecording(context,track.getTrackStatistics(),PreferencesUtils.getUnitSystem()));
     }
 
+
+    public void announceAfterRun(@NonNull Track track) {
+        if (shouldNotAnnounce()) {
+            return;
+        }
+
+        //TODO: Once we have run data from other groups, only call this if we're at the end of a run
+        voiceAnnouncement.announce(VoiceAnnouncementUtils.createRunStatistics(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem()));
+    }
+
     public void announceStatisticsIfNeeded(@NonNull Track track) {
         if (shouldNotAnnounce()) {
             return;

@@ -361,6 +361,7 @@ limitations under the License.
     <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
 
     <string name="settings_announcements_recording_title">Announcements After Recording</string>
+    <string name="settings_announcements_run_title">Announcements After Run</string>
 
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_import_export_summary">Import, Export, Auto Export</string>
