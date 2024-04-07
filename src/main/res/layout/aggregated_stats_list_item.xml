@@ -264,7 +264,7 @@
         app:layout_constraintGuide_begin="20dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/runs_and_lifts_button"
         style="@style/Widget.Material3.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -287,7 +287,7 @@
         tools:visibility="visible" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/elevation_and_speed_button"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -302,7 +302,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/runs_and_lifts_button"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

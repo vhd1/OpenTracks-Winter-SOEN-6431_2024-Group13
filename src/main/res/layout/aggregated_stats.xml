@@ -46,13 +46,5 @@
         android:id="@+id/bottom_app_bar_layout"
         layout="@layout/bottomappbar" />
 
-    <com.google.android.material.button.MaterialButton
-            android:id="@+id/show_calendar_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change date"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

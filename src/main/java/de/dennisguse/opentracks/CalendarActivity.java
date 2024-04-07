@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class CalendarActivity extends AppCompatActivity {
@@ -17,10 +19,12 @@ public class CalendarActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setSelectedDate(new Date());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         MaterialToolbar toolbar = findViewById(R.id.calendar_toolbar);
         toolbar.setNavigationOnClickListener((view) -> finish());
+        Bundle extras = getIntent().getExtras();
 
         Button dateSelectButton = findViewById(R.id.calendar_date_selected_activity);
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
@@ -30,14 +34,17 @@ public class CalendarActivity extends AppCompatActivity {
                     setSelectedDate(new Date(year-1900, month, dayOfMonth));
                 }
             });
-            dateSelectButton.setOnClickListener((view)->{
-//                Intent intent = new Intent(getApplicationContext(), classname.class);
-                //startActivity(intent);
-//                intent.putExtra("Year", selectedDate.getYear());
-//                intent.putExtra("Month", selectedDate.getMonth());
-//                intent.putExtra("Day", selectedDate.getDay());
-
-                // To extract
+            dateSelectButton.setOnClickListener((View v)->{
+                Intent intent = new Intent(v.getContext(), ElevationAndSpeedActivity.class);;
+                if(extras!=null && Objects.equals(extras.getString("Display Fields"), "Elevation and Speed")){
+                    intent = new Intent(v.getContext(), ElevationAndSpeedActivity.class);
+                } else{
+                    intent = new Intent(v.getContext(), RunsAndLiftsActivity.class);
+                }
+                intent.putExtra("Year", selectedDate.getYear());
+                intent.putExtra("Month", selectedDate.getMonth());
+                intent.putExtra("Day", selectedDate.getDay());
+                v.getContext().startActivity(intent);
 //                Bundle extras = getIntent().getExtras();
 //                if (extras != null) {
 //                    String value = extras.getString("key");

@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.AbstractActivity;
-import de.dennisguse.opentracks.CalendarActivity;
-import de.dennisguse.opentracks.NewActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.TrackSelection;
 import de.dennisguse.opentracks.data.models.Track;
@@ -51,13 +48,13 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
             trackIds.stream().forEach(selection::addTrackId);
         }
 
-        viewBinding.showCalendarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
+//        viewBinding.showCalendarButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new AggregatedStatisticsAdapter(this, null);
@@ -74,7 +71,6 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
             }
             checkListEmpty();
         });
-
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dennisguse.opentracks.NewActivity;
+import de.dennisguse.opentracks.CalendarActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
@@ -83,17 +83,19 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
             super(viewBinding.getRoot());
             this.viewBinding = viewBinding;
 
-            viewBinding.button2.setOnClickListener(new View.OnClickListener(){
+            viewBinding.runsAndLiftsButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    Intent intent=new Intent(v.getContext(), NewActivity.class);
+                    Intent intent=new Intent(v.getContext(), CalendarActivity.class);
+                    intent.putExtra("Display Fields", "Runs and Lifts");
                     v.getContext().startActivity(intent);
                 }
             });
-            viewBinding.button3.setOnClickListener(new View.OnClickListener(){
+            viewBinding.elevationAndSpeedButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    Intent intent=new Intent(v.getContext(), NewActivity.class);
+                    Intent intent=new Intent(v.getContext(), CalendarActivity.class);
+                    intent.putExtra("Display Fields", "Elevation and Speed");
                     v.getContext().startActivity(intent);
                 }
             });
