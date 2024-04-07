@@ -51,6 +51,11 @@
         android:title="Waxing Information" />
 
     <Preference
+        android:key="@string/ski_profile_ski_maintenance_title"
+        android:title="Ski Maintenance"
+        android:summary="Check sharpening (75%) and waxing (80%) progress" />
+
+    <Preference
         android:key="@string/ski_profile_statistics_title"
         android:summary="Number of Waxing/Sharpening activities performed on Ski"
         android:title="Maintenance Statistics" />
