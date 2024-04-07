@@ -25,7 +25,6 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
 
     public static final String EXTRA_LAYOUT = "extraLayout";
     private ActivitySettingsCustomLayoutBinding viewBinding;
-    private GridLayoutManager gridLayoutManager;
     private SettingsCustomLayoutEditAdapter adapterFieldsVisible;
     private SettingsCustomLayoutEditAdapter adapterFieldsHidden;
     private String profile;
@@ -36,7 +35,8 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        GridLayoutManager gridLayoutManager;
+        
         // Recycler view with visible stats.
         RecordingLayout recordingLayout = getIntent().getParcelableExtra(EXTRA_LAYOUT);
         profile = recordingLayout.getName();

@@ -138,10 +138,11 @@ public class MarkerEditActivity extends AbstractActivity {
         takePictureFromCamera = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    switch (result.getResultCode()) {
-                        case RESULT_CANCELED ->
-                                Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
-                        case RESULT_OK -> viewModel.onNewCameraPhoto(cameraPhotoUri,
+                    int resultCode = result.getResultCode();
+                    if (resultCode == RESULT_CANCELED) {
+                        Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
+                    } else if (resultCode == RESULT_OK) {
+                        viewModel.onNewCameraPhoto(cameraPhotoUri,
                                 viewBinding.markerEditName.getText().toString(),
                                 viewBinding.markerEditMarkerType.getText().toString(),
                                 viewBinding.markerEditDescription.getText().toString());

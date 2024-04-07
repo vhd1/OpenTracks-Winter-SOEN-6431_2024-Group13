@@ -109,8 +109,8 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
                 viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString(),
                 contentProviderUtils);
     }
-
-    @Override
+//Deprecated this method beacause its deprecated
+    @Deprecated
     public void onBackPressed() {
         if (isDiscarding) {
             return;

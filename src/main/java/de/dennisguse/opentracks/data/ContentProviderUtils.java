@@ -232,7 +232,7 @@ public class ContentProviderUtils {
     public Cursor searchTracks(String searchQuery) {
         // Needed, because MARKER_COUNT is a virtual column and has to be explicitly requested.
         // Used only be TrackListAdapter
-        final String[] projection = new String[]{
+        final String[] lPROJECTION = new String[]{
                 TracksColumns._ID,
                 TracksColumns.NAME,
                 TracksColumns.DESCRIPTION, //TODO Needed?
@@ -256,7 +256,7 @@ public class ContentProviderUtils {
             selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
         }
 
-        return contentResolver.query(TracksColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+        return contentResolver.query(TracksColumns.CONTENT_URI, lPROJECTION, selection, selectionArgs, sortOrder);
     }
 
     public Track getTrack(@NonNull Track.Id trackId) {
@@ -391,8 +391,8 @@ public class ContentProviderUtils {
         Marker marker = new Marker(trackId, Instant.ofEpochMilli(cursor.getLong(timeIndex)));
 
         if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
-            marker.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
-            marker.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
+            marker.setLongitude(( cursor.getInt(longitudeIndex)) / 1E6);
+            marker.setLatitude(( cursor.getInt(latitudeIndex)) / 1E6);
         }
         if (!cursor.isNull(altitudeIndex)) {
             marker.setAltitude(Altitude.WGS84.of(cursor.getFloat(altitudeIndex)));
@@ -675,7 +675,7 @@ public class ContentProviderUtils {
     }
 
     //TODO Set trackId in this method.
-    public int bulkInsertMarkers(List<Marker> markers, Track.Id trackId) {
+    public int bulkInsertMarkers(List<Marker> markers) {
         ContentValues[] values = new ContentValues[markers.size()];
         for (int i = 0; i < markers.size(); i++) {
             values[i] = createContentValues(markers.get(i));
@@ -689,7 +689,7 @@ public class ContentProviderUtils {
      *
      * @param trackId the track id
      */
-    @Deprecated
+    @Deprecated(since = "8.2.1", forRemoval = true)
     public TrackPoint.Id getLastTrackPointId(@NonNull Track.Id trackId) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.id())};
@@ -708,7 +708,7 @@ public class ContentProviderUtils {
      * @param location the location
      * @return trackPoint id if the location is in the track. -1L otherwise.
      */
-    @Deprecated
+    @Deprecated(since = "8.2.1", forRemoval = true)
     public TrackPoint.Id getTrackPointId(Track.Id trackId, Location location) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.id()), Long.toString(location.getTime())};

@@ -88,7 +88,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
             }
             if (PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
                 boolean reportSpeed = PreferencesUtils.isReportSpeed(activityTypeLocalized);
-                if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
+                if (reportSpeed != viewBinding.chartView.isReportSpeed()) {
                     viewBinding.chartView.setReportSpeed(reportSpeed);
                     viewBinding.chartView.applyReportSpeed();
 
@@ -105,17 +105,14 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
     /**
      * A runnable that will setFrequency the orange pointer as appropriate and redraw.
      */
-    private final Runnable updateChart = new Runnable() {
-        @Override
-        public void run() {
+    private final Runnable updateChart = ()->{
             if (!isResumed()) {
                 return;
             }
 
             viewBinding.chartView.setShowPointer(isSelectedTrackRecording());
             viewBinding.chartView.invalidate();
-        }
-    };
+        };
 
 
     @Override
@@ -166,7 +163,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
 
             activityTypeLocalized = track.getActivityTypeLocalized();
             boolean reportSpeed = PreferencesUtils.isReportSpeed(activityTypeLocalized);
-            if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
+            if (reportSpeed != viewBinding.chartView.isReportSpeed()) {
                 viewBinding.chartView.setReportSpeed(reportSpeed);
                 viewBinding.chartView.applyReportSpeed();
             }
@@ -186,6 +183,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
         }
     }
 
+    @Override
     public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics) {
         if (isResumed()) {
             ChartPoint point = ChartPoint.create(trackStatistics, trackPoint, trackPoint.getSpeed(), chartByDistance, viewBinding.chartView.getUnitSystem());
@@ -256,7 +254,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
      * Returns true if the selected track is recording.
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
-    @Deprecated
+    @Deprecated(since = "verision x.x",forRemoval = true)
     //TODO Should not be dynamic but instead set while instantiating, i.e., newFragment().
     private synchronized boolean isSelectedTrackRecording() {
         return trackDataHub != null && trackDataHub.isSelectedTrackRecording();

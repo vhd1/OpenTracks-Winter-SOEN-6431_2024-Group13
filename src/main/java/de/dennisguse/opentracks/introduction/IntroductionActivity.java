@@ -78,7 +78,7 @@ public class IntroductionActivity extends AbstractActivity {
                 return fc.newInstance();
             }
 
-            throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            throw new IllegalArgumentException("There isn't Fragment associated with the position: " + position);
         }
 
         @Override
