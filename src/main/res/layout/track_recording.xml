@@ -47,7 +47,7 @@
         android:contentDescription="@string/image_stop"
         app:layout_anchor="@+id/bottom_app_bar"
         app:layout_anchorGravity="end|center"
-        app:srcCompat="@drawable/stop_button" />
+        app:srcCompat="@drawable/pause_button" />
 
     <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--        android:id="@+id/track_recording_fab_action"-->
