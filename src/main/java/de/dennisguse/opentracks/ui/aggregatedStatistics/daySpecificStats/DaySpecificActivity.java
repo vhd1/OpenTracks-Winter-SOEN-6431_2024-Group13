@@ -10,6 +10,10 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackDataHub;
 import de.dennisguse.opentracks.data.TrackPointIterator;
+<<<<<<< HEAD
+=======
+import de.dennisguse.opentracks.data.models.Distance;
+>>>>>>> 08fc483e8 (Pre-processed data)
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.models.TrackSegment;
@@ -86,8 +90,13 @@ public class DaySpecificActivity extends AbstractTrackDeleteActivity {
                         Log.d(TAG, "No Action for TrackPoint IDLE/SENSORPOINT while recording segments");
                 }
             }
-            trackSegments.forEach(segment -> System.out.println("KEVIN: Distance for segment: " + segment.getDistanceBetweenFirstAndLast().toM()));
-            System.out.println("Segments count: " + trackSegments.size());
+
+            for(int i=0; i<trackSegments.size(); i++){
+                Log.d("RUSHI", "TrackPoint No.: " + i);
+                Log.d("RUSHI", "Distance for segment " + trackSegments.get(i).getDistanceBetweenFirstAndLast().toM());
+                Log.d("RUSHI", "Time for segment " + trackSegments.get(i).getTotalTime() + "Minutes");
+                Log.d("RUSHI", "Speed for segment " + trackSegments.get(i).getSpeed(trackSegments.get(i).getDistanceBetweenFirstAndLast(), trackSegments.get(i).getTotalTime()) + "M/Sec");
+            }
         }
     }
     private Date getDummyDate() {

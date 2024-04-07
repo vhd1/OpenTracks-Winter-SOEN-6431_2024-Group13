@@ -3,6 +3,8 @@ package de.dennisguse.opentracks.data.models;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.ArrayList;
@@ -42,9 +44,25 @@ public class TrackSegment {
         TrackPoint first = trackPoints.get(0);
         TrackPoint last = trackPoints.get(trackPoints.size() - 1);
         Distance distance = last.distanceToPrevious(first);
-        Log.d(TAG, "Kevin: distance between first and last in meters: " + distance.toM());
+
         return distance;
     }
+
+    public Long getTotalTime(){
+
+        if(trackPoints == null){
+            return null;
+        }
+        TrackPoint startTime = trackPoints.get(0);
+        TrackPoint endTime = trackPoints.get(trackPoints.size() - 1);
+
+        Duration totalTime  = Duration.between(startTime.getTime(), endTime.getTime());
+        return totalTime.toMinutes();
+    }
+
+    public double getSpeed(Distance totalDistance, Long totalTime){
+        return totalDistance.distance_m()/totalTime;
+    }
+
+
 }
-
-
