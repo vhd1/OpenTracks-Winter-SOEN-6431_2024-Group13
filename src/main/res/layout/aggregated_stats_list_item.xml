@@ -174,4 +174,15 @@
         app:layout_constraintEnd_toStartOf="@id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/aggregated_stats_max_rate_label" />
 
+    <Button
+        android:id="@+id/list_of_seasons_btn234"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Seasons"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_horizontal_line" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
