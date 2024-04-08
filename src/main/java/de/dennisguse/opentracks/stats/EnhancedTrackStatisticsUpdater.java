@@ -17,4 +17,52 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
         super();
     }
 
+    public void updateStatistics(List<TrackPoint> points, EnhancedTrackStatistics stats) {
+        if (points == null || points.size() < 2) {
+            return; // Not enough data to calculate anything
+        }
+//        EnhancedTrackStatistics stats = new EnhancedTrackStatistics();
+        double totalDistance = 0.0;
+        double totalSpeed = 0.0;
+        double maxSpeed = 0.0;
+        long totalTimeOnChairlift = 0L;
+        Instant startTime = points.get(0).getTime();
+        Instant endTime = points.get(points.size() - 1).getTime();
+        
+        TrackPoint previousPoint = points.get(0);
+        for (int i = 1; i < points.size(); i++) {
+            TrackPoint currentPoint = points.get(i);
+//            double speed = currentPoint.getSpeed();
+            double speed = currentPoint.getSpeed().toMPS();
+            totalSpeed += speed;
+            if (speed > maxSpeed) {
+                maxSpeed = speed;
+            }
+
+            double altitudeChange = currentPoint.getAltitude().toM() - previousPoint.getAltitude().toM(); // Extract altitude value from Altitude object
+            if (speed < CHAIRLIFT_SPEED_THRESHOLD && altitudeChange > ALTITUDE_CHANGE_FOR_CHAIRLIFT) {
+                // Assuming this segment is chairlift usage
+                totalTimeOnChairlift += currentPoint.getTime().toEpochMilli() - previousPoint.getTime().toEpochMilli();
+            } else {
+                // Calculate distance for skiing segments only
+                totalDistance += distanceBetweenPoints(previousPoint, currentPoint);
+            }
+
+            previousPoint = currentPoint;
+        }
+
+        Duration totalTime = Duration.between(startTime, endTime).dividedBy(1000); // convert to seconds
+        double averageSpeed = totalDistance / totalTime.getSeconds();
+        
+        // Update statistics
+        stats.setTotalTime(totalTime);
+        stats.setMovingTime(totalTime.minusMillis(totalTimeOnChairlift)); // convert to seconds
+        stats.setTopSpeed(maxSpeed);
+        stats.setAverageSpeed(Speed.of(averageSpeed));
+        // Assuming slope calculation and waiting time require additional context not provided here
+        
+        // Set calculated values
+        stats.setTimeOnChairlift(totalTimeOnChairlift);
+    }
+
 }
