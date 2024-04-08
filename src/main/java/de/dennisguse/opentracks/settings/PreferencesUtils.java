@@ -456,6 +456,14 @@ public class PreferencesUtils {
     public static void setVoiceAnnounceMaxSpeedRecording(boolean value) {
         setBoolean(R.string.voice_announce_max_speed_recording_key, value);
     }
+    //recording related data for average slope's helper methods
+    public static boolean shouldVoiceAnnounceAveragesloperecording() {
+        return getBoolean(R.string.voice_announce_average_slope_recording_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAveragesloperecording(boolean value) {
+        setBoolean(R.string.voice_announce_average_slope_recording_key, value);
+    }
 
     public static Distance getRecordingDistanceInterval() {
         return Distance.of(getInt(R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal()));

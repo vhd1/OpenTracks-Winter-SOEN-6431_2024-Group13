@@ -80,5 +80,12 @@
             android:defaultValue="@bool/voice_announce_max_slope_default"
             android:key="@string/voice_announce_max_slope_key"
             android:title="@string/settings_announcements_max_slope" />
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/voice_announce_max_slope_default"
+            android:title="@string/settings_announcements_average_slope_recording"
+            app:key="@string/voice_announce_average_slope_recording_key" />
+
     </PreferenceCategory>
 </PreferenceScreen>
