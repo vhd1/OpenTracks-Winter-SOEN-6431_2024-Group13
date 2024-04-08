@@ -67,6 +67,7 @@ public class SkiProfileSettingsFragment extends PreferenceFragmentCompat {
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxNameLength)});
         });
 
+
         EditTextPreference phoneInput = findPreference(getString(R.string.settings_ski_profile_phone_key));
         phoneInput.setDialogTitle(getString(R.string.settings_ski_profile_phone_dialog_title));
         phoneInput.setOnBindEditTextListener(editText -> {
