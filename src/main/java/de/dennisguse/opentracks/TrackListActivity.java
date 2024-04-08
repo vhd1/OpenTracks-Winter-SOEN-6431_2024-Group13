@@ -42,16 +42,16 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.WeatherInformation;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
 import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.WeatherFetchService;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -65,14 +65,14 @@ import de.dennisguse.opentracks.ui.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
-import de.dennisguse.opentracks.settings.CalorieUserDetail;
 
 /**
  * An activity displaying a list of tracks.
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackListActivity extends AbstractTrackDeleteActivity
+        implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
@@ -151,13 +151,22 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
         requestRequiredPermissions();
 
-        CalorieUserDetail calorieUser = new CalorieUserDetail();
-        double calorieValue = calorieUser.getCalorieComputationTest(170,70,"14/04/1997","Running");
-        Log.d("Calorie Test", "Computed Calorie: " + String.valueOf(calorieValue));
+        // checking API
+        double latitude = 45.50889;
+        double longitude = -73.56167;
+        WeatherFetchService wb = new WeatherFetchService();
+        WeatherInformation weatherdata = wb.fetchWeatherData(latitude, longitude);
+        if (weatherdata == null) {
+            Log.d("WeatherTest", "Temperature for latitude:" + latitude + ", longitude:" + longitude + " is null");
+        } else {
+            Log.d("WeatherTest", "Temperature for latitude:" + latitude + ", longitude:" + longitude + " is "
+                    + weatherdata.getTemperature());
+        }
 
         recordingStatusConnection = new TrackRecordingServiceConnection(bindChangedCallback);
 
-        viewBinding.aggregatedStatsButton.setOnClickListener((view) -> startActivity(IntentUtils.newIntent(this, AggregatedStatisticsActivity.class)));
+        viewBinding.aggregatedStatsButton.setOnClickListener(
+                (view) -> startActivity(IntentUtils.newIntent(this, AggregatedStatisticsActivity.class)));
         viewBinding.sensorStartButton.setOnClickListener((view) -> {
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -202,17 +211,20 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             ActivityUtils.vibrate(this, 1000);
             updateGpsMenuItem(false, false);
             recordingStatusConnection.stopRecording(TrackListActivity.this);
-            viewBinding.trackListFabAction.setImageResource(R.drawable.start_button);
-            viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.red_dark));
+            viewBinding.trackListFabAction.setImageResource(R.drawable.ic_baseline_record_24);
+            viewBinding.trackListFabAction
+                    .setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.red_dark));
             return true;
         });
 
         setSupportActionBar(viewBinding.trackListToolbar);
         adapter.setActionModeCallback(contextualActionModeCallback);
+
     }
 
     private void requestRequiredPermissions() {
-        PermissionRequester.ALL.requestPermissionsIfNeeded(this, this, null, (requester) -> Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show());
+        PermissionRequester.ALL.requestPermissionsIfNeeded(this, this, null,
+                (requester) -> Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show());
     }
 
     @Override
@@ -336,7 +348,8 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     private void loadData() {
-        viewBinding.trackListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.app_name)));
+        viewBinding.trackListToolbar
+                .setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.app_name)));
 
         Cursor tracks = new ContentProviderUtils(this).searchTracks(searchQuery);
 
@@ -373,12 +386,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
      * @param isGpsStarted true if gps is started
      * @param isRecording  true if recording
      */
-    //TODO Check if if can be avoided to call this outside of onGpsStatusChanged()
+    // TODO Check if if can be avoided to call this outside of onGpsStatusChanged()
     private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording) {
         MaterialButton startGpsMenuItem = viewBinding.sensorStartButton;
         startGpsMenuItem.setVisibility(!isRecording ? View.VISIBLE : View.INVISIBLE);
         if (!isRecording) {
-            startGpsMenuItem.setIcon(AppCompatResources.getDrawable(this, isGpsStarted ? gpsStatusValue.icon : R.drawable.ic_gps_off_24dp));
+            startGpsMenuItem.setIcon(AppCompatResources.getDrawable(this,
+                    isGpsStarted ? gpsStatusValue.icon : R.drawable.ic_gps_off_24dp));
             if (startGpsMenuItem.getIcon() instanceof AnimatedVectorDrawable animatedVectorDrawable) {
                 animatedVectorDrawable.start();
             }
@@ -424,7 +438,8 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
         if (itemId == R.id.list_context_menu_aggregated_stats) {
             Intent intent = IntentUtils.newIntent(this, AggregatedStatisticsActivity.class)
-                    .putParcelableArrayListExtra(AggregatedStatisticsActivity.EXTRA_TRACK_IDS, new ArrayList<>(Arrays.asList(trackIds)));
+                    .putParcelableArrayListExtra(AggregatedStatisticsActivity.EXTRA_TRACK_IDS,
+                            new ArrayList<>(Arrays.asList(trackIds)));
             startActivity(intent);
             return true;
         }
@@ -443,8 +458,10 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     private void setFloatButton() {
-        viewBinding.trackListFabAction.setImageResource(recordingStatus.isRecording() ? R.drawable.start_button : R.drawable.start_button);
-//        viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, recordingStatus.isRecording() ? R.color.opentracks : R.color.light_gray));
+        viewBinding.trackListFabAction.setImageResource(
+                recordingStatus.isRecording() ? R.drawable.ic_baseline_stop_24 : R.drawable.ic_baseline_record_24);
+        viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this,
+                recordingStatus.isRecording() ? R.color.opentracks : R.color.red_dark));
     }
 
     private void onRecordingStatusChanged(RecordingStatus status) {

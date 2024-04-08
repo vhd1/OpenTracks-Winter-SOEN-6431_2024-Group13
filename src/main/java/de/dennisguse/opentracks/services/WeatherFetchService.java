@@ -1,8 +1,11 @@
 package de.dennisguse.opentracks.services;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,11 +33,30 @@ public class WeatherFetchService {
 
             StringBuilder result = getWeatherData(connection);
 
+            JSONObject current = getJsonConverter(result);
+
+            // Extract weather information
+            double temperature = getTemperature(current);
+
+            return new WeatherInformation(temperature);
+
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private static JSONObject getJsonConverter(StringBuilder result) throws JSONException {
+        JSONObject json = new JSONObject(result.toString());
+
+        return json.getJSONObject("current");
+    }
+
+    private static double getTemperature(JSONObject current) throws JSONException {
+        // Get the temperature in Celsius from the "current" object
+        double temperatureC = current.getDouble("temp_c");
+        return temperatureC;
     }
 
     private static StringBuilder getWeatherData(HttpURLConnection connection) throws IOException {
