@@ -36,7 +36,13 @@ class VoiceAnnouncementUtils {
     private VoiceAnnouncementUtils() {
     }
 
-    static Spannable createIdle(Context context) {
+    static double calculateTimeSkied() {
+
+           return 0.0; 
+		   
+    }
+	
+	static Spannable createIdle(Context context) {
         return new SpannableStringBuilder()
                 .append(context.getString(R.string.voiceIdle));
     }
