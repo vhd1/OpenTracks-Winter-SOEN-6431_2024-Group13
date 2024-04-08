@@ -21,9 +21,10 @@ public class ChairsStatFragment extends Fragment {
     private static final String ARG_SEASON_DAYS = "days";
     private static final String ARG_SEASON_TALLEST_CHAIR = "tallestChair";
     private static final String ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED = "totalNumberOfDaysChairliftUsed";
-
     private static final String[] ARG_SEASON_FAVORITE_CHAIRS = {"favoriteChair1", "favoriteChair2", "favoriteChair3", "favoriteChair4", "favoriteChair5"};
+    private static final String Most_Comman_Trail="most_comman_trail";
 
+    private String mMostcommanTrail;
     private String mSeasonName;
 
     private String mDays;
@@ -35,16 +36,18 @@ public class ChairsStatFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ChairsStatFragment newInstance(String seasonName, String days, String tallestChair, String totalDaysChairliftUsed, String[] favoriteChairs) {
+    public static ChairsStatFragment newInstance(String seasonName,String mostcommantrail, String days, String tallestChair, String totalDaysChairliftUsed, String[] favoriteChairs) {
         ChairsStatFragment fragment = new ChairsStatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_SEASON_NAME, seasonName);
         args.putString(ARG_SEASON_DAYS, days);
         args.putString(ARG_SEASON_TALLEST_CHAIR, tallestChair);
-        args.putString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED, totalDaysChairliftUsed);
+        args.putString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED, totalDaysChairliftUsed);        
+        args.putString(Most_Comman_Trail,mostcommantrail);
         for(int i = 0; i < 5; i++){
             args.putString(ARG_SEASON_FAVORITE_CHAIRS[i], favoriteChairs[i]);
         }
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +61,7 @@ public class ChairsStatFragment extends Fragment {
             mDays = getArguments().getString(ARG_SEASON_DAYS);
             mTallestChair = getArguments().getString(ARG_SEASON_TALLEST_CHAIR);
             mTotalDaysChairliftUsed = getArguments().getString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED);
+            mMostcommanTrail=getArguments().getString(Most_Comman_Trail);
             for (int i = 0; i < 5; i++) {
                 mFavoriteChairs[i] = getArguments().getString(ARG_SEASON_FAVORITE_CHAIRS[i]);
             }
@@ -67,6 +71,7 @@ public class ChairsStatFragment extends Fragment {
         TextView daysTextView = view.findViewById(R.id.days_tv);
         TextView tallestChairTextView = view.findViewById(R.id.tallestChair_tv);
         TextView totalDaysChairliftUsedTextView = view.findViewById(R.id.totalDaysChairliftUsed_tv);
+        TextView mostcommantrail= view.findViewById(R.id.mostcommaintrail);
         TextView favoriteChairsTextView1 = view.findViewById(R.id.favChairTextView1);
         TextView favoriteChairsTextView2 = view.findViewById(R.id.favChairTextView2);
         TextView favoriteChairsTextView3 = view.findViewById(R.id.favChairTextView3);
@@ -77,12 +82,14 @@ public class ChairsStatFragment extends Fragment {
             seasonNameTextView.setText(mSeasonName);
             daysTextView.setText(mDays);
             tallestChairTextView.setText(mTallestChair);
-            totalDaysChairliftUsedTextView.setText(mTotalDaysChairliftUsed);
+            totalDaysChairliftUsedTextView.setText(mTotalDaysChairliftUsed);            
+            mostcommantrail.setText(mMostcommanTrail);
             favoriteChairsTextView1.setText(mFavoriteChairs[0]);
             favoriteChairsTextView2.setText(mFavoriteChairs[1]);
             favoriteChairsTextView3.setText(mFavoriteChairs[2]);
             favoriteChairsTextView4.setText(mFavoriteChairs[3]);
             favoriteChairsTextView5.setText(mFavoriteChairs[4]);
+
         }
         return view;
     }
