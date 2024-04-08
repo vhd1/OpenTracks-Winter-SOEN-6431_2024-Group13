@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.settings;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
