@@ -5,6 +5,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapHeartRate;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 
@@ -91,14 +92,17 @@ class VoiceAnnouncementUtils {
             builder.append(".");
         }
 		
-		if(shouldVoiceAnnounceTimeSkiedRecording()) {
-			Duration movingTime = trackStatistics.getMovingTime();
-//			Duration movingTime = 10000;
-        if (shouldVoiceAnnounceMovingTime() && !movingTime.isZero()) {
-            appendDuration(context, builder, movingTime);
-            builder.append(".");
+
+        if (shouldVoiceAnnounceTimeSkiedRecording()) {
+            double timeSkied = calculateTimeSkied(); // Calculate the maximum slope based on elevation data
+            if (!Double.isNaN(timeSkied)) {
+                builder.append(" ")
+                        .append(context.getString(R.string.settings_announcements_time_skied_recording))
+                        .append(": ")
+                        .append(String.format("%.2f%%", timeSkied)) // Format the slope value
+                        .append(".");
+            }
         }
-		}
 
 
         return builder;
