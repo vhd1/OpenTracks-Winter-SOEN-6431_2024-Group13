@@ -414,14 +414,20 @@ limitations under the License.
     <string name="settings_announcements_lap_heart_rate">Lap heart rate</string>
     <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
+
+    <string name="settings_announcements_max_speed_run">Max speed/run</string>
     <string name="settings_announcements_run_average_speed">Run Average Speed</string>
-    <string name="settings_announcements_max_slope">Max slope</string>
+
 
     <!-- Recording Related Data -->
     <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
+
     <string name="settings_announcements_average_speed_recording">Average speed/recording</string>
 
-    <!-- Custom Layout -->
+    <string name="settings_announcements_max_slope">Max slope</string>
+    <string name="settings_announcements_average_slope_recording">Average slope</string>
+
+
 
 
     <string name="custom_layout_list_title">Layouts</string>
@@ -718,4 +724,6 @@ limitations under the License.
     <string name="always">Always</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+
+
 </resources>

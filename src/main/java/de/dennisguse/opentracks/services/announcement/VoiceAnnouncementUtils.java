@@ -7,8 +7,10 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRun;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceRunAverageSpeed;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAveragesloperecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording;
 
@@ -41,6 +43,10 @@ class VoiceAnnouncementUtils {
        
         // This method should return the calculated maximum slope.
            return 0.0; 
+    }
+    static double CalculateAverageSlope(){
+        // This is dummy methods to fetch or calculate the average slope.
+        return 10.0;
     }
 
     static double calculateAverageSpeed(){
@@ -120,6 +126,17 @@ class VoiceAnnouncementUtils {
             }
         }
 
+
+            if (shouldVoiceAnnounceAveragesloperecording()) {
+                double avgSlope = CalculateAverageSlope();
+                if (!Double.isNaN(avgSlope)) {
+                    builder.append(" ")
+                            .append("Average slope")
+                            .append(": ")
+                            .append(String.format("%.2f%%", avgSlope))
+                            .append(".");
+                }
+            }
         return builder;
     }
 
@@ -128,6 +145,7 @@ class VoiceAnnouncementUtils {
         //TODO: Once we get run data from other groups, we can announce run statistics instead of track statistics
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
+        Speed maxSpeed = trackStatistics.getMaxSpeed();
 
         int speedId;
         String unitSpeedTTS;
@@ -147,9 +165,7 @@ class VoiceAnnouncementUtils {
             default -> throw new RuntimeException("Not implemented");
         }
 
-        if (totalDistance.isZero()) {
-            return builder;
-        }
+
 
         //Announce Average Speed
        if (shouldVoiceAnnounceRunAverageSpeed()) {
@@ -160,13 +176,23 @@ class VoiceAnnouncementUtils {
            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
            builder.append(".");
        }
-       return builder;
+
+        if (shouldVoiceAnnounceMaxSpeedRun()) {
+            double speedInUnit = maxSpeed.to(unitSystem);
+            builder.append(" ")
+                    .append(context.getString(R.string.settings_announcements_max_speed_run));
+            String template = context.getResources().getString(speedId);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
+            builder.append(".");
+        }
+        return builder;
     }
 
     static Spannable createStatistics(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
+
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
 
         int perUnitStringId;
@@ -230,6 +256,7 @@ class VoiceAnnouncementUtils {
                 appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
                 builder.append(".");
             }
+
             if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
                 double currentDistancePerTimeInUnit = currentDistancePerTime.to(unitSystem);
                 if (currentDistancePerTimeInUnit > 0) {
@@ -250,6 +277,7 @@ class VoiceAnnouncementUtils {
                         .append(context.getString(perUnitStringId))
                         .append(".");
             }
+
 
             if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
                 Duration currentTime = currentDistancePerTime.toPace(unitSystem);
