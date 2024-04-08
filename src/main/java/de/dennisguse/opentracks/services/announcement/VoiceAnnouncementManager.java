@@ -124,12 +124,15 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         }
 
         // add other check with and here
-        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording()) {
+        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording() && !PreferencesUtils.shouldVoiceAnnounceMaxSlope() ) {
             return;
         }
 
         voiceAnnouncement.announce(VoiceAnnouncementUtils.createAfterRecording(context,track.getTrackStatistics(),PreferencesUtils.getUnitSystem()));
+        voiceAnnouncement.announce(VoiceAnnouncementUtils.calculateMaxSlope());
+        
     }
+   
 
     public void announceStatisticsIfNeeded(@NonNull Track track) {
         if (shouldNotAnnounce()) {
