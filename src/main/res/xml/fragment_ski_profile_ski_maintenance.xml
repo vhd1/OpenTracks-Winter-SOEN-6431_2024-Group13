@@ -5,7 +5,8 @@
 
         <Preference
             android:key="km_skied_since_sharpening"
-            android:title="KM skied since sharpening"/>
+            android:title="KM skied since sharpening"
+            android:summary=""/>
 
         <Preference
             android:key="sharpening_interval_percent"

@@ -364,19 +364,8 @@ limitations under the License.
     <string name="ski_profile_sharpening_info_title">Sharpening information</string>
     <string name="ski_profile_waxing_info_title">Waxing information</string>
     <string name="ski_profile_ski_maintenance_title">Ski Maintenance</string>
-    <string name="km_skied_format">You\'ve skied %.1f km.</string>
-    <!--    Notification for sharpening and waxing-->
-    <string name="sharpening_notification_title_interval">Time for Ski Sharpening!</string>
-    <string name="sharpening_notification_text_interval">%1$.1f%% of your sharpening interval has been reached.</string>
-    <string name="sharpening_notification_title_months">It\'s been a while since your last sharpening.</string>
-    <string name="sharpening_notification_text_months">It\'s been %1$d months since your last ski sharpening.</string>
-    <string name="waxing_notification_title_interval">Time for Ski Waxing!</string>
-    <string name="waxing_notification_text_interval">%1$.1f%% of your waxing interval has been reached.</string>
-    <string name="waxing_notification_title_months">It\'s been a while since your last waxing.</string>
-    <string name="waxing_notification_text_months">It\'s been %1$d months since your last ski waxing.</string>
 
-
-<string name="settings_sensors_title">Bluetooth Sensors</string>
+    <string name="settings_sensors_title">Bluetooth Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
 
 
