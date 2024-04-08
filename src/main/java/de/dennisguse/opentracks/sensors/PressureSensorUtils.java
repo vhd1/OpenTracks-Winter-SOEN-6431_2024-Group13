@@ -13,7 +13,7 @@ public class PressureSensorUtils {
 
     private static final float EXPONENTIAL_SMOOTHING = 0.3f;
 
-    private static final float p0 = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
+    private static final float P0_STANDARD_ATMOSPHERE_PRESSURE = SensorManager.PRESSURE_STANDARD_ATMOSPHERE;
 
     private PressureSensorUtils() {
     }
@@ -40,8 +40,8 @@ public class PressureSensorUtils {
 
     @VisibleForTesting
     public static AltitudeChange computeChanges(AtmosphericPressure lastAcceptedSensorValue, AtmosphericPressure currentSensorValue) {
-        float lastSensorValue_m = SensorManager.getAltitude(p0, lastAcceptedSensorValue.getHPA());
-        float currentSensorValue_m = SensorManager.getAltitude(p0, currentSensorValue.getHPA());
+        float lastSensorValue_m = SensorManager.getAltitude(P0_STANDARD_ATMOSPHERE_PRESSURE, lastAcceptedSensorValue.getHPA());
+        float currentSensorValue_m = SensorManager.getAltitude(P0_STANDARD_ATMOSPHERE_PRESSURE, currentSensorValue.getHPA());
 
         float altitudeChange_m = currentSensorValue_m - lastSensorValue_m;
         if (Math.abs(altitudeChange_m) < ALTITUDE_CHANGE_DIFF_M) {
@@ -64,6 +64,6 @@ public class PressureSensorUtils {
      */
     @VisibleForTesting
     public static AtmosphericPressure getBarometricPressure(float altitude_m) {
-        return AtmosphericPressure.ofHPA((float) (p0 * Math.pow(1.0 - 0.0065 * altitude_m / 288.15, 5.255f)));
+        return AtmosphericPressure.ofHPA((float) (P0_STANDARD_ATMOSPHERE_PRESSURE * Math.pow(1.0 - 0.0065 * altitude_m / 288.15, 5.255f)));
     }
 }

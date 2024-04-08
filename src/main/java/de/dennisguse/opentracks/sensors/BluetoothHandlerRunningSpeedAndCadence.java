@@ -50,7 +50,6 @@ public class BluetoothHandlerRunningSpeedAndCadence implements SensorHandlerInte
         int flags = characteristic.getValue()[0];
         boolean hasStrideLength = (flags & 0x01) > 0;
         boolean hasTotalDistance = (flags & 0x02) > 0;
-        boolean hasStatus = (flags & 0x03) > 0; // walking vs running
 
         Speed speed = null;
         Cadence cadence = null;

@@ -34,7 +34,7 @@ public class ShareUtils {
      */
     public static Intent newShareFileIntent(Context context, Track.Id... trackIds) {
         if (trackIds.length == 0) {
-            throw new RuntimeException("Need to share at least one track.");
+            throw new ShareUtilsException("Need to share at least one track.");
         }
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
@@ -80,27 +80,34 @@ public class ShareUtils {
     @Nullable
     public static Intent newShareFileIntent(Context context, Marker.Id... markerIds) {
         if (markerIds.length == 0) {
-            throw new RuntimeException("Need to share at least one marker.");
+            throw new ShareUtilsException("Need to share at least one marker.");
         }
 
         String mime = null;
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         ArrayList<Uri> uris = new ArrayList<>();
+        
+        boolean shouldbreak = false;
         for (Marker.Id markerId : markerIds) {
             Marker marker = contentProviderUtils.getMarker(markerId);
             if (marker == null) {
                 Log.e(TAG, "MarkerId " + markerId.id() + " could not be resolved.");
-                continue;
+                shouldbreak = true;
             }
-            if (marker.getPhotoURI() == null) {
+            else if (marker.getPhotoURI() == null) {
                 Log.e(TAG, "MarkerId " + markerId.id() + " has no picture.");
-                continue;
+                shouldbreak = true;
+            }
+            else{
+                mime = context.getContentResolver().getType(marker.getPhotoURI());
+                uris.add(marker.getPhotoURI());
             }
 
-            mime = context.getContentResolver().getType(marker.getPhotoURI());
-
-            uris.add(marker.getPhotoURI());
+            if(shouldbreak){
+                shouldbreak = false;
+                continue;
+            }
         }
 
         if (uris.isEmpty()) {

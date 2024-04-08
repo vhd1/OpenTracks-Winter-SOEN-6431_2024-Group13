@@ -36,7 +36,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
     private static final AltitudeCorrectionManager ALTITUDE_CORRECTION_MANAGER = new AltitudeCorrectionManager();
 
-    private final Runnable ON_IDLE = this::onIdle;
+    private final Runnable onIdle = this::onIdle;
 
     private final ContentProviderUtils contentProviderUtils;
     private final Context context;
@@ -184,7 +184,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
         if (trackPoint.getType() == TrackPoint.Type.IDLE) {
             insertTrackPoint(trackPoint, true);
-            handler.removeCallbacks(ON_IDLE);
+            handler.removeCallbacks(onIdle);
             return true;
         }
         //Storing trackPoint
@@ -224,16 +224,16 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
             insertTrackPoint(trackPoint, true);
 
-            handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+            handler.removeCallbacks(onIdle);
+            handler.postDelayed(onIdle, idleDuration.toMillis());
             return true;
         }
 
         if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)) {
             insertTrackPoint(trackPoint, false);
 
-            handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+            handler.removeCallbacks(onIdle);
+            handler.postDelayed(onIdle, idleDuration.toMillis());
             return true;
         }
 
