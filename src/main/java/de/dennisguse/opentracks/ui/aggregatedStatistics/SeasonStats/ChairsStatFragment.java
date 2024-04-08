@@ -21,24 +21,27 @@ public class ChairsStatFragment extends Fragment {
     private static final String ARG_SEASON_DAYS = "days";
     private static final String ARG_SEASON_TALLEST_CHAIR = "tallestChair";
     private static final String ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED = "totalNumberOfDaysChairliftUsed";
-
+    private static final String ARG_SEASON_vertical_distance_m = "vertical_distance_m";
 
     private String mSeasonName;
     private String mDays;
     private String mTallestChair;
     private String mTotalDaysChairliftUsed;
+    private String mVertical_Distance_m;
 
     public ChairsStatFragment() {
         // Required empty public constructor
     }
 
-    public static ChairsStatFragment newInstance(String seasonName, String days, String tallestChair, String totalDaysChairliftUsed) {
+    public static ChairsStatFragment newInstance(String seasonName, String days, String tallestChair, String totalDaysChairliftUsed, String vertical_m) {
         ChairsStatFragment fragment = new ChairsStatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_SEASON_NAME, seasonName);
         args.putString(ARG_SEASON_DAYS, days);
         args.putString(ARG_SEASON_TALLEST_CHAIR, tallestChair);
         args.putString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED, totalDaysChairliftUsed);
+        args.putString(ARG_SEASON_vertical_distance_m, vertical_m);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,18 +55,23 @@ public class ChairsStatFragment extends Fragment {
             mDays = getArguments().getString(ARG_SEASON_DAYS);
             mTallestChair = getArguments().getString(ARG_SEASON_TALLEST_CHAIR);
             mTotalDaysChairliftUsed = getArguments().getString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED);
+            mVertical_Distance_m = getArguments().getString(ARG_SEASON_vertical_distance_m);
+
         }
 
         TextView seasonNameTextView = view.findViewById(R.id.seasonNameTextView);
         TextView daysTextView = view.findViewById(R.id.days_tv);
         TextView tallestChairTextView = view.findViewById(R.id.tallestChair_tv);
         TextView totalDaysChairliftUsedTextView = view.findViewById(R.id.totalDaysChairliftUsed_tv);
+        TextView verticalDistanceMTextView = view.findViewById(R.id.textView12);
 
         if (mSeasonName != null) {
             seasonNameTextView.setText(mSeasonName);
             daysTextView.setText(mDays);
             tallestChairTextView.setText(mTallestChair);
             totalDaysChairliftUsedTextView.setText(mTotalDaysChairliftUsed);
+            verticalDistanceMTextView.setText(mVertical_Distance_m);
+
         }
         return view;
     }

@@ -725,7 +725,7 @@ limitations under the License.
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
     <string name="default_Date_Key">1 Sep</string>
     <string name="total_number_of_days_chair_lift_used">Total number of days chair lift used</string>
-    <string name="tallest_chair_lift_m">Tallest Chair Lift M</string>
+    <string name="vertical_distance_m">Vertical M</string>
     <string name="days">Days</string>
     <string name="season_totals">Season Totals</string>
     <string name="season_name">Season_name</string>
