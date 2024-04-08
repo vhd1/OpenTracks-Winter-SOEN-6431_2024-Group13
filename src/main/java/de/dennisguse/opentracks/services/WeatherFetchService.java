@@ -12,22 +12,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import de.dennisguse.opentracks.data.models.WeatherInformation;
+
 public class WeatherFetchService {
-    public static final String API_KEY = "b95112d362764c318e8c58042ab6072f";
-    public static final String API_URL = "http://api.weatherstack.com/current";
+    public static final String API_KEY = "19fb6cae02984e348e314715240804";
+    public static final String API_URL = "https://api.weatherapi.com/v1/current.json";
 
     @Nullable
-    public static WeatherInfo fetchWeatherData(double latitude, double longitude) {
+    public static WeatherInformation fetchWeatherData(double latitudeDouble, double longitudeDouble) {
         try {
+            String latitude = String.valueOf(latitudeDouble);
+            String longitude = String.valueOf(longitudeDouble);
 
-            String latitudeS = String.valueOf(latitude);
-            String longitudeS = String.valueOf(longitude);
-
-            URL url = getURL(latitudeS, longitudeS);
+            URL url = getURL(latitude, longitude);
 
             HttpURLConnection connection = getHttpURLConnection(url);
+
             StringBuilder result = getWeatherData(connection);
-            return null;
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -56,9 +57,8 @@ public class WeatherFetchService {
         return connection;
     }
 
-    @SuppressWarnings("deprecation")
     private static URL getURL(String latitude, String longitude) throws MalformedURLException {
-        return new URL(API_URL + "?access_key=" + API_KEY +
-                "&query=" + latitude + "," + longitude);
+        return new URL(API_URL + "?q=" + latitude +
+                "," + longitude + "&key=" + API_KEY);
     }
 }
