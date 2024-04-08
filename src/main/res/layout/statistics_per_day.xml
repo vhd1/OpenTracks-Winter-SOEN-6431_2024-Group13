@@ -136,5 +136,57 @@
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             tools:text="km/h" />
 
+        <!-- Avg. speed/pace -->
+        <TextView
+            android:id="@+id/stats_average_speed_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_speed_horizontal_line"
+            tools:text="Avg. Moving Speed" />
+
+        <TextView
+            android:id="@+id/stats_average_speed_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/stats_average_speed_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_average_speed_label"
+            tools:text="30.00" />
+
+        <TextView
+            android:id="@+id/stats_average_speed_unit"
+            style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/stats_average_speed_value"
+            app:layout_constraintStart_toEndOf="@id/stats_average_speed_value"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            tools:text="km/h" />
+
+
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_speed_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_max_speed_value,stats_average_speed_value" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_waiting_horizontal_line"
+            style="@style/HorizontalLine"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_speed_barrier"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
