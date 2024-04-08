@@ -292,4 +292,73 @@ public class TrackImporter {
         contentProviderUtils.deleteTracks(context, trackIds);
     }
 
+    /**
+     * Finds the start time of the chair lift ride with respect to the provided acceleration threshold.
+     *
+     * @param trackPoints       The list of track points representing the ski lift trajectory
+     * @param currentTrackPoint The current track point
+     * @param acceleration      The acceleration threshold
+     * @return                  The start time of the chair lift ride
+     */
+    public Instant findStartTimeWithAccelerationThreshold(List<TrackPoint> trackPoints, TrackPoint currentTrackPoint, double acceleration) {
+        Instant startTime = currentTrackPoint.getTime(); // Initialize start time
+        double altitudeDifference = -1; // Initialize altitude difference
+
+        TrackPoint previousTrackPoint = trackPoints.get(trackPoints.size() - 1); // Get the last track point in the list
+
+        for (int i = trackPoints.size() - 2; i > 0; i--) { // Iterate through track points in reverse order
+            TrackPoint selectedTrackPoint = trackPoints.get(i);
+            double currentAltitudeDifference = previousTrackPoint.getAltitude().toM() - selectedTrackPoint.getAltitude().toM();
+
+            // Check if altitude difference is within the acceleration threshold
+            if (altitudeDifference == -1 || Math.abs(currentAltitudeDifference - altitudeDifference) <= acceleration) {
+                startTime = selectedTrackPoint.getTime(); // Update start time
+                altitudeDifference = currentAltitudeDifference; // Update altitude difference
+            }
+        }
+        return startTime;
+    }
+
+    /**
+     * Calculates the total time spent on the chair lift ride based on the start time and current time.
+     *
+     * @param trackPoints       The list of track points representing the ski lift trajectory
+     * @param currentTrackPoint The current track point
+     * @param acceleration      The acceleration threshold
+     * @return                  The total time spent on the chair lift ride in seconds
+     */
+    public double calculateTotalTimeOnChairLift(List<TrackPoint> trackPoints, TrackPoint currentTrackPoint, double acceleration) {
+        Instant startTime = findStartTimeWithAccelerationThreshold(trackPoints, currentTrackPoint, acceleration);
+        Instant endTime = currentTrackPoint.getTime();
+
+        // Calculate total time on chair lift
+        return Duration.between(startTime, endTime).getSeconds();
+    }
+
+    public boolean isEnteringChairlift(TrackPoint currentTrackPoint, double elevationThreshold) {
+        List<TrackPoint> recentTrackPoints = filterRecentTrackPoints(currentTrackPoint);
+        if (recentTrackPoints.isEmpty()) {
+            return false;
+        }
+        double currentElevation = currentTrackPoint.getAltitude().toM();
+        for (TrackPoint point : recentTrackPoints) {
+            double elevation = point.getAltitude().toM();
+            if (Math.abs(currentElevation - elevation) > elevationThreshold) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private List<TrackPoint> filterRecentTrackPoints(TrackPoint currentTrackPoint) {
+        List<TrackPoint> recentTrackPoints = new ArrayList<>();
+        Instant currentTime = currentTrackPoint.getTime();
+        for (TrackPoint point : trackPoints) {
+            Instant pointTime = point.getTime();
+            Duration timeDifference = Duration.between(pointTime, currentTime);
+            if (!timeDifference.isNegative() && timeDifference.getSeconds() <= 20) {
+                recentTrackPoints.add(point);
+            }
+        }
+        return recentTrackPoints;
+    }
 }
