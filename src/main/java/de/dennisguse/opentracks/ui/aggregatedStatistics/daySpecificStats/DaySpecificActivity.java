@@ -34,25 +34,23 @@ public class DaySpecificActivity extends AbstractTrackDeleteActivity {
     private TrackDataHub trackDataHub;
     private Track.Id trackId;
     private List<TrackSegment> trackSegments;
-    private DaySpecificAdapter adapter;
+    private DaySpecificAdapter dataAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.day_specific_activity);
+        trackSegments = new ArrayList<>();
         contentProviderUtils = new ContentProviderUtils(this);
         handleIntent(getIntent());
+        updateTrackSegments();
         trackDataHub = new TrackDataHub(this);
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
-        trackSegments = new ArrayList<>();
 
         viewBinding = DaySpecificActivityBinding.inflate(getLayoutInflater());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new DaySpecificAdapter(this, viewBinding.segmentList);
-        viewBinding.segmentList.setLayoutManager(layoutManager);
-        viewBinding.segmentList.setAdapter(adapter);
-
+        dataAdapter = new DaySpecificAdapter(this, viewBinding.segmentList);
+        dataAdapter.swapData(trackSegments);
+        viewBinding.segmentList.setAdapter(dataAdapter);
     }
 
     @Override
@@ -64,7 +62,7 @@ public class DaySpecificActivity extends AbstractTrackDeleteActivity {
     protected void onResume() {
         super.onResume();
         updateTrackSegments();
-        adapter.swapData(trackSegments);
+        dataAdapter.swapData(trackSegments);
     }
 
     public void updateTrackSegments() {
@@ -109,8 +107,7 @@ public class DaySpecificActivity extends AbstractTrackDeleteActivity {
         String dateString = "2024-03-02";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(dateString, formatter);
-        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        return date;
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     private void handleIntent(Intent intent) {

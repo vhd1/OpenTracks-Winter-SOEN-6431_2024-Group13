@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackSegment;
 import de.dennisguse.opentracks.databinding.DaySpecificActivityItemBinding;
-import de.dennisguse.opentracks.ui.TrackListAdapter;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
 
 public class DaySpecificAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ActionMode.Callback {
@@ -101,12 +101,15 @@ public class DaySpecificAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             view.setOnLongClickListener(this);
         }
 
-        public void bind(TrackSegment segment){
+        public void bind(TrackSegment segment) {
+            Distance distance = segment.getDistanceBetweenFirstAndLast();
+            Long time = segment.getTotalTime();
+            double speed = segment.getSpeed(distance, time);
             viewBinding.daySpecificActivity.setText("Run");
             viewBinding.daySpecificActivityDisplacement.setText("0 m");
             viewBinding.daySpecificActivityDistance.setText("0.14 km");
-            viewBinding.daySpecificActivitySpeed.setText("36.3 km/h");
-            viewBinding.daySpecificActivityTime.setText("0.50");
+            viewBinding.daySpecificActivitySpeed.setText(speed + " km/h");
+            viewBinding.daySpecificActivityTime.setText("" + segment.getTotalTime());
         }
 
         public void setSelected(boolean isSelected) {
