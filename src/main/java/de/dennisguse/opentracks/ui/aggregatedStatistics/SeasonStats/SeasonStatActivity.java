@@ -36,7 +36,7 @@ public class SeasonStatActivity extends AppCompatActivity {
         String[] seasonNames = {"Season 2020 - 2021", "Season 2021 - 2022", "Season 2022 - 2023", "Season 2023 - 2024"};
         ArrayList<DummySeason> seasonArrayList = new ArrayList<>();
         for (int i = 0; i < seasonNames.length ; i++){
-            seasonArrayList.add(new DummySeason("trail1 200",seasonNames[i],i,i,i,i,i,"10:10:10", i,i,i,i, i, new String[]{"Chair1","Chair2","Chair3", "Chair4", "Chair5"}, i));
+            seasonArrayList.add(new DummySeason("trail 200",seasonNames[i],i,i,i,i,i,"10:10:10", i,i,i,i, i, new String[]{"Chair1","Chair2","Chair3", "Chair4", "Chair5"}, i));
         }
 
         SeasonListAdapter listAdapter = new SeasonListAdapter(SeasonStatActivity.this, seasonArrayList);
@@ -61,7 +61,7 @@ public class SeasonStatActivity extends AppCompatActivity {
                 intent.putExtra("tallestChair",seasonArrayList.get(position).tallestChair);
                 intent.putExtra("favoriteChairs",seasonArrayList.get(position).favoriteChairs);
                 intent.putExtra("totalNumberOfDaysChairliftUsed",seasonArrayList.get(position).totalNumberOfDaysChairliftUsed);
-                intent.putExtra("mostcommantrail",seasonArrayList.get(position).mostcommantrail);
+                intent.putExtra("mostCommonTrail",seasonArrayList.get(position).mostCommonTrail);
                 startActivity(intent);
             }
         });
@@ -85,10 +85,10 @@ class DummySeason {
 
     int tallestChair;
     String[] favoriteChairs;
-    String mostcommantrail;
+    String mostCommonTrail;
 
 
-    public DummySeason(String mostcommantrail,String seasonName, int days, int runs, int resort, int vertical_m, double distance, String active, double max_Speed, int max_alt, int tallestRun, double longestRun, int tallestChair, String[] favoriteChairs, int totalNumberOfDaysChairliftUsed) {
+    public DummySeason(String mostCommonTrail,String seasonName, int days, int runs, int resort, int vertical_m, double distance, String active, double max_Speed, int max_alt, int tallestRun, double longestRun, int tallestChair, String[] favoriteChairs, int totalNumberOfDaysChairliftUsed) {
         this.seasonName = seasonName;
         this.days = days;
         this.runs = runs;
@@ -103,6 +103,6 @@ class DummySeason {
         this.favoriteChairs = favoriteChairs;
         this.tallestChair = tallestChair;
         this.totalNumberOfDaysChairliftUsed = totalNumberOfDaysChairliftUsed;
-        this.mostcommantrail= mostcommantrail;
+        this.mostCommonTrail= mostCommonTrail;
     }
 }

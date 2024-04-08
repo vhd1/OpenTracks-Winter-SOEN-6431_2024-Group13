@@ -83,16 +83,17 @@ public class RunAndChairStatActivity extends AppCompatActivity {
             String days = "123";
             String tallestChair = "123";
             String totalDaysChairliftUsed = "123";
-            String vertical_m = "123";
+            String mostCommonTrail = "123";
             String[] favoriteChairs = new String[5];
             if (intent != null){
                 seasonName = intent.getStringExtra("seasonName");
                 days = Integer.toString(intent.getIntExtra("days",-1));
                 tallestChair = Integer.toString(intent.getIntExtra("tallestChair", -1));
                 totalDaysChairliftUsed = Integer.toString(intent.getIntExtra("totalNumberOfDaysChairliftUsed",-1));
+                mostCommonTrail = intent.getStringExtra("mostCommonTrail");
                 favoriteChairs = intent.getStringArrayExtra("favoriteChairs");
             }
-            fragmentTransaction.replace(R.id.frame_nav_season, ChairsStatFragment.newInstance(seasonName, days, tallestChair, totalDaysChairliftUsed, favoriteChairs));
+            fragmentTransaction.replace(R.id.frame_nav_season, ChairsStatFragment.newInstance(seasonName, mostCommonTrail, days, tallestChair, totalDaysChairliftUsed, favoriteChairs));
         }
         fragmentTransaction.commit();
     }
