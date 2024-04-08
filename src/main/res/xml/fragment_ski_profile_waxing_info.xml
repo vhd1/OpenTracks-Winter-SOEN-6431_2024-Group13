@@ -8,7 +8,7 @@
             android:summary="Enter the waxing interval for the skis (in km)"
             android:dialogTitle="Enter Waxing Interval"
             android:inputType="numberDecimal"
-            android:defaultValue="null" />
+            android:defaultValue="30" />
         <ListPreference
             android:key="type_of_wax"
             android:title="Wax Type"

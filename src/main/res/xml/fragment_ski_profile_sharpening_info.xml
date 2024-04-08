@@ -32,6 +32,7 @@
     <PreferenceCategory
         android:title="Sharpening info">
 
+<<<<<<< Updated upstream
         <ListPreference
             android:key="day"
             android:title="Interval"
@@ -39,6 +40,16 @@
             android:entries="@array/time_day"
             android:entryValues="@array/time_day"
             android:defaultValue="km"/>
+=======
+        <EditTextPreference
+            android:key="sharpening_interval"
+            android:title="Sharpening Interval (km)"
+            android:summary="Enter the sharpening interval for the skis (in km)"
+            android:dialogTitle="Enter sharpening Interval"
+            android:inputType="numberDecimal"
+            android:defaultValue="30" />
+
+>>>>>>> Stashed changes
 
         <ListPreference
             android:key="base_angle"
