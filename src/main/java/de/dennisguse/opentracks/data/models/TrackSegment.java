@@ -83,4 +83,36 @@ public class TrackSegment {
         long totalTime = getTotalTime().toSeconds();
         return totalDistance/totalTime;
     }
+
+    /**
+     * Calculates the average distance between consecutive track points in the segment.
+     *
+     * @return The average distance as a Distance object.
+     */
+    public Distance getAvgDistance() {
+        if (trackPoints.isEmpty()) {
+            return Distance.of(0);
+        }
+
+
+        double totalDistance = 0;
+
+
+        for (int i = 1; i < trackPoints.size(); i++) {
+            TrackPoint previousPoint = trackPoints.get(i - 1);
+            TrackPoint currentPoint = trackPoints.get(i);
+
+
+            Distance distanceBetweenPoints = currentPoint.distanceToPrevious(previousPoint);
+
+
+            totalDistance += distanceBetweenPoints.toM();
+        }
+
+        // Calculate the average distance by dividing the total distance by the number of segments
+        double averageDistance = totalDistance / (trackPoints.size() - 1);
+
+
+        return Distance.of(averageDistance);
+    }
 }
