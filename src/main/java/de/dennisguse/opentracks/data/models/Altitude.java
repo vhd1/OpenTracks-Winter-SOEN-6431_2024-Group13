@@ -15,7 +15,7 @@ public abstract class Altitude {
     public double toM() {
         return altitude_m;
     }
-    
+
     public abstract int getLabelId();
 
     public static class WGS84 extends Altitude {
@@ -58,4 +58,3 @@ public abstract class Altitude {
                 '}';
     }
 }
-

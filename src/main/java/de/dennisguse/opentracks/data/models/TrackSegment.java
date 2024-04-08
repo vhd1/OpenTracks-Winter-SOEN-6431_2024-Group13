@@ -34,6 +34,12 @@ public class TrackSegment {
         return  !trackPoints.isEmpty();
     }
 
+    /**
+     * Returns the initial elevation of the track.
+     * If the track contains at least one point, the elevation of the first point is returned.
+     * If the track is empty, returns 0.
+     * @return The initial elevation in meters.
+     */
     public double getInitialElevation() {
         Optional<TrackPoint> firstPoint = trackPoints.stream().findFirst();
         if (firstPoint.isPresent()) {
@@ -43,10 +49,17 @@ public class TrackSegment {
         return 0;
     }
 
-    public long getDisplacement() {
+    /**
+     * Calculates the displacement of the track based on altitude gain and loss.
+     * @return The total displacement in meters.
+     */
+    public long getDisplacement()
+    {
         long displacement = 0;
-        for (TrackPoint point: trackPoints) {
-            if (point.hasAltitudeGain()) {
+        for (TrackPoint point: trackPoints)
+        {
+            if (point.hasAltitudeGain())
+            {
                 displacement += point.getAltitudeGain();
             }
 
@@ -57,6 +70,13 @@ public class TrackSegment {
 
         return displacement;
     }
+
+
+    /**
+     * Calculates the total distance covered by the track.
+     * @return The total distance covered as a Distance object.
+     *         Returns null if the trackPoints list is null or empty.
+     */
     public Distance getDistance() {
         if (trackPoints == null) {
             return null;
@@ -66,6 +86,11 @@ public class TrackSegment {
         return last.distanceToPrevious(first);
     }
 
+    /**
+     * Calculates the total time duration of the track.
+     * @return The total time duration as a Duration object.
+     *         Returns null if the trackPoints list is null or empty.
+     */
     public Duration getTotalTime(){
 
         if(trackPoints == null){
@@ -77,6 +102,11 @@ public class TrackSegment {
         return Duration.between(startTime.getTime(), endTime.getTime());
     }
 
+    /**
+     * Calculates the average speed of the track.
+     * @return The average speed in meters per second (m/s).
+     *         Returns NaN if the total time is zero (indicating division by zero).
+     */
     public double getSpeed(){
         // in m/s
         double totalDistance = getDistance().toM();
