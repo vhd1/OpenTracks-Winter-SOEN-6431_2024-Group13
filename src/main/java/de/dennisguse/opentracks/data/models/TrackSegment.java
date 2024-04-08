@@ -164,4 +164,26 @@ public class TrackSegment {
         return totalDistance / totalTimeSeconds;
     }
 
+
+    /**
+     * Calculates the average time between consecutive track points in the segment.
+     *
+     * @return The average time
+     */
+
+    public double getAverageTime()
+    {
+        Distance distance = getDistance();
+        Duration totalTime = getTotalTime();
+
+        if (distance == null || totalTime == null || totalTime.isZero())
+        {
+            return Double.NaN;
+        }
+
+        double totalDistance = distance.toM();
+        long totalTimeSeconds = totalTime.getSeconds();
+        return totalDistance / totalTimeSeconds;
+    }
+
 }
