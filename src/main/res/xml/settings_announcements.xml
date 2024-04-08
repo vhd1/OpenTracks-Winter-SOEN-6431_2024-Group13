@@ -81,4 +81,11 @@
             android:key="@string/voice_announce_max_slope_key"
             android:title="@string/settings_announcements_max_slope" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_announcements_run_title">
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_run_average_speed_default"
+            android:key="@string/voice_announce_run_average_speed_key"
+            android:title="@string/settings_announcements_run_average_speed" />
+    </PreferenceCategory>
 </PreferenceScreen>

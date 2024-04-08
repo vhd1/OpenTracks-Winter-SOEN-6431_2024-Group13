@@ -7,7 +7,9 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceRunAverageSpeed;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope;
+
 
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
 
@@ -104,6 +106,46 @@ class VoiceAnnouncementUtils {
        
 
         return builder;
+    }
+
+    static Spannable createRunStatistics(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        //TODO: Once we get run data from other groups, we can announce run statistics instead of track statistics
+        Distance totalDistance = trackStatistics.getTotalDistance();
+        Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
+
+        int speedId;
+        String unitSpeedTTS;
+        switch (unitSystem) {
+            case METRIC -> {
+                speedId = R.string.voiceSpeedKilometersPerHourPlural;
+                unitSpeedTTS = "kilometer per hour";
+            }
+            case IMPERIAL_FEET, IMPERIAL_METER -> {
+                speedId = R.string.voiceSpeedMilesPerHourPlural;
+                unitSpeedTTS = "mile per hour";
+            }
+            case NAUTICAL_IMPERIAL -> {
+                speedId = R.string.voiceSpeedMKnotsPlural;
+                unitSpeedTTS = "knots";
+            }
+            default -> throw new RuntimeException("Not implemented");
+        }
+
+        if (totalDistance.isZero()) {
+            return builder;
+        }
+
+        //Announce Average Speed
+       if (shouldVoiceAnnounceRunAverageSpeed()) {
+           double speedInUnit = averageMovingSpeed.to(unitSystem);
+           builder.append(" ")
+                   .append(context.getString(R.string.speed));
+           String template = context.getResources().getString(speedId);
+           appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
+           builder.append(".");
+       }
+       return builder;
     }
 
     static Spannable createStatistics(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {

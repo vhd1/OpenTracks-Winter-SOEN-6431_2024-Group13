@@ -361,6 +361,7 @@ limitations under the License.
     <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
 
     <string name="settings_announcements_recording_title">Announcements After Recording</string>
+    <string name="settings_announcements_run_title">Announcements After Run</string>
 
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_import_export_summary">Import, Export, Auto Export</string>
@@ -413,6 +414,7 @@ limitations under the License.
     <string name="settings_announcements_lap_heart_rate">Lap heart rate</string>
     <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
+    <string name="settings_announcements_run_average_speed">Run Average Speed</string>
     <string name="settings_announcements_max_slope">Max slope</string>
 
     <!-- Recording Related Data -->
