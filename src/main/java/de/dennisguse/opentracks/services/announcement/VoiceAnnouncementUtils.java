@@ -41,7 +41,7 @@ class VoiceAnnouncementUtils {
         // This method should return the calculated maximum slope.
            return 0.0; 
     }
-    static double CalculateAvergeaSlope(){
+    static double CalculateAverageSlope(){
         // This is dummy methods to fetch or calculate the average slope.
         return 10.0;
     }
@@ -106,11 +106,10 @@ class VoiceAnnouncementUtils {
             }
         }
             if (shouldVoiceAnnounceAveragesloperecording()) {
-                double avgSlope = calculateMaxSlope();
+                double avgSlope = CalculateAverageSlope();
                 if (!Double.isNaN(avgSlope)) {
                     builder.append(" ")
                             .append("Average slope")
-                            .append(" ")
                             .append(": ")
                             .append(String.format("%.2f%%", avgSlope))
                             .append(".");
