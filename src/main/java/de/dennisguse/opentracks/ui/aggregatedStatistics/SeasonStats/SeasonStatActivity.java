@@ -2,10 +2,8 @@ package de.dennisguse.opentracks.ui.aggregatedStatistics.SeasonStats;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +20,42 @@ import de.dennisguse.opentracks.databinding.ActivitySeasonStatBinding;
 public class SeasonStatActivity extends AppCompatActivity {
 
     ActivitySeasonStatBinding binding;
+
+
+    public int calculateSum(ArrayList<Integer> list) {
+        int sum = 0;
+        for (int num : list) {
+            sum += num;
+        }
+        return sum;
+    }
+
+    public static int findMax(ArrayList<Integer> list) {
+        if (list == null || list.isEmpty()) {
+            throw new IllegalArgumentException("ArrayList is empty or null");
+        }
+
+        int max = list.get(0);
+
+        for (int i = 1; i < list.size(); i++) {
+            int current = list.get(i);
+            if (current > max) {
+                max = current;
+            }
+        }
+        return max;
+    }
+
+    public static int maxSpeed(ArrayList<Integer> dist, ArrayList<Integer> time){
+        int max = (int)(dist.get(0)/time.get(0));
+        for (int i = 1; i < dist.size(); i++) {
+            int current = (int)(dist.get(i)/time.get(i));
+            if (current > max) {
+                max = current;
+            }
+        }
+        return max;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +82,59 @@ public class SeasonStatActivity extends AppCompatActivity {
         int[] TallestRun = new int[4];
         double[] LongestRun = new double[4];
 
+
+        int n = 10;
+        ArrayList<Integer>[] VerticalMList = new ArrayList[n];
+        int size = 10;
+
+        for (int i = 0; i < n; i++) {
+            VerticalMList[i] = new ArrayList<>();
+
+            for (int j = 0; j < size; j++) {
+                VerticalMList[i].add(random.nextInt(1000)); // Generating random integers between 0 and 999
+            }
+        }
+
+        ArrayList<Integer>[] DistanceKMs = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            DistanceKMs[i] = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                DistanceKMs[i].add((int) (random.nextDouble() * 20)); // Generating random integers between 0 and 999
+            }
+        }
+
+        ArrayList<Integer>[] Hours = new ArrayList[n];
+        ArrayList<Integer>[] Minutes = new ArrayList[n];
+        ArrayList<Integer>[] Seconds = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            Hours[i] = new ArrayList<>();
+            Minutes[i] = new ArrayList<>();
+            Seconds[i] = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                Hours[i].add((int) (1 + random.nextInt(23)));
+                Minutes[i].add((int) (random.nextInt(60)));
+                Seconds[i].add((int) (random.nextInt(60)));
+            }
+        }
+
+
         ArrayList<DummySeason> seasonArrayList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             Days[i] = Integer.toString(random.nextInt(1001));
-            VerticalM[i] = random.nextInt(1000);
+            VerticalM[i] = calculateSum(VerticalMList[i]);
             Runs[i] = random.nextInt(20);
-            DistanceKM[i] = random.nextDouble() * 20;
+            DistanceKM[i] = calculateSum(DistanceKMs[i]);
             Resort[i] = random.nextInt(10) + 1;
-            int hours = random.nextInt(24);
-            int minutes = random.nextInt(60);
-            int seconds = random.nextInt(60);
+            int hours = calculateSum(Hours[i]);
+            int minutes = calculateSum(Minutes[i]);
+            int seconds = calculateSum(Seconds[i]);
             String activeTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
             Active[i] = activeTime;
-            MaxSpeed[i] = random.nextDouble() * 100;
+            MaxSpeed[i] = maxSpeed(DistanceKMs[i],Hours[i]);
             TallestRun[i] = (int) (random.nextDouble() * 100);
-            MaxAltitude[i] = (int) (random.nextDouble() * 5000);
+            MaxAltitude[i] = findMax(VerticalMList[i]);
             LongestRun[i] = random.nextDouble() * 10;
 
             seasonArrayList.add(new DummySeason(seasonNames[i], Integer.parseInt(Days[i]), Runs[i], Resort[i], VerticalM[i], DistanceKM[i], Active[i], MaxSpeed[i], MaxAltitude[i], TallestRun[i], LongestRun[i]));
