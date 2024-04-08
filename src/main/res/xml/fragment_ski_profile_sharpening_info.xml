@@ -44,7 +44,7 @@
             android:summary="Enter the sharpening interval for the skis (in km)"
             android:dialogTitle="Enter sharpening Interval"
             android:inputType="numberDecimal"
-            android:defaultValue="null" />
+            android:defaultValue="30" />
 
 
         <ListPreference
