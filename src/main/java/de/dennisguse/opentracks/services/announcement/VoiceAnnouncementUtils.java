@@ -7,7 +7,6 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
-import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope; 
 
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
 
@@ -203,16 +202,6 @@ class VoiceAnnouncementUtils {
                     .append(context.getString(R.string.current_heart_rate));
             appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
             builder.append(".");
-        }
-        if (shouldVoiceAnnounceMaxSlope()) {
-            double maxSlope = calculateMaxSlope(); // Calculate the maximum slope based on elevation data
-            if (!Double.isNaN(maxSlope)) {
-                builder.append(" ")
-               .append(context.getString(R.string.max_slope))
-               .append(": ")
-               .append(String.format("%.2f%%", maxSlope)) // Format the slope value
-               .append(".");
-            }
         }
 
         return builder;
