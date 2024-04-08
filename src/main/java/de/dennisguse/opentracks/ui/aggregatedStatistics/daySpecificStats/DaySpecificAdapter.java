@@ -102,14 +102,19 @@ public class DaySpecificAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         public void bind(TrackSegment segment) {
-            Distance distance = segment.getDistanceBetweenFirstAndLast();
-            Long time = segment.getTotalTime();
-            double speed = segment.getSpeed(distance, time);
-            viewBinding.daySpecificActivity.setText("Run");
-            viewBinding.daySpecificActivityDisplacement.setText("0 m");
-            viewBinding.daySpecificActivityDistance.setText("0.14 km");
-            viewBinding.daySpecificActivitySpeed.setText(speed + " km/h");
-            viewBinding.daySpecificActivityTime.setText("" + segment.getTotalTime());
+            double speed = segment.getSpeed();
+            String formattedSpeed = String.format("%.2f", speed);
+
+            double distance = segment.getDistance().toM();
+            String formattedDistance = String.format("%.2f", distance);
+
+            double elevation = segment.getInitialElevation();
+            String formattedElevation = String.format("%.1f", elevation);
+
+            viewBinding.daySpecificActivityDisplacement.setText(formattedElevation + " m");
+            viewBinding.daySpecificActivityDistance.setText(formattedDistance + " mts");
+            viewBinding.daySpecificActivitySpeed.setText(formattedSpeed + " m/s");
+            viewBinding.daySpecificActivityTime.setText(segment.getTotalTime().toMinutes() + " minutes");
         }
 
         public void setSelected(boolean isSelected) {

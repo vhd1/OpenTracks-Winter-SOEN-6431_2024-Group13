@@ -1,15 +1,12 @@
 package de.dennisguse.opentracks.data.models;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.ArrayList;
-
-import de.dennisguse.opentracks.io.file.importer.TrackImporter;
+import java.util.Optional;
 
 public class TrackSegment {
 
@@ -37,18 +34,39 @@ public class TrackSegment {
         return  !trackPoints.isEmpty();
     }
 
-    public Distance getDistanceBetweenFirstAndLast() {
+    public double getInitialElevation() {
+        Optional<TrackPoint> firstPoint = trackPoints.stream().findFirst();
+        if (firstPoint.isPresent()) {
+            TrackPoint point = firstPoint.get();
+            return point.getAltitude().toM();
+        }
+        return 0;
+    }
+
+    public long getDisplacement() {
+        long displacement = 0;
+        for (TrackPoint point: trackPoints) {
+            if (point.hasAltitudeGain()) {
+                displacement += point.getAltitudeGain();
+            }
+
+            if (point.hasAltitudeLoss()) {
+                displacement += point.getAltitudeLoss();
+            }
+        }
+
+        return displacement;
+    }
+    public Distance getDistance() {
         if (trackPoints == null) {
             return null;
         }
         TrackPoint first = trackPoints.get(0);
         TrackPoint last = trackPoints.get(trackPoints.size() - 1);
-        Distance distance = last.distanceToPrevious(first);
-
-        return distance;
+        return last.distanceToPrevious(first);
     }
 
-    public Long getTotalTime(){
+    public Duration getTotalTime(){
 
         if(trackPoints == null){
             return null;
@@ -56,13 +74,13 @@ public class TrackSegment {
         TrackPoint startTime = trackPoints.get(0);
         TrackPoint endTime = trackPoints.get(trackPoints.size() - 1);
 
-        Duration totalTime  = Duration.between(startTime.getTime(), endTime.getTime());
-        return totalTime.toMinutes();
+        return Duration.between(startTime.getTime(), endTime.getTime());
     }
 
-    public double getSpeed(Distance totalDistance, Long totalTime){
-        return totalDistance.distance_m()/totalTime;
+    public double getSpeed(){
+        // in m/s
+        double totalDistance = getDistance().toM();
+        long totalTime = getTotalTime().toSeconds();
+        return totalDistance/totalTime;
     }
-
-
 }
