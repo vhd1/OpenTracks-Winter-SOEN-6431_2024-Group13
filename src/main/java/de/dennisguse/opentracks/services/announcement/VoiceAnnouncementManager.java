@@ -137,8 +137,21 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
             return;
         }
 
-        //TODO: Once we have run data from other groups, only call this if we're at the end of a run
-        voiceAnnouncement.announce(VoiceAnnouncementUtils.createRunStatistics(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem()));
+        boolean announce = false;
+        this.trackStatistics = track.getTrackStatistics();
+        if (trackStatistics.getTotalDistance().greaterThan(nextTotalDistance)) {
+            updateNextTaskDistance();
+            announce = true;
+        }
+        if (!trackStatistics.getTotalTime().minus(nextTotalTime).isNegative()) {
+            updateNextDuration();
+            announce = true;
+        }
+
+        if (announce) {
+            //TODO: Once we have run data from other groups, change the conditions to only call this if we're at the end of a run
+            voiceAnnouncement.announce(VoiceAnnouncementUtils.createRunStatistics(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem()));
+        }
     }
 
     public void announceStatisticsIfNeeded(@NonNull Track track) {
