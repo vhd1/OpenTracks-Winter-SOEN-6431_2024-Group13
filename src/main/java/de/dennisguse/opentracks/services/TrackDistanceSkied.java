@@ -62,10 +62,10 @@ public class TrackDistanceSkied {
 
         double lat1 = Math.toRadians(prevTrackPoint.getLatitude());
         double lon1 = Math.toRadians(prevTrackPoint.getLongitude());
-        double alt1 = prevTrackPoint.getAltitude();
+        double alt1 = prevTrackPoint.getAltitude().toM();;
         double lat2 = Math.toRadians(currentTrackPoint.getLatitude());
         double lon2 = Math.toRadians(currentTrackPoint.getLongitude());
-        double alt2 = currentTrackPoint.getAltitude();
+        double alt2 = currentTrackPoint.getAltitude().toM();
 
         double latDistance = lat2 - lat1;
         double lonDistance = lon2 - lon1;
