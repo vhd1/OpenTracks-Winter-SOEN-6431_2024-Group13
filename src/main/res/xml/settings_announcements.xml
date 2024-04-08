@@ -88,4 +88,11 @@
             app:key="@string/voice_announce_average_slope_recording_key" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_announcements_run_title">
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_run_average_speed_default"
+            android:key="@string/voice_announce_run_average_speed_key"
+            android:title="@string/settings_announcements_run_average_speed" />
+    </PreferenceCategory>
 </PreferenceScreen>
