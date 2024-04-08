@@ -145,4 +145,23 @@ public class TrackSegment {
 
         return Distance.of(averageDistance);
     }
+
+    /**
+     * Calculates the average speed
+     * @return The average speed in meters per second (m/s).
+     *         Returns NaN if the total time is zero (indicating division by zero).
+     */
+    public double getAverageSpeed() {
+        Distance distance = getDistance();
+        Duration totalTime = getTotalTime();
+
+        if (distance == null || totalTime == null || totalTime.isZero()) {
+            return Double.NaN;
+        }
+
+        double totalDistance = distance.toM();
+        long totalTimeSeconds = totalTime.getSeconds();
+        return totalDistance / totalTimeSeconds;
+    }
+
 }
