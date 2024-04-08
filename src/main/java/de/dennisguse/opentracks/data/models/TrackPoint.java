@@ -261,7 +261,7 @@ public class TrackPoint {
         return altitude != null;
     }
 
-    public Altitude getAltitude() {
+    public double getAltitude() {
         return altitude;
     }
 
