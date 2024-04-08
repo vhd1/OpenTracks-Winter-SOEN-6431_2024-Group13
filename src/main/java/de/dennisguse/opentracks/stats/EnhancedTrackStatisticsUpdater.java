@@ -32,6 +32,7 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
         double lat = Math.toRadians(points.get(0).getLatitude());
         double lon = Math.toRadians(points.get(0).getLongitude());
         TrackPoint top = points.get(0);
+         TrackPoint startChairlift = points.get(0);
         
         TrackPoint previousPoint = points.get(0);
         for (int i = 1; i < points.size(); i++) {
@@ -43,6 +44,11 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
                 lon = Math.toRadians(currentPoint.getLongitude());
                 top = currentPoint;
             }
+
+             if(Math.toRadians(currentPoint.getLatitude()) == lat || Math.toRadians(currentPoint.getLongitude()) == lon ){
+                startChairlift = currentPoint;
+            }
+            
 //            double speed = currentPoint.getSpeed();
             double speed = currentPoint.getSpeed().toMPS();
             totalSpeed += speed;
@@ -74,6 +80,9 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
 
         double slope = slope(points.get(0),top);
         stats.setAverageSlope(slope);
+
+        long waitingTimeForChairlift = Duration.between(points.get(0).getTime() ,startChairlift.getTime()).dividedBy(1000).getSeconds();
+        stats.setWaitingTimeForChairlift(waitingTimeForChairlift*1000);
         
         // Set calculated values
         stats.setTimeOnChairlift(totalTimeOnChairlift);
