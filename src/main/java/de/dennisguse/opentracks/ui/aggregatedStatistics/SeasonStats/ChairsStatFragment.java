@@ -71,7 +71,7 @@ public class ChairsStatFragment extends Fragment {
         TextView daysTextView = view.findViewById(R.id.days_tv);
         TextView tallestChairTextView = view.findViewById(R.id.tallestChair_tv);
         TextView totalDaysChairliftUsedTextView = view.findViewById(R.id.totalDaysChairliftUsed_tv);
-        TextView mostCommonTrail= view.findViewById(R.id.mostCommonTrail_tv);
+        TextView mostCommonTrail= view.findViewById(R.id.name_of_common_trail);
         TextView favoriteChairsTextView1 = view.findViewById(R.id.favChairTextView1);
         TextView favoriteChairsTextView2 = view.findViewById(R.id.favChairTextView2);
         TextView favoriteChairsTextView3 = view.findViewById(R.id.favChairTextView3);
