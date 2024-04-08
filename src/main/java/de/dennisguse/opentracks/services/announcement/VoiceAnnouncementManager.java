@@ -129,7 +129,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         }
 
         voiceAnnouncement.announce(VoiceAnnouncementUtils.createAfterRecording(context,track.getTrackStatistics(),PreferencesUtils.getUnitSystem()));
-        voiceAnnouncement.announce(VoiceAnnouncementUtils.calculateMaxSlope());
+        
         
     }
    
