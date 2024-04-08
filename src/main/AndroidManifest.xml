@@ -46,7 +46,7 @@ limitations under the License.
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -119,7 +119,7 @@ limitations under the License.
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts"
-            />
+                />
         </activity>
 
         <activity android:name=".AboutActivity" />
@@ -357,6 +357,9 @@ limitations under the License.
 
         <activity android:name=".TrackRecordedActivity" />
         <activity android:name=".TrackStoppedActivity" />
+        <activity android:name=".ElevationAndSpeedActivity" />
+        <activity android:name=".RunsAndLiftsActivity" />
+        <activity android:name=".CalendarActivity" />
 
         <activity
             android:name=".TrackRecordingActivity"
