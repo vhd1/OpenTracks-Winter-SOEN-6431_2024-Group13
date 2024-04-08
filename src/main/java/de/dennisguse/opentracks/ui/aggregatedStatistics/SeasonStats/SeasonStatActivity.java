@@ -91,7 +91,7 @@ public class SeasonStatActivity extends AppCompatActivity {
             VerticalMList[i] = new ArrayList<>();
 
             for (int j = 0; j < size; j++) {
-                VerticalMList[i].add(random.nextInt(1000)); // Generating random integers between 0 and 999
+                VerticalMList[i].add(random.nextInt(1000));
             }
         }
 
@@ -100,7 +100,7 @@ public class SeasonStatActivity extends AppCompatActivity {
         for (int i = 0; i < n; i++) {
             DistanceKMs[i] = new ArrayList<>();
             for (int j = 0; j < size; j++) {
-                DistanceKMs[i].add((int) (random.nextDouble() * 20)); // Generating random integers between 0 and 999
+                DistanceKMs[i].add((int) (random.nextDouble() * 20));
             }
         }
 
@@ -119,12 +119,30 @@ public class SeasonStatActivity extends AppCompatActivity {
             }
         }
 
+        ArrayList<Integer>[] tallestRun = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            tallestRun[i] = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                tallestRun[i].add((int) (random.nextDouble() * 100));
+            }
+        }
+
+        ArrayList<Integer>[] longestRun = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            longestRun[i] = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                longestRun[i].add((int) (random.nextDouble() * 10));
+            }
+        }
+
 
         ArrayList<DummySeason> seasonArrayList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             Days[i] = Integer.toString(random.nextInt(1001));
             VerticalM[i] = calculateSum(VerticalMList[i]);
-            Runs[i] = random.nextInt(20);
+            Runs[i] = calculateSum(longestRun[i]);
             DistanceKM[i] = calculateSum(DistanceKMs[i]);
             Resort[i] = random.nextInt(10) + 1;
             int hours = calculateSum(Hours[i]);
@@ -133,9 +151,9 @@ public class SeasonStatActivity extends AppCompatActivity {
             String activeTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
             Active[i] = activeTime;
             MaxSpeed[i] = maxSpeed(DistanceKMs[i],Hours[i]);
-            TallestRun[i] = (int) (random.nextDouble() * 100);
+            TallestRun[i] = findMax(tallestRun[i]);
             MaxAltitude[i] = findMax(VerticalMList[i]);
-            LongestRun[i] = random.nextDouble() * 10;
+            LongestRun[i] = findMax(longestRun[i]);
 
             seasonArrayList.add(new DummySeason(seasonNames[i], Integer.parseInt(Days[i]), Runs[i], Resort[i], VerticalM[i], DistanceKM[i], Active[i], MaxSpeed[i], MaxAltitude[i], TallestRun[i], LongestRun[i]));
         }
