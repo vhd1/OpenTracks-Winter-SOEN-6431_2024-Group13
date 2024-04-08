@@ -28,7 +28,8 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
         long totalTimeOnChairlift = 0L;
         Instant startTime = points.get(0).getTime();
         Instant endTime = points.get(points.size() - 1).getTime();
-
+        String timeOfTheDay = startTime.atZone(ZoneOffset.UTC).toLocalTime().toString();
+        
         double lat = Math.toRadians(points.get(0).getLatitude());
         double lon = Math.toRadians(points.get(0).getLongitude());
         TrackPoint top = points.get(0);
@@ -83,7 +84,12 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
 
         long waitingTimeForChairlift = Duration.between(points.get(0).getTime() ,startChairlift.getTime()).dividedBy(1000).getSeconds();
         stats.setWaitingTimeForChairlift(waitingTimeForChairlift*1000);
-        
+
+        long totalTravelTime = Duration.between(startTime,endTime).dividedBy(1000).getSeconds();
+        stats.setTotalTravelTime(totalTravelTime);
+
+        stats.setTimeOfTheDay(timeOfTheDay);
+
         // Set calculated values
         stats.setTimeOnChairlift(totalTimeOnChairlift);
     }
