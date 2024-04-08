@@ -23,8 +23,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import android.util.Log;
-import android.preference.PreferenceManager;
-
 
 
 public class DefaultsSettingsFragment extends PreferenceFragmentCompat implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
