@@ -15,6 +15,9 @@ public class EnhancedTrackStatistics extends TrackStatistics {
     private Speed averageSpeed; // In meters/second
     private long timeOnChairlift; // In milliseconds
     private long waitingTimeForChairlift; // In milliseconds
+    private long totalTravelTime; //In seconds
+    private String timeOfTheDay; // String
+
 
     // Constructor
     public EnhancedTrackStatistics() {
@@ -65,5 +68,17 @@ public class EnhancedTrackStatistics extends TrackStatistics {
 
     public void setWaitingTimeForChairlift(long waitingTimeForChairlift) {
         this.waitingTimeForChairlift = waitingTimeForChairlift;
+    }
+
+     public long getTotalTravelTime() { return totalTravelTime; }
+
+    public void setTotalTravelTime(long totalTravelTime) {
+        this.totalTravelTime = totalTravelTime;
+    }
+
+    public String getTimeOfTheDay() { return timeOfTheDay;}
+
+    public void setTimeOfTheDay(String timeOfTheDay) {
+        this.timeOfTheDay = timeOfTheDay;
     }
 }
