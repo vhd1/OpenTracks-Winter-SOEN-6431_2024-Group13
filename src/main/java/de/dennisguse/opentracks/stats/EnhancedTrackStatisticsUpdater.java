@@ -28,10 +28,21 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
         long totalTimeOnChairlift = 0L;
         Instant startTime = points.get(0).getTime();
         Instant endTime = points.get(points.size() - 1).getTime();
+
+        double lat = Math.toRadians(points.get(0).getLatitude());
+        double lon = Math.toRadians(points.get(0).getLongitude());
+        TrackPoint top = points.get(0);
         
         TrackPoint previousPoint = points.get(0);
         for (int i = 1; i < points.size(); i++) {
             TrackPoint currentPoint = points.get(i);
+
+            //find the top point of the ski track
+            if(Math.toRadians(currentPoint.getLatitude()) > lat || Math.toRadians(currentPoint.getLongitude()) > lon ){
+                lat = Math.toRadians(currentPoint.getLatitude());
+                lon = Math.toRadians(currentPoint.getLongitude());
+                top = currentPoint;
+            }
 //            double speed = currentPoint.getSpeed();
             double speed = currentPoint.getSpeed().toMPS();
             totalSpeed += speed;
@@ -60,6 +71,9 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
         stats.setTopSpeed(maxSpeed);
         stats.setAverageSpeed(Speed.of(averageSpeed));
         // Assuming slope calculation and waiting time require additional context not provided here
+
+        double slope = slope(points.get(0),top);
+        stats.setAverageSlope(slope);
         
         // Set calculated values
         stats.setTimeOnChairlift(totalTimeOnChairlift);
@@ -82,6 +96,22 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
         double c = 2 * Math.atan2(Math.sqrt(aSin), Math.sqrt(1 - aSin));
 
         return R * c;
+    }
+
+     private double slope(TrackPoint a, TrackPoint b) {
+        double S=0;
+        double lat1 = Math.toRadians(a.getLatitude());
+        double lat2 = Math.toRadians(b.getLatitude());
+        double lon1 = Math.toRadians(a.getLongitude());
+        double lon2 = Math.toRadians(b.getLongitude());
+
+        double deltaLat = Math.abs(lat2 - lat1);
+        double deltaLon = Math.abs(lon2 - lon1);
+
+        S = (deltaLat/deltaLon) * 100;
+
+
+        return S;
     }
 
 }
