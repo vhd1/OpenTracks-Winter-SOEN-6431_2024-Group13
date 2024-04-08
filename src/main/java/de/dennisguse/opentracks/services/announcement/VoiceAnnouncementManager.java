@@ -124,7 +124,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         }
 
         // add other check with and here
-        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording() && !PreferencesUtils.shouldVoiceAnnounceMaxSlope() ) {
+        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording() && !PreferencesUtils.shouldVoiceAnnounceMaxSlope() && !PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording()) {
             return;
         }
 

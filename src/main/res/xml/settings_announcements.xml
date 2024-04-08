@@ -76,6 +76,11 @@
             android:key="@string/voice_announce_max_speed_recording_key"
             android:title="@string/settings_announcements_max_speed_recording" />
 
+        <SwitchPreference
+            android:defaultValue="@bool/voice_announce_max_speed_recording_default"
+            android:title="@string/settings_announcements_average_speed_recording"
+            app:key="@string/voice_announce_average_speed_recording_key" />
+
         <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_max_slope_default"
             android:key="@string/voice_announce_max_slope_key"

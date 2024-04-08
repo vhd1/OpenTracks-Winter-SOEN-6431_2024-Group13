@@ -419,6 +419,7 @@ limitations under the License.
 
     <!-- Recording Related Data -->
     <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
+    <string name="settings_announcements_average_speed_recording">Average speed/recording</string>
 
     <!-- Custom Layout -->
 
