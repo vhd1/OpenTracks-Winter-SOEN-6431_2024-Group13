@@ -26,6 +26,7 @@ import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.stats.SplitSegment;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
@@ -312,6 +313,38 @@ public class TrackImporter {
 
     public void cleanImport() {
         contentProviderUtils.deleteTracks(context, trackIds);
+    }
+    /**
+     * Calculates the total time spent on a chairlift given the current track point and acceleration threshold.
+     *
+     * @param currentTrackPoint The current track point on the chairlift.
+     * @param acceleration The acceleration threshold to determine if the chairlift is moving.
+     * @return The total time spent on the chairlift in seconds.
+     */
+    public long getTotalTimeOnChairLift(TrackPoint currentTrackPoint, double acceleration) {
+        // Initialize start and end times with the current track point's time
+        Instant startTime = currentTrackPoint.getTime(), endTime = currentTrackPoint.getTime();
+
+        // Initialize altitude difference
+        double altitudeDifference = -1;
+
+        // Get the last track point in the list
+        TrackPoint previousTrackPoint = trackPoints.get(trackPoints.size() - 1);
+
+        // Iterate through track points in reverse order
+        for (int i = trackPoints.size() - 2; i > 0; i--) {
+            TrackPoint selectedTrackPoint = trackPoints.get(i);
+            double currentAltitudeDifference = previousTrackPoint.getAltitude().toM() - selectedTrackPoint.getAltitude().toM();
+
+            // Check if altitude difference is within the acceleration threshold
+            if (altitudeDifference == -1 || Math.abs(currentAltitudeDifference - altitudeDifference) <= acceleration) {
+                startTime = selectedTrackPoint.getTime(); // Update start time
+                altitudeDifference = currentAltitudeDifference; // Update altitude difference
+            }
+        }
+
+        // Calculate total time spent on chairlift
+        return endTime.getEpochSecond() - startTime.getEpochSecond() + SplitSegment.calculateWaitingTime(trackPoints);
     }
 
     /**
