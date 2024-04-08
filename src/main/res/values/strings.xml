@@ -729,4 +729,6 @@ limitations under the License.
     <string name="days">Days</string>
     <string name="season_totals">Season Totals</string>
     <string name="season_name">Season Name</string>
+    <string name="name_of_common_trail">Cote 71</string>
+    <string name="season_common_trail">Season Common Trail</string>
 </resources>

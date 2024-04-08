@@ -206,16 +206,16 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/CommainTrail"
+            android:id="@+id/season_common_trail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Seasons Comman Trail"
-            android:textSize="18dp"
+            android:text="@string/season_common_trail"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:layout_marginTop="9sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/row11"
-
             />
 
         <LinearLayout
@@ -223,28 +223,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="6sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CommainTrail">
+            app:layout_constraintTop_toBottomOf="@id/season_common_trail">
 
-
-                <TextView
-                    android:id="@+id/mostCommonTrail_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Name Trail"
-                    android:textSize="16dp"
-                    android:layout_marginLeft="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/CommanTrail" />
-
-
-
-
-
-
-
+            <TextView
+                android:id="@+id/name_of_common_trail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/name_of_common_trail"
+                android:textSize="16sp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/season_common_trail" />
 
         </LinearLayout>
 
