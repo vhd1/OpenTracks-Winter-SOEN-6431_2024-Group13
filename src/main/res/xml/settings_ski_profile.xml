@@ -53,7 +53,7 @@
     <Preference
         android:key="@string/ski_profile_ski_maintenance_title"
         android:title="Ski Maintenance"
-        android:summary="Check sharpening (75%) and waxing (80%) progress" />
+        android:summary="Check sharpening and waxing progress" />
 
     <Preference
         android:key="@string/ski_profile_statistics_title"
