@@ -439,7 +439,14 @@ public class PreferencesUtils {
     public static void setVoiceAnnounceAverageHeartRate(boolean value) {
         setBoolean(R.string.voice_announce_average_heart_rate_key, value);
     }
-
+    public static boolean shouldVoiceAnnounceMaxSlope() {
+        return getBoolean(R.string.voice_announce_max_slope_key, true);
+    }
+    
+    @VisibleForTesting
+    public static void setVoiceAnnounceMaxSlope(boolean value) {
+        setBoolean(R.string.voice_announce_max_slope_key, value);
+    }
     // recoding related setting helper methods
     public static boolean shouldVoiceAnnounceMaxSpeedRecording() {
         return getBoolean(R.string.voice_announce_max_speed_recording_key, true);
