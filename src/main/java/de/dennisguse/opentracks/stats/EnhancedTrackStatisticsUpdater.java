@@ -65,4 +65,23 @@ public class EnhancedTrackStatisticsUpdater extends TrackStatisticsUpdater {
         stats.setTimeOnChairlift(totalTimeOnChairlift);
     }
 
+    private double distanceBetweenPoints(TrackPoint a, TrackPoint b) {
+        final double R = 6371e3; // Earth's radius in meters
+        double lat1 = Math.toRadians(a.getLatitude());
+        double lat2 = Math.toRadians(b.getLatitude());
+        double lon1 = Math.toRadians(a.getLongitude());
+        double lon2 = Math.toRadians(b.getLongitude());
+
+        double deltaLat = lat2 - lat1;
+        double deltaLon = lon2 - lon1;
+
+        // Haversine formula
+        double aSin = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(aSin), Math.sqrt(1 - aSin));
+
+        return R * c;
+    }
+
 }
