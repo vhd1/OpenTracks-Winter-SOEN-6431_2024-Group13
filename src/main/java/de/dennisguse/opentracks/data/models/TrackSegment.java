@@ -164,4 +164,39 @@ public class TrackSegment {
         return totalDistance / totalTimeSeconds;
     }
 
+
+    /**
+     * Calculates the average time between consecutive track points in the segment.
+     *
+     * @return The average time
+     */
+
+    public double getAverageTime()
+    {
+        Distance distance = getDistance();
+        Duration totalTime = getTotalTime();
+
+        if (distance == null || totalTime == null || totalTime.isZero())
+        {
+            return Double.NaN;
+        }
+
+        double totalDistance = distance.toM();
+        long totalTimeSeconds = totalTime.getSeconds();
+        return totalDistance / totalTimeSeconds;
+    }
+
+    /**
+     * Method to display track points in the segment in table format .
+     *
+     */
+
+    public void displayDetails()
+    {
+        for (Map.Entry<String, String> entry : sessionDetails.entrySet())
+        {
+            System.out.println("Run \n");
+            System.out.println("\n");
+            System.out.printf("%-25s: %s%n", entry.getKey(), entry.getValue());
+        }
 }
