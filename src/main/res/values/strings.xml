@@ -413,6 +413,7 @@ limitations under the License.
     <string name="settings_announcements_lap_heart_rate">Lap heart rate</string>
     <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
+    <string name="settings_announcements_max_slope">Max slope</string>
 
     <!-- Recording Related Data -->
     <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
