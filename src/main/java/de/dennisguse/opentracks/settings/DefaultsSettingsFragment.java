@@ -249,8 +249,6 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
     private void updateRecordLengthList(int selectedLength) {
         PreferencesUtils.setString(R.string.record_length_default, String.valueOf(selectedLength));
     }
-}
-
     private void showAddCustomActivityDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
