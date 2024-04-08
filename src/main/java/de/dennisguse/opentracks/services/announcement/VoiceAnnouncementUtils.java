@@ -9,6 +9,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording;
 
 import android.content.Context;
 import android.icu.text.MessageFormat;
@@ -83,6 +84,15 @@ class VoiceAnnouncementUtils {
             appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
             builder.append(".");
         }
+		
+		if(shouldVoiceAnnounceTimeSkiedRecording()) {
+			Duration movingTime = trackStatistics.getMovingTime();
+//			Duration movingTime = 10000;
+        if (shouldVoiceAnnounceMovingTime() && !movingTime.isZero()) {
+            appendDuration(context, builder, movingTime);
+            builder.append(".");
+        }
+		}
 
 
         return builder;
