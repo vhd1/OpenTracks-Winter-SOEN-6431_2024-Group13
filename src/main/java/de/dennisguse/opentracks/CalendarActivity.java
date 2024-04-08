@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,6 +18,8 @@ import java.util.Objects;
 public class CalendarActivity extends AppCompatActivity {
 
     private Date selectedDate;
+    private Calendar calendar = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,14 @@ public class CalendarActivity extends AppCompatActivity {
                 } else{
                     intent = new Intent(v.getContext(), RunsAndLiftsActivity.class);
                 }
-                intent.putExtra("Year", selectedDate.getYear());
-                intent.putExtra("Month", selectedDate.getMonth());
-                intent.putExtra("Day", selectedDate.getDay());
+                calendar.setTime(selectedDate);
+                int year = calendar.get(Calendar.YEAR) - 1900;
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                intent.putExtra("Year", year);
+                intent.putExtra("Year", month);
+                intent.putExtra("Day", day);
+
                 v.getContext().startActivity(intent);
 //                Bundle extras = getIntent().getExtras();
 //                if (extras != null) {
