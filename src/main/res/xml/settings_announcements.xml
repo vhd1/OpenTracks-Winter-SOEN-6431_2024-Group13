@@ -75,6 +75,11 @@
             android:defaultValue="@bool/voice_announce_max_speed_recording_default"
             android:key="@string/voice_announce_max_speed_recording_key"
             android:title="@string/settings_announcements_max_speed_recording" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_max_slope_default"
+            android:key="@string/voice_announce_max_slope_key"
+            android:title="@string/settings_announcements_max_slope" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_announcements_run_title">

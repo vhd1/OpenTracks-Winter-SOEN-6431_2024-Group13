@@ -8,6 +8,8 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceRunAverageSpeed;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope;
+
 
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
 
@@ -34,6 +36,12 @@ import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 class VoiceAnnouncementUtils {
 
     private VoiceAnnouncementUtils() {
+    }
+    
+    static double calculateMaxSlope() {
+       
+        // This method should return the calculated maximum slope.
+           return 0.0; 
     }
 
     static Spannable createIdle(Context context) {
@@ -85,6 +93,17 @@ class VoiceAnnouncementUtils {
             builder.append(".");
         }
 
+        if (shouldVoiceAnnounceMaxSlope()) {
+            double maxSlope = calculateMaxSlope(); // Calculate the maximum slope based on elevation data
+            if (!Double.isNaN(maxSlope)) {
+                builder.append(" ")
+               .append(context.getString(R.string.settings_announcements_max_slope))
+               .append(": ")
+               .append(String.format("%.2f%%", maxSlope)) // Format the slope value
+               .append(".");
+            }
+        }
+       
 
         return builder;
     }
@@ -244,6 +263,8 @@ class VoiceAnnouncementUtils {
             appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
             builder.append(".");
         }
+        
+
 
         return builder;
     }
