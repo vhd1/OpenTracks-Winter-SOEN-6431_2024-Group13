@@ -407,11 +407,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
-    <string name="add_custom_activity_title">Custom Activity</string>
-    <string name="add_custom_activity_summary">Define your custom Activity</string>
-    <string name="custom_activity_add">Enter Custom Activity</string>
-    <string name="key_custom_activities">custom_activities_key</string>
-
 
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Lap length</string>

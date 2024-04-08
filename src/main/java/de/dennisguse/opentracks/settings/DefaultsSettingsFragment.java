@@ -2,10 +2,8 @@ package de.dennisguse.opentracks.settings;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.NumberPicker;
-import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
@@ -35,10 +33,6 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
     public boolean onPreferenceTreeClick(Preference preference) {
         if (preference.getKey().equals(getString(R.string.ski_season_start_key))) {
             showCustomDatePickerDialog(); // Call method to show the dialog
-            return true;
-        }
-        else if (preference.getKey().equals(getString(R.string.custom_activity_add))) {
-            showAddCustomActivityDialog();
             return true;
         }
         return super.onPreferenceTreeClick(preference);
@@ -171,6 +165,7 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
 
 
 
+
     private int getMaxDayOfMonth(int month) {
         // Get the maximum day for the given month
         Calendar calendar = Calendar.getInstance();
@@ -203,22 +198,4 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
             activityPreferenceDialog.updateUI(activityType);
         }
     }
-
-    private void showAddCustomActivityDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final EditText input = new EditText(getActivity());
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-
-        builder.setTitle(R.string.custom_activity_add)
-                .setView(input)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    String activityName = input.getText().toString().trim();
-                    if (!activityName.isEmpty()) {
-                        PreferencesUtils.addCustomActivity(getActivity(), activityName);
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel())
-                .show();
-    }
-
 }
