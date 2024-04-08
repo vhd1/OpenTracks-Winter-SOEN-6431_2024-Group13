@@ -139,7 +139,7 @@ public class ShareContentProvider extends CustomContentProvider {
                     TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
             case URI_CSV -> TrackFileFormat.CSV;
             default ->
-                    throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
+                    throw new IllegalArgumentException(String.format("Could not derive TrackFileFormat from Uri " + uri));
         };
     }
 
@@ -163,16 +163,16 @@ public class ShareContentProvider extends CustomContentProvider {
         Object[] values = new Object[projection.length];
         int i = 0;
         for (String col : projection) {
-            switch (col) {
-                case OpenableColumns.DISPLAY_NAME -> {
-                    cols[i] = OpenableColumns.DISPLAY_NAME;
-                    values[i++] = uri.getLastPathSegment();
-                }
-                case OpenableColumns.SIZE -> {
-                    cols[i] = OpenableColumns.SIZE;
-                    values[i++] = -1; //Report unknown size; if applications need to know, one need to generate the file here also (count bytes that are written to OutputStream.
-                }
+
+            if(col.equals(OpenableColumns.DISPLAY_NAME)){
+                cols[i] = OpenableColumns.DISPLAY_NAME;
+                values[i++] = uri.getLastPathSegment();
+            } else if(col.equals(OpenableColumns.SIZE)){
+                cols[i] = OpenableColumns.SIZE;
+                values[i++] = -1; //Report unknown size; if applications need to know, one need to generate the file here also (count bytes that are written to OutputStream.
+
             }
+
         }
 
         cols = Arrays.copyOf(cols, i);

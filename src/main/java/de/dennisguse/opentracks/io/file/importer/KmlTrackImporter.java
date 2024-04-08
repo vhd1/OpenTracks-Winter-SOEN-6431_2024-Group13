@@ -77,7 +77,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_PHOTO_OVERLAY = "PhotoOverlay";
     private static final String TAG_PLACEMARK = "Placemark";
     private static final String TAG_STYLE_URL = "styleUrl";
-    //    private static final String TAG_VALUE = "value"; TODO
+    //    private static final String TAG_VALUE = "value";
     private static final String TAG_WHEN = "when";
     private static final String TAG_UUID = "opentracks:trackid";
 
@@ -258,7 +258,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             return;
         }
 
-        Marker marker = new Marker(null, new TrackPoint(TrackPoint.Type.TRACKPOINT, location, whenList.get(0))); //TODO Creating marker without need
+        Marker marker = new Marker(null, new TrackPoint(TrackPoint.Type.TRACKPOINT, location, whenList.get(0)));
         marker.setName(name != null ? name : "");
         marker.setDescription(description != null ? description : "");
         marker.setCategory(activityTypeLocalized != null ? activityTypeLocalized : "");
