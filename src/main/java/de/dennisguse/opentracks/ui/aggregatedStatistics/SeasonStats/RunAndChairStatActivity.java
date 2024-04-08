@@ -78,7 +78,21 @@ public class RunAndChairStatActivity extends AppCompatActivity {
             // Pass the string as an argument if the fragment is RunsStatFragment
             fragmentTransaction.replace(R.id.frame_nav_season, RunsStatFragment.newInstance(seasonName, days, runs, resort, vertical_m, distance, active, max_Speed, max_alt, tallestRun, longestRun), totalNumberOfDaysChairliftUsed);
         } else {
-            fragmentTransaction.replace(R.id.frame_nav_season, fragment);
+            Intent intent = this.getIntent();
+            String seasonName = "123";
+            String days = "123";
+            String tallestChair = "123";
+            String totalDaysChairliftUsed = "123";
+            String vertical_m = "123";
+            String[] favoriteChairs = new String[5];
+            if (intent != null){
+                seasonName = intent.getStringExtra("seasonName");
+                days = Integer.toString(intent.getIntExtra("days",-1));
+                tallestChair = Integer.toString(intent.getIntExtra("tallestChair", -1));
+                totalDaysChairliftUsed = Integer.toString(intent.getIntExtra("totalNumberOfDaysChairliftUsed",-1));
+                favoriteChairs = intent.getStringArrayExtra("favoriteChairs");
+            }
+            fragmentTransaction.replace(R.id.frame_nav_season, ChairsStatFragment.newInstance(seasonName, days, tallestChair, totalDaysChairliftUsed, favoriteChairs));
         }
         fragmentTransaction.commit();
     }

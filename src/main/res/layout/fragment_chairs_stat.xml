@@ -79,27 +79,27 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/vertical_distance_m"
+                    android:layout_gravity="center"
                     android:layout_marginTop="-10dp"
+                    android:text="@string/tallest_chair_lift_m"
                     android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tallestChair_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="9dp"
                     android:text="0"
                     android:textSize="15dp"
-                    android:layout_gravity="center"
                     app:layout_constraintTop_toBottomOf="@+id/textView12" />
             </FrameLayout>
         </LinearLayout>
@@ -166,6 +166,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
+                android:id="@+id/favChairTextView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1. Title One" />
@@ -179,21 +180,25 @@
                 android:contentDescription="Transparent space" />
 
             <TextView
+                android:id="@+id/favChairTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2. Title Two" />
 
             <TextView
+                android:id="@+id/favChairTextView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3. Title Three" />
 
             <TextView
+                android:id="@+id/favChairTextView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4. Title Four" />
 
             <TextView
+                android:id="@+id/favChairTextView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5. Title Five" />
