@@ -210,5 +210,44 @@
             app:layout_constraintTop_toBottomOf="@id/stats_shortest_wait_label"
             tools:text="00:00:00" />
 
+               <!-- Longest wait at chairlift -->
+        <TextView
+            android:id="@+id/stats_longest_wait_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Longest wait at chairlift"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_waiting_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_longest_wait_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/stats_longest_wait_label"
+            tools:text="00:00:00" />
+
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_time_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_longest_wait_value,stats_shortest_wait_value" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_distance_horizontal_line"
+            style="@style/HorizontalLine"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_time_barrier" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
