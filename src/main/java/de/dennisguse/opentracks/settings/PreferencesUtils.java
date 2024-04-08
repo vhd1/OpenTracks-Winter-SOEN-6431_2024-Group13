@@ -460,10 +460,6 @@ public class PreferencesUtils {
         setBoolean(R.string.voice_announce_time_skied_recording_key, value);
     }
 
-    @VisibleForTesting
-    public static void setVoiceAnnounceTimeSkiedRecording(boolean value) {
-        setBoolean(R.string.voice_announce_time_skied_recording_key, value);
-    }
 
     public static Distance getRecordingDistanceInterval() {
         return Distance.of(getInt(R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal()));
