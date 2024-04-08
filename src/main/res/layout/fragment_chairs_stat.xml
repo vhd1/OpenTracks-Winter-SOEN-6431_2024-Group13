@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="-10dp"
-                    android:text="@string/vertical_distance_m"
+                    android:text="@string/tallest_chair_lift_m"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
@@ -166,6 +166,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6">
 
             <TextView
+                android:id="@+id/favChairTextView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1. Title One" />
@@ -179,21 +180,25 @@
                 android:src="@android:color/transparent" />
 
             <TextView
+                android:id="@+id/favChairTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2. Title Two" />
 
             <TextView
+                android:id="@+id/favChairTextView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3. Title Three" />
 
             <TextView
+                android:id="@+id/favChairTextView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4. Title Four" />
 
             <TextView
+                android:id="@+id/favChairTextView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5. Title Five" />
@@ -224,7 +229,7 @@
 
 
                 <TextView
-                    android:id="@+id/mostcommaintrail"
+                    android:id="@+id/mostCommonTrail_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Name Trail"
