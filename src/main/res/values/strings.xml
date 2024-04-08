@@ -419,8 +419,9 @@ limitations under the License.
 
     <!-- Recording Related Data -->
     <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
+    <!-- Recording Related Data -->
+    <string name="settings_announcements_average_slope_recording">Average slope</string>
 
-    <!-- Custom Layout -->
 
 
     <string name="custom_layout_list_title">Layouts</string>

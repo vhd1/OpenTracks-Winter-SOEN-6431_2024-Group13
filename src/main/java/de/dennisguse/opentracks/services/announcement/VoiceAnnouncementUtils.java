@@ -9,6 +9,9 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceRunAverageSpeed;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAveragesloperecording;
+
+
 
 
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
@@ -42,6 +45,10 @@ class VoiceAnnouncementUtils {
        
         // This method should return the calculated maximum slope.
            return 0.0; 
+    }
+    static double CalculateAverageSlope(){
+        // This is dummy methods to fetch or calculate the average slope.
+        return 10.0;
     }
 
     static Spannable createIdle(Context context) {
@@ -103,8 +110,16 @@ class VoiceAnnouncementUtils {
                .append(".");
             }
         }
-       
-
+            if (shouldVoiceAnnounceAveragesloperecording()) {
+                double avgSlope = CalculateAverageSlope();
+                if (!Double.isNaN(avgSlope)) {
+                    builder.append(" ")
+                            .append("Average slope")
+                            .append(": ")
+                            .append(String.format("%.2f%%", avgSlope))
+                            .append(".");
+                }
+            }
         return builder;
     }
 
