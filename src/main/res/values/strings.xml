@@ -248,6 +248,7 @@ limitations under the License.
     <string name="generic_dismiss">Dismiss</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
+    <string name="gps_status">GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
     <string name="gps_wait_for_signal">Waiting for GPS signal</string>
     <string name="gps_disabled_msg">GPS disabled</string>
