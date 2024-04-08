@@ -21,6 +21,14 @@ public class RunAndChairStatActivity extends AppCompatActivity {
     ActivityRunAndChairStatBinding binding;
     FragmentRunsStatBinding fragmentRunsStatBinding;
 
+    /**
+     * Called when the activity is starting. This is where most initialization should go: calling setContentView(int) to
+     * inflate the activity's UI, initializing views, and starting up any processes that will be required by the activity.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this
+     *                             Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     *                             Note: Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,11 @@ public class RunAndChairStatActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment The fragment to replace the current fragment with.
+     */
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
