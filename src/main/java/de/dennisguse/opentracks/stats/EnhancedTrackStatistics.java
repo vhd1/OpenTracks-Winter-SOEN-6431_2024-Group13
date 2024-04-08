@@ -25,4 +25,45 @@ public class EnhancedTrackStatistics extends TrackStatistics {
         this.timeOnChairlift = 0L;
         this.waitingTimeForChairlift = 0L;
     }
+
+    // Getters and setters
+    public double getAverageSlope() {
+        return averageSlope;
+    }
+
+    public void setAverageSlope(double averageSlope) {
+        this.averageSlope = averageSlope;
+    }
+
+    public double getTopSpeed() {
+        return topSpeed;
+    }
+
+    public void setTopSpeed(double topSpeed) {
+        this.topSpeed = topSpeed;
+    }
+
+    public Speed getAverageSpeed() {
+        return averageSpeed;
+    }
+
+    public void setAverageSpeed(Speed averageSpeed) {
+        this.averageSpeed = averageSpeed;
+    }
+
+    public long getTimeOnChairlift() {
+        return timeOnChairlift;
+    }
+
+    public void setTimeOnChairlift(long timeOnChairlift) {
+        this.timeOnChairlift = timeOnChairlift;
+    }
+
+    public long getWaitingTimeForChairlift() {
+        return waitingTimeForChairlift;
+    }
+
+    public void setWaitingTimeForChairlift(long waitingTimeForChairlift) {
+        this.waitingTimeForChairlift = waitingTimeForChairlift;
+    }
 }
