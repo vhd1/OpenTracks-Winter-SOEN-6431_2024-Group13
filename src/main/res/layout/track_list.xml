@@ -118,6 +118,14 @@ limitations under the License.
             app:icon="@drawable/ic_statistics_24dp"
             app:iconTint="?attr/colorOnBackground" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aggregate_stats"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sensor_start_button"
             style="@style/Widget.Material3.Button.IconButton"
@@ -125,6 +133,14 @@ limitations under the License.
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_gps_off_24dp"
             app:iconTint="?attr/colorOnBackground" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gps_status"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 

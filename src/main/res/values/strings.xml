@@ -248,6 +248,7 @@ limitations under the License.
     <string name="generic_dismiss">Dismiss</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
+    <string name="gps_status">GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
     <string name="gps_wait_for_signal">Waiting for GPS signal</string>
     <string name="gps_disabled_msg">GPS disabled</string>
@@ -542,6 +543,7 @@ limitations under the License.
     <!-- Aggregated Statistics -->
     <string name="aggregated_stats_empty_message">Record your first track to see aggregated statistics</string>
     <string name="aggregated_stats_filter_no_results">There are not activities for the specified filter</string>
+    <string name="aggregate_stats">Aggregate Stats</string>
     <!-- Interval List -->
     <string name="interval_list_empty_message">There are not any interval yet</string>
     <!-- Unit -->
