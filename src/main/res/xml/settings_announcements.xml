@@ -68,10 +68,7 @@
             android:defaultValue="@bool/voice_announce_lap_heart_rate_default"
             android:key="@string/voice_announce_lap_heart_rate_key"
             android:title="@string/settings_announcements_lap_heart_rate" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/voice_announce_max_speed_run_default"
-            android:key="@string/voice_announce_max_speed_run_key"
-            android:title="@string/settings_announcements_max_speed_run" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_announcements_recording_title">
@@ -98,5 +95,9 @@
             android:defaultValue="@bool/voice_announce_run_average_speed_default"
             android:key="@string/voice_announce_run_average_speed_key"
             android:title="@string/settings_announcements_run_average_speed" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_max_speed_run_default"
+            android:key="@string/voice_announce_max_speed_run_key"
+            android:title="@string/settings_announcements_max_speed_run" />
     </PreferenceCategory>
 </PreferenceScreen>
