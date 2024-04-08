@@ -733,5 +733,10 @@ limitations under the License.
     <string name="always">Always</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+    <string name="custom_record_length_summary">Enter custom record length in seconds</string>
+    <string name="custom_record_length_title">Custom Record Length</string>
+    <string name="custom_record_length_key">custom_record_length</string>
+
     <string name="default_Date_Key">1 Sep</string>
+
 </resources>
