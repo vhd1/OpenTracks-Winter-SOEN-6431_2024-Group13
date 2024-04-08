@@ -22,7 +22,9 @@ public class ChairsStatFragment extends Fragment {
     private static final String ARG_SEASON_TALLEST_CHAIR = "tallestChair";
     private static final String ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED = "totalNumberOfDaysChairliftUsed";
     private static final String ARG_SEASON_vertical_distance_m = "vertical_distance_m";
+    private static final String Most_Comman_Trail="most_comman_trail";
 
+    private String mMostcommanTrail;
     private String mSeasonName;
     private String mDays;
     private String mTallestChair;
@@ -33,7 +35,7 @@ public class ChairsStatFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ChairsStatFragment newInstance(String seasonName, String days, String tallestChair, String totalDaysChairliftUsed, String vertical_m) {
+    public static ChairsStatFragment newInstance(String seasonName,String mostcommantrail, String days, String tallestChair, String totalDaysChairliftUsed, String vertical_m) {
         ChairsStatFragment fragment = new ChairsStatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_SEASON_NAME, seasonName);
@@ -41,6 +43,7 @@ public class ChairsStatFragment extends Fragment {
         args.putString(ARG_SEASON_TALLEST_CHAIR, tallestChair);
         args.putString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED, totalDaysChairliftUsed);
         args.putString(ARG_SEASON_vertical_distance_m, vertical_m);
+        args.putString(Most_Comman_Trail,mostcommantrail);
 
         fragment.setArguments(args);
         return fragment;
@@ -56,7 +59,7 @@ public class ChairsStatFragment extends Fragment {
             mTallestChair = getArguments().getString(ARG_SEASON_TALLEST_CHAIR);
             mTotalDaysChairliftUsed = getArguments().getString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED);
             mVertical_Distance_m = getArguments().getString(ARG_SEASON_vertical_distance_m);
-
+            mMostcommanTrail=getArguments().getString(Most_Comman_Trail);
         }
 
         TextView seasonNameTextView = view.findViewById(R.id.seasonNameTextView);
@@ -64,6 +67,7 @@ public class ChairsStatFragment extends Fragment {
         TextView tallestChairTextView = view.findViewById(R.id.tallestChair_tv);
         TextView totalDaysChairliftUsedTextView = view.findViewById(R.id.totalDaysChairliftUsed_tv);
         TextView verticalDistanceMTextView = view.findViewById(R.id.textView12);
+        TextView mostcommantrail= view.findViewById(R.id.mostcommaintrail);
 
         if (mSeasonName != null) {
             seasonNameTextView.setText(mSeasonName);
@@ -71,6 +75,7 @@ public class ChairsStatFragment extends Fragment {
             tallestChairTextView.setText(mTallestChair);
             totalDaysChairliftUsedTextView.setText(mTotalDaysChairliftUsed);
             verticalDistanceMTextView.setText(mVertical_Distance_m);
+            mostcommantrail.setText(mMostcommanTrail);
 
         }
         return view;

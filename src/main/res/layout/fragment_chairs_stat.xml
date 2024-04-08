@@ -21,9 +21,9 @@
             android:text="@string/season_name"
             android:textSize="30dp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Season Totals TextView -->
         <TextView
@@ -34,72 +34,72 @@
             android:text="@string/season_totals"
             android:textSize="18dp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/seasonNameTextView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/seasonNameTextView" />
 
         <!-- FrameLayout for Row 1 -->
         <LinearLayout
             android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:orientation="horizontal"
             android:layout_margin="10dp"
-            app:layout_constraintTop_toBottomOf="@id/textView4"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/textView4">
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/days"
+                    android:layout_gravity="center"
                     android:layout_marginTop="-10dp"
+                    android:text="@string/days"
                     android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/days_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="9dp"
                     android:text="15"
                     android:textSize="15dp"
-                    android:layout_gravity="center"
                     app:layout_constraintTop_toBottomOf="@+id/textView11" />
             </FrameLayout>
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/vertical_distance_m"
+                    android:layout_gravity="center"
                     android:layout_marginTop="-10dp"
+                    android:text="@string/vertical_distance_m"
                     android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tallestChair_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="9dp"
                     android:text="0"
                     android:textSize="15dp"
-                    android:layout_gravity="center"
                     app:layout_constraintTop_toBottomOf="@+id/textView12" />
             </FrameLayout>
         </LinearLayout>
@@ -109,36 +109,36 @@
             android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:orientation="horizontal"
             android:layout_margin="10dp"
-            app:layout_constraintTop_toBottomOf="@id/row1"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/row1">
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView21"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/total_number_of_days_chair_lift_used"
+                    android:layout_gravity="center"
                     android:layout_marginTop="-10dp"
+                    android:text="@string/total_number_of_days_chair_lift_used"
                     android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/totalDaysChairliftUsed_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="9dp"
                     android:text="0"
                     android:textSize="15dp"
-                    android:layout_gravity="center"
                     app:layout_constraintTop_toBottomOf="@+id/textView21" />
             </FrameLayout>
         </LinearLayout>
@@ -152,18 +152,18 @@
             android:text="Seasons Favorite Lifts"
             android:textSize="18dp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/row2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/row2" />
 
         <LinearLayout
             android:id="@+id/row11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView6">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -175,8 +175,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@android:color/transparent"
-                android:contentDescription="Transparent space" />
+                android:contentDescription="Transparent space"
+                android:src="@android:color/transparent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -197,6 +197,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5. Title Five" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/CommainTrail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seasons Comman Trail"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/row11"
+
+            />
+
+        <LinearLayout
+            android:id="@+id/row13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CommainTrail">
+
+
+                <TextView
+                    android:id="@+id/mostcommaintrail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Name Trail"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/CommanTrail" />
+
+
+
+
+
+
+
 
         </LinearLayout>
 
