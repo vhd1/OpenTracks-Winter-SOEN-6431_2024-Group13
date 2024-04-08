@@ -292,4 +292,30 @@ public class TrackImporter {
         contentProviderUtils.deleteTracks(context, trackIds);
     }
 
+    public boolean isEnteringChairlift(TrackPoint currentTrackPoint, double elevationThreshold) {
+        List<TrackPoint> recentTrackPoints = filterRecentTrackPoints(currentTrackPoint);
+        if (recentTrackPoints.isEmpty()) {
+            return false;
+        }
+        double currentElevation = currentTrackPoint.getAltitude().toM();
+        for (TrackPoint point : recentTrackPoints) {
+            double elevation = point.getAltitude().toM();
+            if (Math.abs(currentElevation - elevation) > elevationThreshold) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private List<TrackPoint> filterRecentTrackPoints(TrackPoint currentTrackPoint) {
+        List<TrackPoint> recentTrackPoints = new ArrayList<>();
+        Instant currentTime = currentTrackPoint.getTime();
+        for (TrackPoint point : trackPoints) {
+            Instant pointTime = point.getTime();
+            Duration timeDifference = Duration.between(pointTime, currentTime);
+            if (!timeDifference.isNegative() && timeDifference.getSeconds() <= 20) {
+                recentTrackPoints.add(point);
+            }
+        }
+        return recentTrackPoints;
+    }
 }
