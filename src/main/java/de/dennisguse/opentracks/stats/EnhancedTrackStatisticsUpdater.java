@@ -2,6 +2,8 @@ package de.dennisguse.opentracks.stats;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Speed;
