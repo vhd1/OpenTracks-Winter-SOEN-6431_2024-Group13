@@ -126,6 +126,7 @@ class VoiceAnnouncementUtils {
         //TODO: Once we get run data from other groups, we can announce run statistics instead of track statistics
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
+        Speed maxSpeed = trackStatistics.getMaxSpeed();
 
         int speedId;
         String unitSpeedTTS;
@@ -145,9 +146,7 @@ class VoiceAnnouncementUtils {
             default -> throw new RuntimeException("Not implemented");
         }
 
-        if (totalDistance.isZero()) {
-            return builder;
-        }
+
 
         //Announce Average Speed
        if (shouldVoiceAnnounceRunAverageSpeed()) {
@@ -158,14 +157,23 @@ class VoiceAnnouncementUtils {
            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
            builder.append(".");
        }
-       return builder;
+
+        if (shouldVoiceAnnounceMaxSpeedRun()) {
+            double speedInUnit = maxSpeed.to(unitSystem);
+            builder.append(" ")
+                    .append(context.getString(R.string.settings_announcements_max_speed_run));
+            String template = context.getResources().getString(speedId);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
+            builder.append(".");
+        }
+        return builder;
     }
 
     static Spannable createStatistics(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
-        Speed maxSpeed = trackStatistics.getMaxSpeed();
+
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
 
         int perUnitStringId;
@@ -229,14 +237,7 @@ class VoiceAnnouncementUtils {
                 appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
                 builder.append(".");
             }
-            if (shouldVoiceAnnounceMaxSpeedRun()) {
-                double speedInUnit = maxSpeed.to(unitSystem);
-                builder.append(" ")
-                        .append(context.getString(R.string.speed));
-                String template = context.getResources().getString(speedId);
-                appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
-                builder.append(".");
-            }
+
             if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
                 double currentDistancePerTimeInUnit = currentDistancePerTime.to(unitSystem);
                 if (currentDistancePerTimeInUnit > 0) {
@@ -258,15 +259,6 @@ class VoiceAnnouncementUtils {
                         .append(".");
             }
 
-            if (shouldVoiceAnnounceMaxSpeedRun()) {
-                Duration time = maxSpeed.toPace(unitSystem);
-                builder.append(" ")
-                        .append(context.getString(R.string.pace));
-                appendDuration(context, builder, time);
-                builder.append(" ")
-                        .append(context.getString(perUnitStringId))
-                        .append(".");
-            }
 
             if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
                 Duration currentTime = currentDistancePerTime.toPace(unitSystem);
