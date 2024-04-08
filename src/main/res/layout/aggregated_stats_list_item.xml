@@ -2,72 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/total_distance"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="8dp"
-    android:paddingTop="32dp"
+    android:paddingTop="8dp"
     android:paddingEnd="8dp"
+    android:paddingStart="8dp"
     android:paddingBottom="8dp">
 
     <!-- Guidelines -->
-
-    <TextView
-        android:id="@+id/aggregated_stats_slope_label"
-        style="@style/TextAppearance.OpenTracks.SecondaryHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="85dp"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHorizontal_bias="0.317"
-        app:layout_constraintStart_toEndOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_avg_rate"
-        tools:text="Slope" />
-
-    <TextView
-        android:id="@+id/aggregated_stats_slope_unit"
-        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHorizontal_bias="0.023"
-        app:layout_constraintStart_toEndOf="@+id/aggregated_stats_slope"
-        tools:layout_editor_absoluteY="202dp"
-        tools:text="ft" />
-
-    <TextView
-        android:id="@+id/aggregated_stats_slope"
-        style="@style/TextAppearance.OpenTracks.SecondaryValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="88dp"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_distance"
-        tools:text="30" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="395dp"
-        android:layout_marginBottom="177dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_begin="8dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="450dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_begin="205dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -92,8 +47,8 @@
         style="@style/TextAppearance.OpenTracks.PrimaryHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="0dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/activity_icon"
         app:layout_constraintStart_toEndOf="@+id/activity_icon"
         app:layout_constraintTop_toTopOf="@+id/activity_icon"
@@ -102,9 +57,11 @@
     <TextView
         android:id="@+id/aggregated_stats_num_tracks"
         style="@style/TextAppearance.OpenTracks.PrimaryHeader"
-        android:layout_width="5dp"
-        android:layout_height="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
         android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_type_label"
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_type_label"
         app:layout_constraintTop_toTopOf="@+id/aggregated_stats_type_label"
         tools:text="(1)" />
@@ -115,13 +72,12 @@
         style="@style/TextAppearance.OpenTracks.PrimaryValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/aggregated_stats_avg_rate"
         app:layout_constraintEnd_toStartOf="@id/aggregated_stats_distance_unit"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@+id/activity_icon"
+        tools:layout_editor_absoluteX="52dp"
         tools:text="100000" />
-
 
     <TextView
         android:id="@+id/aggregated_stats_distance_unit"
@@ -139,13 +95,10 @@
         style="@style/TextAppearance.OpenTracks.PrimaryValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="63dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
-        app:layout_constraintStart_toEndOf="@+id/aggregated_stats_distance_unit"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/activity_icon"
         tools:text="00:00:00" />
-
 
     <!-- Avg. rate -->
     <TextView
@@ -158,8 +111,6 @@
         app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/aggregated_stats_distance"
         tools:text="30" />
-
-
 
     <TextView
         android:id="@+id/aggregated_stats_avg_rate_unit"
@@ -182,23 +133,45 @@
         app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_avg_rate"
         tools:text="@string/stats_average_moving_speed" />
 
-    <!-- Max. rate -->
-
-
+    <!-- Slope % -->
     <TextView
-        android:id="@+id/aggregated_stats_chairLift_waitingTime"
+        android:id="@+id/aggregated_stats_slope_percent"
         style="@style/TextAppearance.OpenTracks.SecondaryValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/aggregated_stats_max_rate_unit"
+        app:layout_constraintEnd_toStartOf="@+id/aggregated_stats_slope_percent_unit"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_time"
-        tools:text="00:00:00" />
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_avg_rate_label"
+        tools:text="10"
+        android:visibility="gone"/>
 
+
+    <TextView
+        android:id="@+id/aggregated_stats_slope_percent_unit"
+        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_slope_percent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@+id/aggregated_stats_slope_percent"
+        tools:text="%"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:id="@+id/aggregated_stats_slope_percent_label"
+        style="@style/TextAppearance.OpenTracks.SecondaryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_slope_percent"
+        tools:text="Average Slope %"
+        android:visibility="gone"/>
+
+    <!-- Max. rate -->
     <TextView
         android:id="@+id/aggregated_stats_max_rate"
         style="@style/TextAppearance.OpenTracks.SecondaryValue"
@@ -231,78 +204,23 @@
         app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_max_rate"
         tools:text="@string/stats_max_speed" />
 
-    <TextView
-        android:id="@+id/aggregated_stats_chairLift_waitingTime_label"
-        style="@style/TextAppearance.OpenTracks.SecondaryHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="84dp"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toStartOf="@id/guideline3"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_max_rate"
-        tools:text="Chairlift Waiting Time" />
-
     <View
         android:id="@+id/aggregated_stats_horizontal_line"
         style="@style/HorizontalLine"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="90dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toEndOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_max_rate_label"
-        app:layout_constraintVertical_bias="0.503" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_slope_percent_label" />
 
     <Button
-        android:id="@+id/runs_and_lifts_button"
-        style="@style/Widget.Material3.Button"
+        android:id="@+id/list_of_seasons_btn234"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="119dp"
-        android:layout_marginBottom="10dp"
-        android:background="#E66400"
-        android:text="Runs and Lifts"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginTop="16dp"
+        android:text="Seasons"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_horizontal_line"
-        app:layout_constraintVertical_bias="0.05"
-        app:rippleColor="#FFFFFF"
-        tools:ignore="MissingConstraints"
-        tools:visibility="visible" />
-
-    <Button
-        android:id="@+id/elevation_and_speed_button"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="startPostponedEnterTransitionWith"
-        android:text="Elevation and Speed"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/runs_and_lifts_button"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_horizontal_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
