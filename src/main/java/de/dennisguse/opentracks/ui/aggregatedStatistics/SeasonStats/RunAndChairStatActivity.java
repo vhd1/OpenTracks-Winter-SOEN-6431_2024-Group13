@@ -72,7 +72,7 @@ public class RunAndChairStatActivity extends AppCompatActivity {
                 distance = Integer.toString((int)intent.getDoubleExtra("distance", -1.0));
                 max_Speed = Integer.toString((int)intent.getDoubleExtra("max_Speed", -1.0));
                 longestRun = Integer.toString((int)intent.getDoubleExtra("longestRun", -1.0));
-                totalNumberOfDaysChairliftUsed = Integer.toString((int)intent.getDoubleExtra("totalNumberOfDaysChairliftUsed",-1));
+                totalNumberOfDaysChairliftUsed = Integer.toString((int)intent.getDoubleExtra("totalNumberOfDaysChairliftUsed",-1.0));
 
             }
             // Pass the string as an argument if the fragment is RunsStatFragment
@@ -96,5 +96,11 @@ public class RunAndChairStatActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.frame_nav_season, ChairsStatFragment.newInstance(seasonName, mostCommonTrail, days, tallestChair, totalDaysChairliftUsed, favoriteChairs));
         }
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Perform the default back button behavior (e.g., navigate back)
+        super.onBackPressed();
     }
 }

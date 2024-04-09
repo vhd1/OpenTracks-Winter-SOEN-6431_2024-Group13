@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ImageButton;
+
 
 import androidx.fragment.app.Fragment;
 
@@ -78,6 +80,17 @@ public class ChairsStatFragment extends Fragment {
         TextView favoriteChairsTextView4 = view.findViewById(R.id.favChairTextView4);
         TextView favoriteChairsTextView5 = view.findViewById(R.id.favChairTextView5);
 
+         // Find the ImageButton by its ID
+         ImageButton backButton = view.findViewById(R.id.imageButton);
+                 // Set OnClickListener to handle the click event
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity to go back to the previous one
+                getActivity().finish();
+            }
+        });
+
         if (seasonNameTextView != null && mSeasonName != null) {
             seasonNameTextView.setText(mSeasonName);
             daysTextView.setText(mDays);
@@ -93,4 +106,5 @@ public class ChairsStatFragment extends Fragment {
         }
         return view;
     }
+    
 }
