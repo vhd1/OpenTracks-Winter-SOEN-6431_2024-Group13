@@ -490,11 +490,11 @@ public class PreferencesUtils {
     }
     //recording related data for average slope's helper methods for each run
     public static boolean shouldVoiceAnnounceAverageslopeRun() {
-        return getBoolean(R.string.voice_announce_average_slope_recording_key, true);
+        return getBoolean(R.string.voice_announce_average_slope_run_key, true);
     }
     @VisibleForTesting
     public static void setVoiceAnnounceAverageslopeRun(boolean value) {
-        setBoolean(R.string.voice_announce_average_slope_recording_key, value);
+        setBoolean(R.string.voice_announce_average_slope_run_key, value);
 
     }
 
