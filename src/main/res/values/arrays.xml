@@ -3,6 +3,121 @@
 
 
 
+    <string-array name="time_periods">
+        <item>Season</item>
+        <item>Total</item>
+    </string-array>
+
+    <string-array name="time_year">
+        <item>2024</item>
+        <item>2023</item>
+        <item>2022</item>
+        <item>2021</item>
+        <item>2020</item>
+        <item>2019</item>
+        <item>2018</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+    </string-array>
+
+    <string-array name="time_month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string-array name="waxing_types">
+        <item>Warm</item>
+        <item>Cold</item>
+        <item>Universal</item>
+    </string-array>
+
+    <string-array name="time_day">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+    </string-array>
+
+    <integer-array name="sharpening_interval">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>7</item>
+        <item>10</item>
+        <item>15</item>
+    </integer-array>
+
+    <string-array name="base_angle">
+        <item>0</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="edge_angle">
+        <item>0</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="ski_type">
+        <item>Downhill</item>
+        <item>Snowpark</item>
+        <item>Touring</item>
+    </string-array>
 
     <string-array name="countries_array">
         <item>Canada</item>
@@ -249,8 +364,6 @@
     </string-array>
     <string-array name="countries_array_values">
         <item>Canada</item>
-
-
         <item>Afghanistan</item>
         <item>Albania</item>
         <item>Algeria</item>

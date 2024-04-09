@@ -188,7 +188,6 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
 
             viewBinding.aggregatedStatsTime.setText(StringUtils.formatElapsedTime(aggregatedStatistic.getTrackStatistics().getMovingTime()));
 
-
             if (activityType.equals("skiing")){
                 viewBinding.aggregatedStatsSlopePercentLabel.setVisibility(View.VISIBLE);
                 viewBinding.aggregatedStatsSlopePercent.setVisibility(View.VISIBLE);
@@ -202,7 +201,6 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
                 viewBinding.aggregatedStatsSlopePercentLabel.setText("Average Slope %");
                 viewBinding.aggregatedStatsSlopePercentUnit.setText("%");
             }
-
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
