@@ -206,7 +206,7 @@
                     app:layout_constraintEnd_toStartOf="@id/buttons_guideline"
                     app:layout_constraintStart_toEndOf="@id/buttons_guideline"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_button_resume" />
+                    app:srcCompat="@drawable/resume" />
 
                 <ImageView
                     android:id="@+id/finish_button"
@@ -217,7 +217,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/resume_button"
                     app:layout_constraintStart_toEndOf="@id/resume_button"
                     app:layout_constraintTop_toTopOf="@id/resume_button"
-                    app:srcCompat="@drawable/ic_button_done" />
+                    app:srcCompat="@drawable/stop_button" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 public class TrackSegment {
@@ -27,17 +28,18 @@ public class TrackSegment {
     }
 
     public int getTrackPointCount() {
-        return  trackPoints.size();
+        return trackPoints.size();
     }
 
     public Boolean hasTrackPoints() {
-        return  !trackPoints.isEmpty();
+        return !trackPoints.isEmpty();
     }
 
     /**
      * Returns the initial elevation of the track.
      * If the track contains at least one point, the elevation of the first point is returned.
      * If the track is empty, returns 0.
+     *
      * @return The initial elevation in meters.
      */
     public double getInitialElevation() {
@@ -51,15 +53,13 @@ public class TrackSegment {
 
     /**
      * Calculates the displacement of the track based on altitude gain and loss.
+     *
      * @return The total displacement in meters.
      */
-    public long getDisplacement()
-    {
+    public long getDisplacement() {
         long displacement = 0;
-        for (TrackPoint point: trackPoints)
-        {
-            if (point.hasAltitudeGain())
-            {
+        for (TrackPoint point : trackPoints) {
+            if (point.hasAltitudeGain()) {
                 displacement += point.getAltitudeGain();
             }
 
@@ -74,8 +74,9 @@ public class TrackSegment {
 
     /**
      * Calculates the total distance covered by the track.
+     *
      * @return The total distance covered as a Distance object.
-     *         Returns null if the trackPoints list is null or empty.
+     * Returns null if the trackPoints list is null or empty.
      */
     public Distance getDistance() {
         if (trackPoints == null) {
@@ -88,12 +89,13 @@ public class TrackSegment {
 
     /**
      * Calculates the total time duration of the track.
+     *
      * @return The total time duration as a Duration object.
-     *         Returns null if the trackPoints list is null or empty.
+     * Returns null if the trackPoints list is null or empty.
      */
-    public Duration getTotalTime(){
+    public Duration getTotalTime() {
 
-        if(trackPoints == null){
+        if (trackPoints == null) {
             return null;
         }
         TrackPoint startTime = trackPoints.get(0);
@@ -104,14 +106,15 @@ public class TrackSegment {
 
     /**
      * Calculates the average speed of the track.
+     *
      * @return The average speed in meters per second (m/s).
-     *         Returns NaN if the total time is zero (indicating division by zero).
+     * Returns NaN if the total time is zero (indicating division by zero).
      */
-    public double getSpeed(){
+    public double getSpeed() {
         // in m/s
         double totalDistance = getDistance().toM();
         long totalTime = getTotalTime().toSeconds();
-        return totalDistance/totalTime;
+        return totalDistance / totalTime;
     }
 
     /**
@@ -148,8 +151,9 @@ public class TrackSegment {
 
     /**
      * Calculates the average speed
+     *
      * @return The average speed in meters per second (m/s).
-     *         Returns NaN if the total time is zero (indicating division by zero).
+     * Returns NaN if the total time is zero (indicating division by zero).
      */
     public double getAverageSpeed() {
         Distance distance = getDistance();
@@ -164,4 +168,47 @@ public class TrackSegment {
         return totalDistance / totalTimeSeconds;
     }
 
+
+    /**
+     * Calculates the average time between consecutive track points in the segment.
+     *
+     * @return The average time
+     */
+
+    public double getAverageTime() {
+        Distance distance = getDistance();
+        Duration totalTime = getTotalTime();
+
+        if (distance == null || totalTime == null || totalTime.isZero()) {
+            return Double.NaN;
+        }
+
+        double totalDistance = distance.toM();
+        long totalTimeSeconds = totalTime.getSeconds();
+        return totalDistance / totalTimeSeconds;
+    }
+
+    /**
+     * Method to display track points in the segment in table format .
+     */
+
+    public void displayDetails() {
+        Map<String, String> sessionDetails = null;
+        for (Map.Entry<String, String> entry : sessionDetails.entrySet()) {
+            System.out.println("Run \n");
+            System.out.println("\n");
+            System.out.printf("%-25s: %s%n", entry.getKey(), entry.getValue());
+        }
+    }
+    // Method to filter and return skiing session details as a list
+    public List<String> filterDetails(String filterAttribute, String filterValue) {
+        Map<String, String> sessionDetails = null;
+        List<String> filteredDetails = new ArrayList<>();
+        for (Map.Entry<String, String> entry : sessionDetails.entrySet()) {
+            if (filterAttribute.equals(entry.getKey()) && filterValue.equals(entry.getValue())) {
+                filteredDetails.add(entry.getKey() + ": " + entry.getValue());
+            }
+        }
+        return filteredDetails;
+    }
 }

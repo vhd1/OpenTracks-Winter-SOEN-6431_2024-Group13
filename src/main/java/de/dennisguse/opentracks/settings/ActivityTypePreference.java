@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.settings;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -26,6 +27,9 @@ import android.widget.ImageView;
 
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
@@ -70,22 +74,30 @@ public class ActivityTypePreference extends DialogPreference {
             return dialog;
         }
 
-        @Override
         protected void onBindDialogView(View view) {
             super.onBindDialogView(view);
-
             final Context context = getActivity();
-
             textView = view.findViewById(R.id.activity_type_preference_text_view);
-            String activityTypeLocalized = PreferencesUtils.getDefaultActivityTypeLocalized();
-            textView.setText(activityTypeLocalized);
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(context));
+            List<String> predefinedActivities = ActivityType.getLocalizedStrings(context);
+            List<String> customActivities = PreferencesUtils.getCustomActivities(context);
+            List<String> allActivities = new ArrayList<>(predefinedActivities);
+            allActivities.addAll(customActivities);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, allActivities);
             textView.setAdapter(adapter);
+            String activityTypeLocalized = PreferencesUtils.getDefaultActivityTypeLocalized();
+            textView.setText(activityTypeLocalized, false);
             textView.setOnItemClickListener((parent, v, position, id) -> {
-                String localizedActivityType = (String) textView.getAdapter().getItem(position);
-                ActivityType activityType = ActivityType.findByLocalizedString(context, localizedActivityType);
-                updateIcon(activityType);
+                String selectedActivity = (String) textView.getAdapter().getItem(position);
+                ActivityType activityType = ActivityType.findByLocalizedString(context, selectedActivity);
+                if (activityType != ActivityType.UNKNOWN || !customActivities.contains(selectedActivity)) {
+                    updateIcon(activityType);
+                } else {
+                    textView.setText(selectedActivity);
+                    updateIcon(ActivityType.UNKNOWN);
+                }
             });
+
             textView.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
                     String localizedActivityType = textView.getText().toString();
@@ -97,6 +109,7 @@ public class ActivityTypePreference extends DialogPreference {
             iconView = view.findViewById(R.id.activity_type_preference_spinner);
             iconView.setOnClickListener((it) -> showIconSelectDialog());
 
+            // Pre-select icon for the current or default activity type
             updateIcon(ActivityType.findByLocalizedString(context, activityTypeLocalized));
         }
 

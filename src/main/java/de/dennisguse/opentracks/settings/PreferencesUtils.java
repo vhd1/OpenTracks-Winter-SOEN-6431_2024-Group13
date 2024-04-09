@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -78,7 +79,7 @@ public class PreferencesUtils {
     public static void initPreferences(final Context context, final Resources resources) {
         PreferencesUtils.resources = resources;
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
+        setDefaultActivityLocalized(context.getString(R.string.activity_type_skiing));
         PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
     }
 
@@ -217,6 +218,18 @@ public class PreferencesUtils {
 
     public static void setShowIntroduction(boolean introduction) {
         setBoolean(R.string.show_introduction_screen_key, introduction);
+    }
+
+    public static boolean shouldDiscardRecord(int recordDuration) {
+        boolean autoDiscardEnabled = getBoolean(R.string.auto_discard_key, false);
+        int selectedLength = Integer.parseInt(getString(R.string.record_length_default, "0"));
+        int customLength = Integer.parseInt(getString(R.string.custom_record_length_key, "5"));
+        Log.d("DefaultsSettingsFragment", "Auto discard enabled: " + autoDiscardEnabled);
+        Log.d("DefaultsSettingsFragment", "Selected record length: " + selectedLength);
+        Log.d("DefaultsSettingsFragment", "Custom record length: " + customLength);
+        Log.d("DefaultsSettingsFragment", "Record duration: " + recordDuration);
+
+        return autoDiscardEnabled && (recordDuration < selectedLength|| recordDuration < customLength);
     }
 
     public static UnitSystem getUnitSystem() {
@@ -454,6 +467,84 @@ public class PreferencesUtils {
     public static void setVoiceAnnounceAverageHeartRate(boolean value) {
         setBoolean(R.string.voice_announce_average_heart_rate_key, value);
     }
+
+
+    public static boolean shouldVoiceAnnounceMaxSpeedRun() {
+        return getBoolean(R.string.voice_announce_max_speed_run_key, true);
+    }
+
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceMaxSpeedRun(boolean value) {
+        setBoolean(R.string.voice_announce_max_speed_run_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceRunAverageSpeed() {
+        return getBoolean(R.string.voice_announce_run_average_speed_key, true);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceRunAverageSpeed(boolean value) {
+        setBoolean(R.string.voice_announce_run_average_speed_key, value);
+    }
+
+
+    public static boolean shouldVoiceAnnounceMaxSlope() {
+        return getBoolean(R.string.voice_announce_max_slope_key, true);
+    }
+    
+    @VisibleForTesting
+    public static void setVoiceAnnounceMaxSlope(boolean value) {
+        setBoolean(R.string.voice_announce_max_slope_key, value);
+    }
+
+    // recoding related setting helper methods
+    public static boolean shouldVoiceAnnounceMaxSpeedRecording() {
+        return getBoolean(R.string.voice_announce_max_speed_recording_key, true);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceMaxSpeedRecording(boolean value) {
+        setBoolean(R.string.voice_announce_max_speed_recording_key, value);
+    }
+	
+	// recoding related setting helper methods
+    public static boolean shouldVoiceAnnounceTimeSkiedRecording() {
+        return getBoolean(R.string.voice_announce_time_skied_recording_key, true);
+    }
+	
+	@VisibleForTesting
+    public static void setVoiceAnnounceTimeSkiedRecording(boolean value) {
+        setBoolean(R.string.voice_announce_time_skied_recording_key, value);
+    }
+
+    //recording related data for average slope's helper methods for each recording
+    public static boolean shouldVoiceAnnounceAveragesloperecording() {
+        return getBoolean(R.string.voice_announce_average_slope_recording_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAveragesloperecording(boolean value) {
+        setBoolean(R.string.voice_announce_average_slope_recording_key, value);
+
+    }
+    //recording related data for average slope's helper methods for each run
+    public static boolean shouldVoiceAnnounceAverageslopeRun() {
+        return getBoolean(R.string.voice_announce_average_slope_run_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAverageslopeRun(boolean value) {
+        setBoolean(R.string.voice_announce_average_slope_run_key, value);
+
+    }
+
+    public static boolean shouldVoiceAnnounceAverageSpeedRecording() {
+        return getBoolean(R.string.voice_announce_average_speed_recording_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAverageSpeedRecording(boolean value) {
+        setBoolean(R.string.voice_announce_average_speed_recording_key, value);
+    }
+
 
     public static Distance getRecordingDistanceInterval() {
         return Distance.of(getInt(R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal()));
@@ -877,5 +968,23 @@ public class PreferencesUtils {
     public static void setSelectedCountry(final String selectedCountry) {
         setString(R.string.settings_profile_country_key, selectedCountry);
     }
+
+    public static void addCustomActivity(Context context, String activityName) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String existingActivities = prefs.getString(context.getString(R.string.key_custom_activities), "");
+        if (!existingActivities.contains(activityName)) {
+            existingActivities += (existingActivities.isEmpty() ? "" : ";") + activityName;
+            prefs.edit().putString(context.getString(R.string.key_custom_activities), existingActivities).apply();
+        }
+    }
+
+    public static List<String> getCustomActivities(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String activitiesString = prefs.getString(context.getString(R.string.key_custom_activities), "");
+        return Arrays.asList(activitiesString.split(";"));
+    }
+
+
+
 
 }

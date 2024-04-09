@@ -118,6 +118,44 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         voiceAnnouncement.announce(VoiceAnnouncementUtils.createIdle(context));
     }
 
+    public void announceAfterRecording(@NonNull Track track) {
+        if (shouldNotAnnounce()) {
+            return;
+        }
+        // add other check with and here
+
+
+        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording() && !PreferencesUtils.shouldVoiceAnnounceMaxSlope() && !PreferencesUtils.shouldVoiceAnnounceAveragesloperecording()  
+            && !PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording() && !PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording()) {
+            return;
+        }
+        voiceAnnouncement.announce(VoiceAnnouncementUtils.createAfterRecording(context,track.getTrackStatistics(),PreferencesUtils.getUnitSystem()));
+    }
+   
+
+
+    public void announceAfterRun(@NonNull Track track) {
+        if (shouldNotAnnounce()) {
+            return;
+        }
+
+        boolean announce = false;
+        this.trackStatistics = track.getTrackStatistics();
+        if (trackStatistics.getTotalDistance().greaterThan(nextTotalDistance)) {
+            updateNextTaskDistance();
+            announce = true;
+        }
+        if (!trackStatistics.getTotalTime().minus(nextTotalTime).isNegative()) {
+            updateNextDuration();
+            announce = true;
+        }
+
+        if (announce) {
+            //TODO: Once we have run data from other groups, change the conditions to only call this if we're at the end of a run
+            voiceAnnouncement.announce(VoiceAnnouncementUtils.createRunStatistics(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem()));
+        }
+    }
+
     public void announceStatisticsIfNeeded(@NonNull Track track) {
         if (shouldNotAnnounce()) {
             return;
