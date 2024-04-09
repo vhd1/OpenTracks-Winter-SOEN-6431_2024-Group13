@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="8dp" />
+        app:layout_constraintGuide_end="359dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="8dp" />
+        app:layout_constraintGuide_percent="0.95822453" />
 
     <!-- Icon and sport name -->
     <ImageView
@@ -234,20 +234,21 @@
     <View
         android:id="@+id/aggregated_stats_horizontal_line"
         style="@style/HorizontalLine"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@id/guideline1"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/aggregatedStatsSkiingDurationLabel" />
 
     <Button
         android:id="@+id/list_of_seasons_btn234"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Seasons"
+        android:layout_marginTop="40dp"
         android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Seasons"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aggregated_stats_horizontal_line" />
 
     <Button
@@ -298,5 +299,14 @@
         app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintEnd_toStartOf="@id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/calendar_button" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="188dp"
+        tools:text="@tools:sample/us_zipcodes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

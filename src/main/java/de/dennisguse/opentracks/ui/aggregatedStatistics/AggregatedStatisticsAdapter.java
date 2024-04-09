@@ -201,6 +201,7 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
                 viewBinding.aggregatedStatsSlopePercentLabel.setText("Average Slope %");
                 viewBinding.aggregatedStatsSlopePercentUnit.setText("%");
             }
+
 //            for the time duration of skiing
 //            if (activityType.equals("skiing")){
 //
