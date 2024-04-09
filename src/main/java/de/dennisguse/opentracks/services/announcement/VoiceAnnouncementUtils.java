@@ -5,6 +5,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapHeartRate;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRun;
@@ -13,7 +14,9 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAveragesloperecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageslopeRun;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording;
+
 
 import android.content.Context;
 import android.icu.text.MessageFormat;
@@ -39,6 +42,14 @@ class VoiceAnnouncementUtils {
 
     private VoiceAnnouncementUtils() {
     }
+
+
+    static double calculateTimeSkied() {
+
+           return 0.0; 
+		   
+    }
+	
 
     static double calculateMaxSlope() {
 
@@ -121,6 +132,18 @@ class VoiceAnnouncementUtils {
             String template = context.getResources().getString(speedId);
             appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
             builder.append(".");
+        }
+		
+
+        if (shouldVoiceAnnounceTimeSkiedRecording()) {
+            double timeSkied = calculateTimeSkied(); // Calculate the maximum slope based on elevation data
+            if (!Double.isNaN(timeSkied)) {
+                builder.append(" ")
+                        .append(context.getString(R.string.settings_announcements_time_skied_recording))
+                        .append(": ")
+                        .append(String.format("%.2f%%", timeSkied)) // Format the slope value
+                        .append(".");
+            }
         }
 
 
