@@ -445,6 +445,7 @@ public class PreferencesUtils {
         return getBoolean(R.string.voice_announce_max_speed_run_key, true);
     }
 
+
     @VisibleForTesting
     public static void setVoiceAnnounceMaxSpeedRun(boolean value) {
         setBoolean(R.string.voice_announce_max_speed_run_key, value);
@@ -478,12 +479,21 @@ public class PreferencesUtils {
     public static void setVoiceAnnounceMaxSpeedRecording(boolean value) {
         setBoolean(R.string.voice_announce_max_speed_recording_key, value);
     }
-    //recording related data for average slope's helper methods
+    //recording related data for average slope's helper methods for each recording
     public static boolean shouldVoiceAnnounceAveragesloperecording() {
         return getBoolean(R.string.voice_announce_average_slope_recording_key, true);
     }
     @VisibleForTesting
     public static void setVoiceAnnounceAveragesloperecording(boolean value) {
+        setBoolean(R.string.voice_announce_average_slope_recording_key, value);
+
+    }
+    //recording related data for average slope's helper methods for each run
+    public static boolean shouldVoiceAnnounceAverageslopeRun() {
+        return getBoolean(R.string.voice_announce_average_slope_recording_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAverageslopeRun(boolean value) {
         setBoolean(R.string.voice_announce_average_slope_recording_key, value);
 
     }

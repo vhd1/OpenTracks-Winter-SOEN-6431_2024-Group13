@@ -95,6 +95,12 @@
             android:defaultValue="@bool/voice_announce_run_average_speed_default"
             android:key="@string/voice_announce_run_average_speed_key"
             android:title="@string/settings_announcements_run_average_speed" />
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/voice_announce_average_slope_run_default"
+            android:title="@string/settings_announcements_average_slope_run"
+            app:key="@string/voice_announce_average_slope_run_key" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_max_speed_run_default"
             android:key="@string/voice_announce_max_speed_run_key"
