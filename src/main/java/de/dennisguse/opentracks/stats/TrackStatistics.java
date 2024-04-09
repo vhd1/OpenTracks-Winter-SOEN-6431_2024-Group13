@@ -427,6 +427,49 @@ public class TrackStatistics {
         return slopePercent_m != null;
     }
 
+    // Method to calculate the total skiing duration for the current day
+//    public Duration getTotalSkiingDuration() {
+//        return getTotalSkiingDuration(LocalDate.now());
+//    }
+//
+//    // Method to calculate the total skiing duration for a specific date
+//    public Duration getTotalSkiingDuration(LocalDate date) {
+//        Duration time = TrackImporter.getTotalSkiingDuration(date);
+//
+//        return TrackImporter.totalSkiingDuration;
+//    }
+//
+//    // Method to determine if skiing is detected between two track points
+//    private boolean isSkiingSegment(TrackPoint startPoint, TrackPoint endPoint) {
+//        // Thresholds to determine skiing activity
+//        double altitudeChangeThreshold = 10.0; // Meters
+//        double speedThreshold = 5.0; // Meters per second
+//        long timeThresholdInSeconds = 50; // Seconds
+//
+//        // Check if altitude change is significant
+//        double altitudeChange = Math.abs(startPoint.getAltitude().toM() - endPoint.getAltitude().toM());
+//        if (altitudeChange < altitudeChangeThreshold) {
+//            return false; // Altitude change not significant, likely not skiing
+//        }
+//
+//        // Calculate total distance
+////        double totalDistance = startPoint.distanceTo(endPoint).toKM();
+//
+//        // Calculate total time (in seconds)
+//        long totalTimeInSeconds = Duration.between(startPoint.getTime(), endPoint.getTime()).getSeconds();
+//
+//        // Calculate average speed
+////        double averageSpeed = totalDistance / totalTimeInSeconds;
+//
+//        // Check if average speed is above the speed threshold
+//        return totalTimeInSeconds >= timeThresholdInSeconds;
+//    }
+//
+//    // Method to check if two Instant objects belong to the same LocalDate
+//    private boolean isSameDate(Instant instant, LocalDate date) {
+//        return instant.atZone(ZoneId.systemDefault()).toLocalDate().isEqual(date);
+//    }
+//
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addTotalAltitudeLoss(float loss_m) {
         if (totalAltitudeLoss_m == null) {
