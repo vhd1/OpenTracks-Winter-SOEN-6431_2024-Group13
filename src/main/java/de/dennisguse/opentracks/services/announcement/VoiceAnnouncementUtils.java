@@ -5,6 +5,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapHeartRate;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRun;
@@ -12,7 +13,10 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAveragesloperecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageslopeRun;
+
 
 import android.content.Context;
 import android.icu.text.MessageFormat;
@@ -38,16 +42,26 @@ class VoiceAnnouncementUtils {
 
     private VoiceAnnouncementUtils() {
     }
-    
-    static double calculateMaxSlope() {
-       
-        // This method should return the calculated maximum slope.
+
+
+    static double calculateTimeSkied() {
+
            return 0.0; 
+		   
     }
-    static double CalculateAverageSlope(){
+	
+
+    static double calculateMaxSlope() {
+
+        // This method should return the calculated maximum slope.
+        return 0.0;
+    }
+
+    static double CalculateAverageSlope() {
         // This is dummy methods to fetch or calculate the average slope.
         return 10.0;
     }
+
 
     static Spannable createIdle(Context context) {
         return new SpannableStringBuilder()
@@ -57,6 +71,7 @@ class VoiceAnnouncementUtils {
     static Spannable createAfterRecording(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         Speed maxSpeed = trackStatistics.getMaxSpeed();
+        Speed avgSpeed = trackStatistics.getAverageSpeed();
 
         int perUnitStringId;
         int distanceId;
@@ -92,7 +107,7 @@ class VoiceAnnouncementUtils {
         if (shouldVoiceAnnounceMaxSpeedRecording()) {
             double speedInUnit = maxSpeed.to(unitSystem);
             builder.append(" ")
-                    .append(context.getString(R.string.speed));
+                    .append(context.getString(R.string.stats_max_speed));
             String template = context.getResources().getString(speedId);
             appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
             builder.append(".");
@@ -102,22 +117,46 @@ class VoiceAnnouncementUtils {
             double maxSlope = calculateMaxSlope(); // Calculate the maximum slope based on elevation data
             if (!Double.isNaN(maxSlope)) {
                 builder.append(" ")
-               .append(context.getString(R.string.settings_announcements_max_slope))
-               .append(": ")
-               .append(String.format("%.2f%%", maxSlope)) // Format the slope value
-               .append(".");
+                        .append(context.getString(R.string.settings_announcements_max_slope))
+                        .append(": ")
+                        .append(String.format("%.2f%%", maxSlope)) // Format the slope value
+                        .append(".");
             }
         }
-            if (shouldVoiceAnnounceAveragesloperecording()) {
-                double avgSlope = CalculateAverageSlope();
-                if (!Double.isNaN(avgSlope)) {
-                    builder.append(" ")
-                            .append("Average slope")
-                            .append(": ")
-                            .append(String.format("%.2f%%", avgSlope))
-                            .append(".");
-                }
+
+        if (shouldVoiceAnnounceAverageSpeedRecording()) {
+
+            double speedInUnit = avgSpeed.to(unitSystem);
+            builder.append(" ")
+                    .append(context.getString(R.string.speed));
+            String template = context.getResources().getString(speedId);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
+            builder.append(".");
+        }
+		
+
+        if (shouldVoiceAnnounceTimeSkiedRecording()) {
+            double timeSkied = calculateTimeSkied(); // Calculate the maximum slope based on elevation data
+            if (!Double.isNaN(timeSkied)) {
+                builder.append(" ")
+                        .append(context.getString(R.string.settings_announcements_time_skied_recording))
+                        .append(": ")
+                        .append(String.format("%.2f%%", timeSkied)) // Format the slope value
+                        .append(".");
             }
+        }
+
+
+        if (shouldVoiceAnnounceAveragesloperecording()) {
+            double avgSlope = CalculateAverageSlope();
+            if (!Double.isNaN(avgSlope)) {
+                builder.append(" ")
+                        .append("Average slope")
+                        .append(": ")
+                        .append(String.format("%.2f%%", avgSlope))
+                        .append(".");
+            }
+        }
         return builder;
     }
 
@@ -146,21 +185,20 @@ class VoiceAnnouncementUtils {
         }
 
 
-
         //Announce Average Speed
-       if (shouldVoiceAnnounceRunAverageSpeed()) {
-           double speedInUnit = averageMovingSpeed.to(unitSystem);
-           builder.append(" ")
-                   .append(context.getString(R.string.speed));
-           String template = context.getResources().getString(speedId);
-           appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
-           builder.append(".");
-       }
+        if (shouldVoiceAnnounceRunAverageSpeed()) {
+            double speedInUnit = averageMovingSpeed.to(unitSystem);
+            builder.append(" ")
+                    .append(context.getString(R.string.speed));
+            String template = context.getResources().getString(speedId);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
+            builder.append(".");
+        }
 
         if (shouldVoiceAnnounceMaxSpeedRun()) {
             double speedInUnit = maxSpeed.to(unitSystem);
             builder.append(" ")
-                    .append(context.getString(R.string.settings_announcements_max_speed_run));
+                    .append(context.getString(R.string.stats_max_speed));
             String template = context.getResources().getString(speedId);
             appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
             builder.append(".");
@@ -296,7 +334,6 @@ class VoiceAnnouncementUtils {
             appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
             builder.append(".");
         }
-        
 
 
         return builder;
@@ -324,7 +361,7 @@ class VoiceAnnouncementUtils {
     /**
      * Speaks as: 98.14 [UNIT] - ninety eight point one four [UNIT with correct plural form]
      *
-     * @param number The number to speak
+     * @param number    The number to speak
      * @param precision The number of decimal places to announce
      */
     private static void appendDecimalUnit(@NonNull SpannableStringBuilder builder, @NonNull String localizedText, double number, int precision, @NonNull String unit) {
@@ -336,7 +373,7 @@ class VoiceAnnouncementUtils {
         long integerPart = (long) roundedNumber;
 
         if (precision == 0 || (roundedNumber - integerPart) == 0) {
-            measureBuilder.setNumber((long)number);
+            measureBuilder.setNumber((long) number);
         } else {
             // Extract the decimal part
             String fractionalPart = String.format("%." + precision + "f", (roundedNumber - integerPart)).substring(2);
