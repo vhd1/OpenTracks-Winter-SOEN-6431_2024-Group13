@@ -360,6 +360,9 @@ limitations under the License.
     <string name="settings_announcements_statistics_title">Statistics Announcements</string>
     <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
 
+    <string name="settings_announcements_recording_title">Announcements After Recording</string>
+    <string name="settings_announcements_run_title">Announcements After Run</string>
+
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_import_export_summary">Import, Export, Auto Export</string>
 
@@ -426,7 +429,16 @@ limitations under the License.
     <string name="settings_profile_country">Country</string>
     <string name="settings_profile_country_key" translatable="false">country</string>
 
-    <!-- Custom Layout -->
+    <string name="settings_announcements_max_speed_run">Max speed/run</string>
+    <string name="settings_announcements_run_average_speed">Run Average Speed</string>
+
+
+    <!-- Recording Related Data -->
+    <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
+    <string name="settings_announcements_max_slope">Max slope</string>
+    <string name="settings_announcements_average_slope_recording">Average slope</string>
+    <string name="settings_announcements_average_slope_run">Average slope</string>
+
 
 
     <string name="custom_layout_list_title">Layouts</string>
@@ -729,4 +741,5 @@ limitations under the License.
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
     <string name="default_Date_Key">1 Sep</string>
+
 </resources>
