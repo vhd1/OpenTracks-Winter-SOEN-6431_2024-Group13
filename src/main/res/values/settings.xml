@@ -262,8 +262,33 @@
     <string name="voice_announce_lap_heart_rate_key" translatable="false">voiceAnnounceLapHeartRate</string>
     <bool name="voice_announce_lap_heart_rate_default" translatable="false">false</bool>
 
-    <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
+
+    <!-- Recording related data -->
+    <string name="voice_announce_max_slope_key">voiceAnnounceMaxSlope</string>
+    <bool name="voice_announce_max_slope_default" translatable="false">true</bool>
+
+    <string name="voice_announce_max_speed_recording_key">voiceAnnounceMaxSpeedRecording</string>
+    <bool name="voice_announce_max_speed_recording_default" translatable="false">true</bool>
+
+    <string name="voice_announce_average_slope_recording_key">voiceAnnounceAverageSlopeRecording</string>
+    <bool name="voice_announce_average_slope_recording_default" translatable="false">true</bool>
+
+    <string name="voice_announce_average_slope_run_key">voiceAnnounceAverageSlopeRun</string>
+    <bool name="voice_announce_average_slope_run_default" translatable="false">true</bool>
+  
+  
+  
+    <!-- Run related data -->
+
+    <string name="voice_announce_run_average_speed_key" translatable="false">voiceAnnounceRunAverageSpeed</string>
+    <bool name="voice_announce_run_average_speed_default" translatable="false">false</bool>
+
+    <string name="voice_announce_max_speed_run_key">voiceAnnounceMaxSpeedRun</string>
+    <bool name="voice_announce_max_speed_run_default" translatable="false">true</bool>
+
+
     <!-- See TrackFileFormat -->
+    <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
     <string name="export_trackfileformat_default" translatable="false">KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES</string>
 
     <string name="import_prevent_reimport_key" translatable="false">preventReimportTrackKey</string>

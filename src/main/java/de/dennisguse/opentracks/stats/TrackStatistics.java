@@ -58,6 +58,7 @@ public class TrackStatistics {
     private Speed maxSpeed;
     private Float totalAltitudeGain_m = null;
     private Float totalAltitudeLoss_m = null;
+
     // The average heart rate seen on this track
     private HeartRate avgHeartRate = null;
 
@@ -454,3 +455,4 @@ public class TrackStatistics {
                 + "; Slope%: " + getSlopePercent() + "}";
     }
 }
+
