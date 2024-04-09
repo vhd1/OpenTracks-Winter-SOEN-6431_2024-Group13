@@ -264,6 +264,10 @@
     <string name="voice_announce_max_speed_recording_key">voiceAnnounceMaxSpeedRecording</string>
     <bool name="voice_announce_max_speed_recording_default" translatable="false">true</bool>
 
+
+    <string name="voice_announce_average_speed_recording_key">voiceAnnounceAverageSlopeRecording</string>
+    <bool name="voice_announce_average_speed_recording_default" translatable="false">true</bool>
+
     <string name="voice_announce_average_slope_recording_key">voiceAnnounceAverageSlopeRecording</string>
     <bool name="voice_announce_average_slope_recording_default" translatable="false">true</bool>
 
@@ -279,6 +283,7 @@
 
     <string name="voice_announce_max_speed_run_key">voiceAnnounceMaxSpeedRun</string>
     <bool name="voice_announce_max_speed_run_default" translatable="false">true</bool>
+
 
 
     <!-- See TrackFileFormat -->
