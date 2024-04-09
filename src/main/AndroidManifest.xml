@@ -92,6 +92,9 @@ limitations under the License.
             android:name=".ui.aggregatedStatistics.SeasonStats.SeasonStatActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.aggregatedStatistics.daystatistics.DayStatisticsActivity"
+            android:exported="false" />
+        <activity
             android:name=".publicapi.StartRecording"
             android:exported="true"
             android:theme="@style/SplashTheme">
