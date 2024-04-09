@@ -123,7 +123,9 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
             return;
         }
         // add other check with and here
-        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording() && !PreferencesUtils.shouldVoiceAnnounceMaxSlope() && !PreferencesUtils.shouldVoiceAnnounceAveragesloperecording()  ) {
+
+        if (!PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording() && !PreferencesUtils.shouldVoiceAnnounceMaxSlope() && !PreferencesUtils.shouldVoiceAnnounceAveragesloperecording()  
+            && !PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording()) {
             return;
         }
         voiceAnnouncement.announce(VoiceAnnouncementUtils.createAfterRecording(context,track.getTrackStatistics(),PreferencesUtils.getUnitSystem()));
