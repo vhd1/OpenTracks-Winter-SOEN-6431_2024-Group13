@@ -11,6 +11,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceRunAverageSpeed;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAveragesloperecording;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageslopeRun;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording;
 
@@ -142,7 +143,6 @@ class VoiceAnnouncementUtils {
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
         Speed maxSpeed = trackStatistics.getMaxSpeed();
-
         int speedId;
         String unitSpeedTTS;
         switch (unitSystem) {
@@ -179,6 +179,16 @@ class VoiceAnnouncementUtils {
             String template = context.getResources().getString(speedId);
             appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
             builder.append(".");
+        }
+        if (shouldVoiceAnnounceAverageslopeRun()) {
+            double avgSlope = CalculateAverageSlope();
+            if (!Double.isNaN(avgSlope)) {
+                builder.append(" ")
+                        .append("Average slope")
+                        .append(": ")
+                        .append(String.format("%.2f%%", avgSlope))
+                        .append(".");
+            }
         }
         return builder;
     }

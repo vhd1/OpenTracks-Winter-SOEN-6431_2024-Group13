@@ -271,6 +271,8 @@
     <string name="voice_announce_average_slope_recording_key">voiceAnnounceAverageSlopeRecording</string>
     <bool name="voice_announce_average_slope_recording_default" translatable="false">true</bool>
 
+    <string name="voice_announce_average_slope_run_key">voiceAnnounceAverageSlopeRun</string>
+    <bool name="voice_announce_average_slope_run_default" translatable="false">true</bool>
   
   
   
