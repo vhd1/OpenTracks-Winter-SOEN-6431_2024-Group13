@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -78,7 +79,7 @@ public class PreferencesUtils {
     public static void initPreferences(final Context context, final Resources resources) {
         PreferencesUtils.resources = resources;
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
+        setDefaultActivityLocalized(context.getString(R.string.activity_type_skiing));
         PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
     }
 
@@ -217,6 +218,18 @@ public class PreferencesUtils {
 
     public static void setShowIntroduction(boolean introduction) {
         setBoolean(R.string.show_introduction_screen_key, introduction);
+    }
+
+    public static boolean shouldDiscardRecord(int recordDuration) {
+        boolean autoDiscardEnabled = getBoolean(R.string.auto_discard_key, false);
+        int selectedLength = Integer.parseInt(getString(R.string.record_length_default, "0"));
+        int customLength = Integer.parseInt(getString(R.string.custom_record_length_key, "5"));
+        Log.d("DefaultsSettingsFragment", "Auto discard enabled: " + autoDiscardEnabled);
+        Log.d("DefaultsSettingsFragment", "Selected record length: " + selectedLength);
+        Log.d("DefaultsSettingsFragment", "Custom record length: " + customLength);
+        Log.d("DefaultsSettingsFragment", "Record duration: " + recordDuration);
+
+        return autoDiscardEnabled && (recordDuration < selectedLength|| recordDuration < customLength);
     }
 
     public static UnitSystem getUnitSystem() {
@@ -935,5 +948,23 @@ public class PreferencesUtils {
     public static void setSelectedCountry(final String selectedCountry) {
         setString(R.string.settings_profile_country_key, selectedCountry);
     }
+
+    public static void addCustomActivity(Context context, String activityName) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String existingActivities = prefs.getString(context.getString(R.string.key_custom_activities), "");
+        if (!existingActivities.contains(activityName)) {
+            existingActivities += (existingActivities.isEmpty() ? "" : ";") + activityName;
+            prefs.edit().putString(context.getString(R.string.key_custom_activities), existingActivities).apply();
+        }
+    }
+
+    public static List<String> getCustomActivities(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String activitiesString = prefs.getString(context.getString(R.string.key_custom_activities), "");
+        return Arrays.asList(activitiesString.split(";"));
+    }
+
+
+
 
 }

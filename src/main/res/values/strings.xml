@@ -248,6 +248,7 @@ limitations under the License.
     <string name="generic_dismiss">Dismiss</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
+    <string name="gps_status">GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
     <string name="gps_wait_for_signal">Waiting for GPS signal</string>
     <string name="gps_disabled_msg">GPS disabled</string>
@@ -437,6 +438,11 @@ limitations under the License.
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
+    <string name="add_custom_activity_title">Custom Activity</string>
+    <string name="add_custom_activity_summary">Define your custom Activity</string>
+    <string name="custom_activity_add">Enter Custom Activity</string>
+    <string name="key_custom_activities">custom_activities_key</string>
+
 
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Lap length</string>
@@ -575,6 +581,7 @@ limitations under the License.
     <!-- Aggregated Statistics -->
     <string name="aggregated_stats_empty_message">Record your first track to see aggregated statistics</string>
     <string name="aggregated_stats_filter_no_results">There are not activities for the specified filter</string>
+    <string name="aggregate_stats">Aggregate Stats</string>
     <!-- Interval List -->
     <string name="interval_list_empty_message">There are not any interval yet</string>
     <!-- Unit -->
@@ -772,8 +779,12 @@ limitations under the License.
     <string name="always">Always</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+    <string name="custom_record_length_summary">Enter custom record length in seconds</string>
+    <string name="custom_record_length_title">Custom Record Length</string>
+    <string name="custom_record_length_key">custom_record_length</string>
+
     <string name="default_Date_Key">1 Sep</string>
-  
+ 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

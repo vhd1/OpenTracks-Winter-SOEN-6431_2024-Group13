@@ -78,7 +78,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
     }
 
     private PreferenceFragmentCompat getPreferenceScreen(String key) {
-        PreferenceFragmentCompat fragment = null;
+        PreferenceFragmentCompat LocalFragment = null;
 
         if (key.equals(getString(R.string.settings_defaults_key))) {
             fragment = new DefaultsSettingsFragment();
