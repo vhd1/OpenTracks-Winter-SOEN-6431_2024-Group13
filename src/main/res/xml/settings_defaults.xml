@@ -33,6 +33,42 @@
             android:key="@string/track_name_key"
             android:title="@string/settings_recording_track_name_title"
             app:useSimpleSummaryProvider="true" />
+        <Preference
+            android:key="@string/ski_season_start_key"
+            android:defaultValue="@string/default_Date_Key"
+            android:inputType="date"
+            android:title="@string/ski_season_start_title"
+            android:summary="@string/default_Date_Key"
+            app:useSimpleSummaryProvider="true"
+            />
+        <Preference
+            android:key="@string/custom_activity_add"
+            android:title="@string/add_custom_activity_title"
+            android:summary="@string/add_custom_activity_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Auto Discard Records">
+        <SwitchPreferenceCompat
+            android:key="@string/auto_discard_key"
+            android:title="@string/auto_discard_title"
+            android:summary="@string/auto_discard_summary"
+            android:defaultValue="@string/auto_discard_default" />
+
+        <ListPreference
+            android:key="@string/record_length_key"
+            android:title="@string/record_length_title"
+            android:summary="@string/record_length_summary"
+            android:entries="@array/record_length_options"
+            android:entryValues="@array/record_length_values"
+            android:defaultValue="@string/record_length_default" />
+
+        <!-- EditTextPreference for custom record length -->
+        <EditTextPreference
+            android:key="@string/custom_record_length_key"
+            android:title="@string/custom_record_length_title"
+            android:summary="@string/custom_record_length_summary"
+            android:inputType="number"
+            android:defaultValue="" /> <!-- Default value can be set if needed -->
     </PreferenceCategory>
 
 </PreferenceScreen>

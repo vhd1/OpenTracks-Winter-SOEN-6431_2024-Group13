@@ -15,6 +15,8 @@
 
     <string name="settings_ui_key" translatable="false">settingsUI</string>
 
+    <string name="settings_ski_profile_key" translatable="false">settingsSkiProfile</string>
+
     <string name="settings_gps_key" translatable="false">settingsGps</string>
 
     <string name="settings_sensors_key" translatable="false">settingsSensorsGps</string>
@@ -66,6 +68,10 @@
 
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>
+
+    <string name="ski_season_start_key" translatable="false">skiSeasonStartDate</string>
+    <item name="monthPicker" type="id" />
+    <item name="dayPicker" type="id" />
 
     <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
     <string name="recording_distance_interval_default" translatable="false">10</string>
@@ -455,5 +461,35 @@
     </integer-array>
 
     <string name="prefs_last_version_key" translatable="false">lastVersionKey</string>
+
+    <!-- Default value for automatic record discarding -->
+    <string name="auto_discard_default">true</string>
+    <string name="auto_discard_key">auto_discard_switch</string> <!-- Update the key -->
+    <string name="auto_discard_title">Automatically discard records</string> <!-- Update the title -->
+    <string name="auto_discard_summary">Enable automatic record discarding</string> <!-- Update the summary -->
+
+    <!-- Default value for record length preference -->
+    <string name="record_length_key">record_length_list</string> <!-- Update the key -->
+    <string name="record_length_options">record_length_list</string> <!-- Update the options -->
+    <string name="record_length_default">5</string> <!-- Update the default value -->
+    <string name="record_length_title">Record Length</string> <!-- Update the title -->
+    <string name="record_length_summary">Select the duration for each record</string> <!-- Update the summary -->
+
+    <!-- Array of record length options -->
+    <string-array name="record_length_options">
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>20 seconds</item>
+        <item>Custom</item> <!-- Include the "Custom" option -->
+    </string-array>
+
+    <!-- Array of corresponding record length values -->
+    <string-array name="record_length_values">
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>-1</item> <!-- Add a placeholder value for "Custom" -->
+    </string-array>
+
 
 </resources>

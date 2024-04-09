@@ -2,6 +2,11 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/menu_settings">
+    <Preference
+        android:icon="@drawable/ic_profile"
+        android:key="@string/settings_profile_key"
+        android:summary="@string/settings_profile_summary"
+        android:title="@string/settings_profile_title" />
 
     <Preference
         android:icon="@drawable/ic_units"
@@ -14,6 +19,12 @@
         android:key="@string/settings_ui_key"
         android:summary="@string/settings_ui_summary"
         android:title="@string/settings_ui_title" />
+
+    <Preference
+        android:icon="@drawable/ic_activity_skiing_24dp"
+        android:key="@string/settings_ski_profile_key"
+        android:summary="@string/settings_ski_profile_summary"
+        android:title="@string/settings_ski_profile_title" />
 
     <Preference
         android:icon="@drawable/ic_baseline_satellite_alt_24"

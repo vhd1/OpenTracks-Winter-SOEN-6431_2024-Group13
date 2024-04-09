@@ -12,10 +12,10 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceRunAverageSpeed;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSlope;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAveragesloperecording;
-import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageslopeRun;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMaxSpeedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTimeSkiedRecording;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedRecording;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageslopeRun;
 
 
 import android.content.Context;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +25,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
 import de.dennisguse.opentracks.chart.TrackDataHubInterface;
@@ -36,6 +40,7 @@ import de.dennisguse.opentracks.databinding.TrackRecordingBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
 import de.dennisguse.opentracks.services.RecordingStatus;
+import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
@@ -55,7 +60,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface, TrackDeleteService.TrackDeleteResultReceiver.Receiver {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -132,17 +137,32 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
 
-        viewBinding.trackRecordingFabAction.setImageResource(R.drawable.ic_baseline_stop_24);
+        viewBinding.trackRecordingFabAction.setImageResource(R.drawable.pause_button);
         viewBinding.trackRecordingFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.opentracks));
         viewBinding.trackRecordingFabAction.setBackgroundColor(ContextCompat.getColor(this, R.color.opentracks));
         viewBinding.trackRecordingFabAction.setOnLongClickListener((view) -> {
             ActivityUtils.vibrate(this, 1000);
             trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this);
-            Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackStoppedActivity.class)
-                    .putExtra(TrackStoppedActivity.EXTRA_TRACK_ID, trackId);
-            startActivity(newIntent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            finish();
+
+            Track track = contentProviderUtils.getTrack(trackId);
+            long trackDurationInSeconds = track.getTrackStatistics().getTotalTime().getSeconds();
+
+            if (PreferencesUtils.shouldDiscardRecord((int) trackDurationInSeconds)) {
+                // Discard records
+                ArrayList<Track.Id> trackIdList = new ArrayList<>();
+                Track.Id trackIds = track.getId();
+                trackIdList.add(trackId);
+
+                Log.d("TrackStoppedActivity", "Discarding records");
+                TrackDeleteService.enqueue(this, new TrackDeleteService.TrackDeleteResultReceiver(new Handler(), this), trackIdList);
+            } else {
+                Log.d("TrackStoppedActivity", "Not discarding records");
+                Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackStoppedActivity.class)
+                        .putExtra(TrackStoppedActivity.EXTRA_TRACK_ID, trackId);
+                startActivity(newIntent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
             return true;
         });
         viewBinding.trackRecordingFabAction.setOnClickListener((view) -> Toast.makeText(TrackRecordingActivity.this, getString(R.string.hold_to_stop), Toast.LENGTH_LONG).show());
@@ -320,6 +340,11 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         Track track = contentProviderUtils.getTrack(trackId);
         String activityTypeLocalized = getString(activityType.getLocalizedStringId());
         TrackUtils.updateTrack(this, track, null, activityTypeLocalized, null, contentProviderUtils);
+    }
+
+    @Override
+    public void onDeleteFinished() {
+        finish();
     }
 
     private class CustomFragmentPagerAdapter extends FragmentStateAdapter {

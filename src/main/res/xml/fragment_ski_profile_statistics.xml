@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/ski_profile_statistics_title">
+
+    <PreferenceCategory
+        android:title="Time Period">
+
+        <ListPreference
+            android:key="time_period"
+            android:title="Select Time Period"
+            android:summary="Choose the time period to view statistics"
+            android:entries="@array/time_periods"
+            android:entryValues="@array/time_periods"
+            android:defaultValue="monthly" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Maintenance Activity Types">
+
+        <Preference
+            android:key="waxing"
+            android:title="Waxing"
+            android:summary="Number of Waxing activities performed" />
+
+        <Preference
+            android:key="sharpening"
+            android:title="Sharpening"
+            android:summary="Number of Sharpening activities performed" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
