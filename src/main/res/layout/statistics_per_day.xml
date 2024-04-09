@@ -271,5 +271,55 @@
             app:layout_constraintTop_toBottomOf="@id/stats_moving_time_label"
             tools:text="00:00:00" />
 
+        <!-- Total skied km -->
+        <TextView
+            android:id="@+id/stats_distance_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total skied km"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_distance_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_distance_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/stats_distance_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_distance_label"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/stats_distance_unit"
+            style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/stats_distance_value"
+            app:layout_constraintStart_toEndOf="@id/stats_distance_value"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            tools:text="km" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_distance_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_moving_time_value,stats_distance_value" />
+
+        <!-- Horizontal Line -->
+        <View
+            android:id="@+id/stats_end_horizontal_line"
+            style="@style/HorizontalLine"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_distance_barrier" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
