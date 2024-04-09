@@ -440,6 +440,36 @@ public class PreferencesUtils {
         setBoolean(R.string.voice_announce_average_heart_rate_key, value);
     }
 
+
+    public static boolean shouldVoiceAnnounceMaxSpeedRun() {
+        return getBoolean(R.string.voice_announce_max_speed_run_key, true);
+    }
+
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceMaxSpeedRun(boolean value) {
+        setBoolean(R.string.voice_announce_max_speed_run_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceRunAverageSpeed() {
+        return getBoolean(R.string.voice_announce_run_average_speed_key, true);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceRunAverageSpeed(boolean value) {
+        setBoolean(R.string.voice_announce_run_average_speed_key, value);
+    }
+
+
+    public static boolean shouldVoiceAnnounceMaxSlope() {
+        return getBoolean(R.string.voice_announce_max_slope_key, true);
+    }
+    
+    @VisibleForTesting
+    public static void setVoiceAnnounceMaxSlope(boolean value) {
+        setBoolean(R.string.voice_announce_max_slope_key, value);
+    }
+
     // recoding related setting helper methods
     public static boolean shouldVoiceAnnounceMaxSpeedRecording() {
         return getBoolean(R.string.voice_announce_max_speed_recording_key, true);
@@ -458,6 +488,33 @@ public class PreferencesUtils {
 	@VisibleForTesting
     public static void setVoiceAnnounceTimeSkiedRecording(boolean value) {
         setBoolean(R.string.voice_announce_time_skied_recording_key, value);
+    }
+
+    //recording related data for average slope's helper methods for each recording
+    public static boolean shouldVoiceAnnounceAveragesloperecording() {
+        return getBoolean(R.string.voice_announce_average_slope_recording_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAveragesloperecording(boolean value) {
+        setBoolean(R.string.voice_announce_average_slope_recording_key, value);
+
+    }
+    //recording related data for average slope's helper methods for each run
+    public static boolean shouldVoiceAnnounceAverageslopeRun() {
+        return getBoolean(R.string.voice_announce_average_slope_run_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAverageslopeRun(boolean value) {
+        setBoolean(R.string.voice_announce_average_slope_run_key, value);
+
+    }
+
+    public static boolean shouldVoiceAnnounceAverageSpeedRecording() {
+        return getBoolean(R.string.voice_announce_average_speed_recording_key, true);
+    }
+    @VisibleForTesting
+    public static void setVoiceAnnounceAverageSpeedRecording(boolean value) {
+        setBoolean(R.string.voice_announce_average_speed_recording_key, value);
     }
 
 

@@ -361,6 +361,7 @@ limitations under the License.
     <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
 
     <string name="settings_announcements_recording_title">Announcements After Recording</string>
+    <string name="settings_announcements_run_title">Announcements After Run</string>
 
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_import_export_summary">Import, Export, Auto Export</string>
@@ -414,11 +415,27 @@ limitations under the License.
     <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
 
+    <!-- Run RRelated Data -->
+    <string name="settings_announcements_average_slope_run">Average slope</string>  
+    <string name="settings_announcements_max_speed_run">Max speed/run</string>
+    <string name="settings_announcements_run_average_speed">Run Average Speed</string>
+
+
     <!-- Recording Related Data -->
     <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
-	<string name="settings_announcements_time_skied_recording">Time skied/recording</string>
-    <!-- Custom Layout -->
 
+	  <string name="settings_announcements_time_skied_recording">Time skied/recording</string>
+    
+
+
+    <string name="settings_announcements_average_speed_recording">Average speed/recording</string>
+
+    <string name="settings_announcements_max_slope">Max slope</string>
+    <string name="settings_announcements_average_slope_recording">Average slope</string>
+    
+
+
+    <!-- Custom Layout -->
 
     <string name="custom_layout_list_title">Layouts</string>
     <string name="custom_layout_list_edit_name">Type layout\'s name to add</string>
@@ -714,4 +731,6 @@ limitations under the License.
     <string name="always">Always</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+
+
 </resources>

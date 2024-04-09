@@ -84,6 +84,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
 
             voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
+            voiceAnnouncementManager.announceAfterRun(data.first);
 
             recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
 
