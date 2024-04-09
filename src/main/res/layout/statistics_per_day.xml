@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarStyle="outsideOverlay">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.aggregatedStatistics.daystatistics.DayStatisticsActivity">
+
+        <!-- Guidelines -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="8dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp" />
+
+        <!-- Activity information: icon, name, description and start datetime -->
+        <ImageView
+            android:id="@+id/stats_activity_type_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            tools:src="@drawable/ic_activity_skiing_24dp" />
+
+        <TextView
+            android:id="@+id/stats_name_value"
+            style="?attr/textAppearanceHeadline6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/stats_activity_type_icon"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            tools:text="Day Statistics" />
+
+        <TextView
+            android:id="@+id/stats_description_value"
+            style="?attr/textAppearanceBody1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/stats_name_value"
+            app:layout_constraintTop_toBottomOf="@id/stats_name_value"
+            tools:text="Here will be a description that could be really long and it would show completely without problems." />
+
+        <TextView
+            android:id="@+id/stats_start_datetime_value"
+            style="?attr/textAppearanceBody2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/stats_description_barrier"
+            tools:text="Saturday 6th, 16:44" />
+
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_description_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_activity_type_icon,stats_name_value,stats_description_value" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_speed_horizontal_line"
+            style="@style/HorizontalLine"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_start_datetime_value" />
+
+        <!-- Max speed -->
+        <TextView
+            android:id="@+id/stats_max_speed_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/stats_speed_horizontal_line"
+            tools:text="Max. Speed" />
+
+        <TextView
+            android:id="@+id/stats_max_speed_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/stats_max_speed_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_max_speed_label"
+            tools:text="30.00" />
+
+        <TextView
+            android:id="@+id/stats_max_speed_unit"
+            style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/stats_max_speed_value"
+            app:layout_constraintStart_toEndOf="@id/stats_max_speed_value"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
+            tools:text="km/h" />
+
+        <!-- Avg. speed/pace -->
+        <TextView
+            android:id="@+id/stats_average_speed_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_speed_horizontal_line"
+            tools:text="Avg. Moving Speed" />
+
+        <TextView
+            android:id="@+id/stats_average_speed_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/stats_average_speed_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_average_speed_label"
+            tools:text="30.00" />
+
+        <TextView
+            android:id="@+id/stats_average_speed_unit"
+            style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/stats_average_speed_value"
+            app:layout_constraintStart_toEndOf="@id/stats_average_speed_value"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            tools:text="km/h" />
+
+
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_speed_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_max_speed_value,stats_average_speed_value" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_waiting_horizontal_line"
+            style="@style/HorizontalLine"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_speed_barrier"/>
+
+        <!-- Shortest wait at chairlift -->
+        <TextView
+            android:id="@+id/stats_shortest_wait_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shortest wait at chairlift"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/stats_waiting_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_shortest_wait_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/stats_shortest_wait_label"
+            tools:text="00:00:00" />
+
+        <!-- Longest wait at chairlift -->
+        <TextView
+            android:id="@+id/stats_longest_wait_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Longest wait at chairlift"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_waiting_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_longest_wait_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/stats_longest_wait_label"
+            tools:text="00:00:00" />
+
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_time_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_longest_wait_value,stats_shortest_wait_value" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_distance_horizontal_line"
+            style="@style/HorizontalLine"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_time_barrier" />
+
+        <!-- Average waiting time -->
+        <TextView
+            android:id="@+id/stats_moving_time_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average waiting time at chairlift"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/stats_distance_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_moving_time_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/stats_moving_time_label"
+            tools:text="00:00:00" />
+
+        <!-- Total skied km -->
+        <TextView
+            android:id="@+id/stats_distance_label"
+            style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total skied km"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_distance_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_distance_value"
+            style="@style/TextAppearance.OpenTracks.PrimaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toStartOf="@id/stats_distance_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_distance_label"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/stats_distance_unit"
+            style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/stats_distance_value"
+            app:layout_constraintStart_toEndOf="@id/stats_distance_value"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            tools:text="km" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_distance_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_moving_time_value,stats_distance_value" />
+
+        <!-- Horizontal Line -->
+        <View
+            android:id="@+id/stats_end_horizontal_line"
+            style="@style/HorizontalLine"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_distance_barrier" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

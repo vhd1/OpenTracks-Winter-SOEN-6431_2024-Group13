@@ -84,6 +84,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
 
             voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
+            voiceAnnouncementManager.announceAfterRun(data.first);
 
             recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
 
@@ -237,6 +238,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             Log.w(TAG, "Ignore endCurrentTrack. Not recording.");
             return;
         }
+
+        // announce after recording
+        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
+
+        voiceAnnouncementManager.announceAfterRecording(data.first);
 
         // Set recording status
         updateRecordingStatus(STATUS_DEFAULT);

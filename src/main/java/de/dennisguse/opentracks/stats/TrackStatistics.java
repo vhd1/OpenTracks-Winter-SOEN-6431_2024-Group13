@@ -454,5 +454,5 @@ public class TrackStatistics {
                 + "; Altitude Loss: " + getTotalAltitudeLoss()
                 + "; Slope%: " + getSlopePercent() + "}";
     }
-
 }
+
