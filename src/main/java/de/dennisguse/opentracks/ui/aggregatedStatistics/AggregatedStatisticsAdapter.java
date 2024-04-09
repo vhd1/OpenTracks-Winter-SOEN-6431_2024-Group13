@@ -121,14 +121,14 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
             });
 
-            viewBinding.dayStatisticsBtn.setOnClickListener(new View.OnClickListener() {
+            /*viewBinding.dayStatisticsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Context context = viewBinding.getRoot().getContext();
                     Intent intent = new Intent(context, DayStatisticsActivity.class);
                     context.startActivity(intent);
                 }
-            });
+            });*/
         }
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {

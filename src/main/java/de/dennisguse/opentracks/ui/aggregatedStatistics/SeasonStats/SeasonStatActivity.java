@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.databinding.ActivitySeasonStatBinding;
+/*import de.dennisguse.opentracks.databinding.ActivitySeasonStatBinding;*/
 
 public class SeasonStatActivity extends AppCompatActivity {
 
-    ActivitySeasonStatBinding binding;
+    /*ActivitySeasonStatBinding binding;
 
 
     public int calculateSum(ArrayList<Integer> list) {
@@ -209,5 +209,5 @@ class DummySeason {
         this.max_alt = max_alt;
         this.tallestRun = tallestRun;
         this.longestRun = longestRun;
-    }
+    }*/
 }
