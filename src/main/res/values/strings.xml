@@ -464,6 +464,20 @@ limitations under the License.
     <string name="settings_profile_profile_picture_title">Profile picture</string>
     <string name="settings_profile_profile_picture_key">profilePicture</string>
     <string name="settings_profile_profile_picture_nickname">profilePictureNickname</string>
+    <string name="settings_profile_dob_key">dob_key</string>
+    <string name="settings_profile_dob_title">Date of Birth</string>
+    <string name="settings_profile_dob_dialog_title">Select Date of Birth</string>
+    <string name="settings_profile_dob_dialog_message">Please select your date of birth</string>
+    <string name="settings_profile_gender_key">gender</string>
+    <string name="settings_profile_gender">Gender</string>
+    <string name="default_gender_value">Select Gender</string>
+    <string name="settings_profile_leaderboard_share_key">settings_profile_leaderboard_share</string>
+    <string name="settings_profile_leaderboard_share_title">Allow information Sharing</string>
+    <string name="settings_profile_leaderboard_share_summary_on">You have agreed to share information in the leaderboard.</string>
+    <string name="settings_profile_leaderboard_share_summary_off">You have not agreed to share information in the leaderboard.</string>
+
+
+
 
     <!-- Run RRelated Data -->
     <string name="settings_announcements_average_slope_run">Average slope</string>  
