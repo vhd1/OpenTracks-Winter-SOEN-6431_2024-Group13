@@ -1,10 +1,12 @@
 package de.dennisguse.opentracks.settings;
+
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -27,14 +29,13 @@ import android.app.DatePickerDialog;
 import java.util.Calendar;
 import java.util.Locale;
 
-
-
 public class ProfileSettingsFragment extends PreferenceFragmentCompat {
     ImageViewPreference imageViewPreference;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Bitmap profilePicture;
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (
+            sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.night_mode_key, key)) {
             getActivity().runOnUiThread(PreferencesUtils::applyNightMode);
         }
@@ -44,7 +45,6 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_profile);
         ListPreference countryPreference = findPreference(getString(R.string.settings_profile_country_key));
-
 
         String selectedCountryValue = PreferencesUtils.getSelectedCountry();
         countryPreference.setSummary(selectedCountryValue);
@@ -83,7 +83,8 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
 
-        CheckBoxPreference leaderboardSharePreference = findPreference(getString(R.string.settings_profile_leaderboard_share_key));
+        CheckBoxPreference leaderboardSharePreference = findPreference(
+                getString(R.string.settings_profile_leaderboard_share_key));
         leaderboardSharePreference.setSummary(leaderboardSharePreference.isChecked()
                 ? getString(R.string.settings_profile_leaderboard_share_summary_on)
                 : getString(R.string.settings_profile_leaderboard_share_summary_off));
@@ -123,8 +124,18 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             editText.setSingleLine(true);
             editText.selectAll(); // select all text
             int maxNicknameLength = 20;
-            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxNicknameLength)});
+            editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(maxNicknameLength) });
         });
+
+        EditTextPreference heightInput = findPreference(getString(R.string.settings_profile_height_key));
+        heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title));
+        heightInput.setOnBindEditTextListener(editText -> {
+            editText.setSingleLine(true);
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
+            editText.setHint("Feet");
+        });
+
 
         ListPreference countryPreference = findPreference(getString(R.string.settings_profile_country_key));
         String selectedCountryValue = PreferencesUtils.getSelectedCountry();
@@ -146,36 +157,36 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         imageViewPreference = findPreference(getString(R.string.settings_profile_profile_picture_key));
 
         if (imageViewPreference != null) {
-            pickMedia =
-                    registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                        // Callback is invoked after the user selects a media item or closes the
-                        // photo picker.
-                        if (uri != null) {
-                            try {
-                                ImageView imageView2 = imageViewPreference.getImageView();
-                                profilePicture = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
-                                imageView2.setImageBitmap(profilePicture);
+            pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                // Callback is invoked after the user selects a media item or closes the
+                // photo picker.
+                if (uri != null) {
+                    try {
+                        ImageView imageView2 = imageViewPreference.getImageView();
+                        profilePicture = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                        imageView2.setImageBitmap(profilePicture);
 
-                                try {
-                                    File file = new File(getContext().getFilesDir(), getString(R.string.settings_profile_profile_picture_key));
-                                    FileOutputStream fileOutputStream = new FileOutputStream(file);
-                                    profilePicture.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-                                    fileOutputStream.close();
+                        try {
+                            File file = new File(getContext().getFilesDir(),
+                                    getString(R.string.settings_profile_profile_picture_key));
+                            FileOutputStream fileOutputStream = new FileOutputStream(file);
+                            profilePicture.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+                            fileOutputStream.close();
 
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            Toast.makeText(getContext(), "No media selected", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "No media selected", Toast.LENGTH_SHORT).show();
+                }
+            });
             imageViewPreference.setImageClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //do whatever you want on image click here
+                    // do whatever you want on image click here
                     pickMedia.launch(new PickVisualMediaRequest.Builder()
                             .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                             .build());
@@ -197,50 +208,55 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         return b;
     }
 
-
     private void showDatePickerDialog(Preference dobPreference) {
         Calendar calendar = Calendar.getInstance();
         int currentYear = calendar.get(Calendar.YEAR);
         int currentMonth = calendar.get(Calendar.MONTH);
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, monthOfYear, dayOfMonth) -> {
-            Calendar selectedCalendar = Calendar.getInstance();
-            selectedCalendar.set(year, monthOfYear, dayOfMonth);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    Calendar selectedCalendar = Calendar.getInstance();
+                    selectedCalendar.set(year, monthOfYear, dayOfMonth);
 
-            // Calculate 18 years ago
-            Calendar eighteenYearsAgo = Calendar.getInstance();
-            eighteenYearsAgo.add(Calendar.YEAR, -18);
+                    // Calculate 18 years ago
+                    Calendar eighteenYearsAgo = Calendar.getInstance();
+                    eighteenYearsAgo.add(Calendar.YEAR, -18);
 
-            // Calculate 120 years ago
-            Calendar hundredtwentyYearsAgo = Calendar.getInstance();
-            hundredtwentyYearsAgo.add(Calendar.YEAR, -120);
+                    // Calculate 120 years ago
+                    Calendar hundredtwentyYearsAgo = Calendar.getInstance();
+                    hundredtwentyYearsAgo.add(Calendar.YEAR, -120);
 
-            // Check if the selected date is not in the future and greater or equal to 18 years ago
-            if (selectedCalendar.compareTo(calendar) <= 0) {
-                if (selectedCalendar.compareTo(eighteenYearsAgo) >= 0) {
-                    Toast.makeText(requireContext(), "Please select a valid date (at least 18 years ago)", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (selectedCalendar.compareTo(hundredtwentyYearsAgo) >= 0) {
-                        // Save the selected date of birth to SharedPreferences
-                        String dob = String.format(Locale.getDefault(), "%02d/%02d/%04d", monthOfYear + 1, dayOfMonth, year);
-                        PreferencesUtils.setDateOfBirth(dob);
+                    // Check if the selected date is not in the future and greater or equal to 18
+                    // years ago
+                    if (selectedCalendar.compareTo(calendar) <= 0) {
+                        if (selectedCalendar.compareTo(eighteenYearsAgo) >= 0) {
+                            Toast.makeText(requireContext(), "Please select a valid date (at least 18 years ago)",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (selectedCalendar.compareTo(hundredtwentyYearsAgo) >= 0) {
+                                // Save the selected date of birth to SharedPreferences
+                                String dob = String.format(Locale.getDefault(), "%02d/%02d/%04d", monthOfYear + 1,
+                                        dayOfMonth, year);
+                                PreferencesUtils.setDateOfBirth(dob);
 
-                        // Update summary with selected date of birth
-                        dobPreference.setSummary(dob);
+                                // Update summary with selected date of birth
+                                dobPreference.setSummary(dob);
+                            } else {
+                                Toast.makeText(requireContext(),
+                                        "Please select a valid date (no more than 120 years ago)", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        }
                     } else {
-                        Toast.makeText(requireContext(), "Please select a valid date (no more than 120 years ago)", Toast.LENGTH_SHORT).show();
+                        // Show a toast indicating that the selected date is invalid
+                        Toast.makeText(requireContext(), "Please select a valid date (not today or in the future)",
+                                Toast.LENGTH_SHORT).show();
                     }
-                }
-            } else {
-                // Show a toast indicating that the selected date is invalid
-                Toast.makeText(requireContext(), "Please select a valid date (not today or in the future)", Toast.LENGTH_SHORT).show();
-            }
-        }, currentYear, currentMonth, currentDay);
+                }, currentYear, currentMonth, currentDay);
 
         datePickerDialog.show();
     }
-
 
     private void updateDateOfBirthPreferenceSummary(Preference dobPreference) {
         String dob = PreferencesUtils.getDateOfBirth();
