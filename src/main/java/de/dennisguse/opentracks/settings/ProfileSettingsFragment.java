@@ -99,8 +99,59 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
 
             return true;
         });
+        EditTextPreference heightInput = findPreference(getString(R.string.settings_profile_height_key));
+        heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title));
+        heightInput.setOnBindEditTextListener(editText -> {
+        editText.setSingleLine(true);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
+        editText.setHint("Feet");
+        });
 
+        // Add validation to height input
+        heightInput.setOnPreferenceChangeListener((preference, newValue) -> {
+            String heightStr = (String) newValue;
+            if (isValidHeight(heightStr)) {
+                // Save the height to SharedPreferences
+                PreferencesUtils.setString(R.string.settings_profile_height_key, heightStr);
+                // Update summary with selected height
+                preference.setSummary(heightStr);
+                return true;
+            } else {
+                Toast.makeText(requireContext(), "Please enter a valid height", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
+
+    // Method to validate height input
+    private boolean isValidHeight(String heightStr) {
+        if (TextUtils.isEmpty(heightStr)) {
+            return false;
+        }
+        try {
+            double height = Double.parseDouble(heightStr);
+            // Assuming a height between 2 and 8 feet is valid
+            return height >= 2 && height <= 8;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    // Method to convert height between units
+    private String convertHeight(double height, String newUnit) {
+        switch (newUnit) {
+            case "feet":
+                return String.valueOf(height); // No conversion needed if it is already in feet
+            case "meters":
+                return String.format(Locale.getDefault(), "%.2f", height * 0.3048); // Convert to meters
+            case "centimeters":
+                return String.format(Locale.getDefault(), "%.2f", height * 30.48); // Convert to centimeters
+            default:
+                return String.valueOf(height); // Default to feet
+        }
+    }
+    
 
     @Override
     public void onStart() {
