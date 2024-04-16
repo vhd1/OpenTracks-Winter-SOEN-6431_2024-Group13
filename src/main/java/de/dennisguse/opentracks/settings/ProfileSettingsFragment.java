@@ -99,12 +99,14 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
 
             return true;
         });
+
         EditTextPreference heightInput = findPreference(getString(R.string.settings_profile_height_key));
         heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title));
         heightInput.setOnBindEditTextListener(editText -> {
             editText.setSingleLine(true);
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL); // Allow decimal numbers
-            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL); // Allow decimal
+                                                                                                     // numbers
+            editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(5) });
             editText.setHint("Feet");
         });
 
@@ -151,7 +153,6 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
                 return String.valueOf(height); // Default to feet
         }
     }
-    
 
     @Override
     public void onStart() {
@@ -183,10 +184,9 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         heightInput.setOnBindEditTextListener(editText -> {
             editText.setSingleLine(true);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
+            editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(5) });
             editText.setHint("Feet");
         });
-
 
         ListPreference countryPreference = findPreference(getString(R.string.settings_profile_country_key));
         String selectedCountryValue = PreferencesUtils.getSelectedCountry();
