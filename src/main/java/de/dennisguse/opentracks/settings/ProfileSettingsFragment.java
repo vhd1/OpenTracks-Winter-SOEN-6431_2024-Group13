@@ -102,10 +102,10 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         EditTextPreference heightInput = findPreference(getString(R.string.settings_profile_height_key));
         heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title));
         heightInput.setOnBindEditTextListener(editText -> {
-        editText.setSingleLine(true);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
-        editText.setHint("Feet");
+            editText.setSingleLine(true);
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL); // Allow decimal numbers
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
+            editText.setHint("Feet");
         });
 
         // Add validation to height input
