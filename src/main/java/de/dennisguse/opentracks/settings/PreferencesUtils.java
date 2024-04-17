@@ -147,6 +147,14 @@ public class PreferencesUtils {
     }
 
 
+    public static String getHeight() {
+        return getString(R.string.settings_profile_height_key,"" );
+    }
+
+    public static void setHeight(String newHeight) {
+        setString(R.string.settings_profile_height_key, newHeight);
+    }
+
 
     static int getInt(int keyId, int defaultValue) {
         try {
