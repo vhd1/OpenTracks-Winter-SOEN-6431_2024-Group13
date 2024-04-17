@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ import de.dennisguse.opentracks.R;
 import android.app.DatePickerDialog;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProfileSettingsFragment extends PreferenceFragmentCompat {
     ImageViewPreference imageViewPreference;
@@ -100,57 +103,6 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
 
-        EditTextPreference heightInput = findPreference(getString(R.string.settings_profile_height_key));
-        heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title));
-        heightInput.setOnBindEditTextListener(editText -> {
-            editText.setSingleLine(true);
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL); // Allow decimal numbers
-            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
-            editText.setHint("Feet");
-        });
-
-        // Add validation to height input
-        heightInput.setOnPreferenceChangeListener((preference, newValue) -> {
-            String heightStr = (String) newValue;
-            if (isValidHeight(heightStr)) {
-                // Save the height to SharedPreferences
-                PreferencesUtils.setString(R.string.settings_profile_height_key, heightStr);
-                // Set the summary dynamically
-                preference.setSummary(heightStr);
-                return true;
-            } else {
-                Toast.makeText(requireContext(), "Please enter a valid height", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-    }
-
-    // Method to validate height input
-    private boolean isValidHeight(String heightStr) {
-        if (TextUtils.isEmpty(heightStr)) {
-            return false;
-        }
-        try {
-            double height = Double.parseDouble(heightStr);
-            // Assuming a height between 2 and 8 feet is valid
-            return height >= 2 && height <= 8;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    // Method to convert height between units
-    private String convertHeight(double height, String newUnit) {
-        switch (newUnit) {
-            case "feet":
-                return String.valueOf(height); // No conversion needed if it is already in feet
-            case "meters":
-                return String.format(Locale.getDefault(), "%.2f", height * 0.3048); // Convert to meters
-            case "centimeters":
-                return String.format(Locale.getDefault(), "%.2f", height * 30.48); // Convert to centimeters
-            default:
-                return String.valueOf(height); // Default to feet
-        }
     }
 
     @Override
@@ -183,10 +135,44 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         heightInput.setOnBindEditTextListener(editText -> {
             editText.setSingleLine(true);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-            editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(5) });
-            editText.setHint("Feet");
+            // Set the hint directly on the EditText object
+            editText.setHint("Enter your height in feet (e.g., 5.5)");
+
+            // Create and set an InputFilter to allow up to two decimal points
+            InputFilter filter = new InputFilter() {
+                final int maxDigitsBeforeDecimalPoint=2;
+                final int maxDigitsAfterDecimalPoint=2;
+
+                @Override
+                public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                    if (source.equals("")) { // for backspace
+                        return null;
+                    }
+                    String result = dest.subSequence(0, dstart) + source.toString() + dest.subSequence(dend, dest.length());
+                    if (!result.matches("[0-9]{1," + maxDigitsBeforeDecimalPoint + "}+((\\.[0-9]{0," + maxDigitsAfterDecimalPoint + "})?)||(\\.)?")) {
+                        return "";
+                    }
+                    return null;
+                }
+            };
+            editText.setFilters(new InputFilter[]{filter});
         });
 
+// Listener for validating the input when the user saves it
+        heightInput.setOnPreferenceChangeListener((preference, newValue) -> {
+            try {
+                double height = Double.parseDouble((String) newValue);
+                if (height < 2 || height > 8) {
+                    Toast.makeText(getContext(), "Please enter a height between 2 and 8 feet", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                Toast.makeText(getContext(), "Invalid height entered. Please enter a numerical value.", Toast.LENGTH_LONG).show();
+                return false;
+            }
+            return true;
+        });
+        
         ListPreference countryPreference = findPreference(getString(R.string.settings_profile_country_key));
         String selectedCountryValue = PreferencesUtils.getSelectedCountry();
         if (selectedCountryValue != null && !selectedCountryValue.isEmpty()) {
@@ -294,7 +280,7 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
                                 dobPreference.setSummary(dob);
                             } else {
                                 Toast.makeText(requireContext(),
-                                        "Please select a valid date (no more than 120 years ago)", Toast.LENGTH_SHORT)
+                                                "Please select a valid date (no more than 120 years ago)", Toast.LENGTH_SHORT)
                                         .show();
                             }
                         }
