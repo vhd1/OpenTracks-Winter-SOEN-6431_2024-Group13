@@ -115,6 +115,8 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             if (isValidHeight(heightStr)) {
                 // Save the height to SharedPreferences
                 PreferencesUtils.setString(R.string.settings_profile_height_key, heightStr);
+                // Set the summary dynamically
+                preference.setSummary(heightStr);
                 return true;
             } else {
                 Toast.makeText(requireContext(), "Please enter a valid height", Toast.LENGTH_SHORT).show();
