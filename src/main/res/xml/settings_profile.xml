@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/settings_profile_title">
-
     <de.dennisguse.opentracks.settings.ImageViewPreference
         android:key="@string/settings_profile_profile_picture_key"
         android:layout="@layout/profile_picture_layout" />
 
     <EditTextPreference
+        android:inputType="text"
         android:key="@string/settings_profile_nickname_key"
         android:title="@string/settings_profile_nickname"
-        android:inputType="text"
         app:useSimpleSummaryProvider="true" />
     
-    <!-- Height Preference -->
     <EditTextPreference
+        android:inputType="text"
         android:key="@string/settings_profile_height_key"
         android:title="@string/settings_profile_height"
-        android:inputType="numberDecimal"
-        app:useSimpleSummaryProvider="true"
-        app:dialogTitle="@string/settings_profile_height_dialog_title"
-        app:defaultValue=""
-        app:appendUnit="@string/settings_profile_height_unit" />
+        app:useSimpleSummaryProvider="true" />
 
     <ListPreference
         android:key="@string/settings_profile_country_key"
         android:title="@string/settings_profile_country"
         android:entries="@array/countries_array"
-        android:entryValues="@array/countries_array_values"
-        android:defaultValue="@string/default_country_value" />
+        android:defaultValue="@string/default_country_value"
+        android:entryValues="@array/countries_array_values" />
 
     <Preference
         android:key="@string/settings_profile_dob_key"
-        android:title="@string/settings_profile_dob_title" />
-
+        android:title="@string/settings_profile_dob_title"
+         />
     <ListPreference
         android:key="@string/settings_profile_gender_key"
         android:title="@string/settings_profile_gender"
         android:entries="@array/gender_array"
-        android:entryValues="@array/gender_array_values"
-        android:defaultValue="@string/default_gender_value" />
-
+        android:defaultValue="@string/default_gender_value"
+        android:entryValues="@array/gender_array_values" />
     <CheckBoxPreference
         android:key="@string/settings_profile_leaderboard_share_key"
         android:title="@string/settings_profile_leaderboard_share_title"
         android:summaryOn="@string/settings_profile_leaderboard_share_summary_on"
         android:summaryOff="@string/settings_profile_leaderboard_share_summary_off"
-        android:defaultValue="false" />
+        android:defaultValue="false"
+        android:singleLine="false"
+        android:lines="2"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        />
 
+
+    />
 </PreferenceScreen>
