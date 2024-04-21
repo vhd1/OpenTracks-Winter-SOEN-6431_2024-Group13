@@ -94,9 +94,6 @@ public class PreferencesUtils {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener);
     }
 
-
-
-
     public static String getDefaultActivityTypeLocalized() {
         return getString(R.string.default_activity_key, resources.getString(R.string.default_activity_default));
     }
@@ -145,8 +142,6 @@ public class PreferencesUtils {
     private static boolean getBoolean(int keyId, boolean defaultValue) {
         return sharedPreferences.getBoolean(getKey(keyId), defaultValue);
     }
-
-
 
     static int getInt(int keyId, int defaultValue) {
         try {
@@ -216,7 +211,6 @@ public class PreferencesUtils {
     public static boolean isPublicAPIDashboardEnabled() {
         return getBoolean(R.string.publicapi_dashboard_enabled_key, resources.getBoolean(R.bool.publicapi_dashboard_enabled_default));
     }
-
 
     public static boolean shouldShowIntroduction() {
         return getBoolean(R.string.show_introduction_screen_key, resources.getBoolean(R.bool.show_introduction_screen_default));
@@ -291,33 +285,8 @@ public class PreferencesUtils {
 
     public static String getNickName(){
         return getString(R.string.settings_profile_nickname_key, null);
-    }
-
-    public static void setDateOfBirth(String dob) {
-        setString(R.string.settings_profile_dob_key, dob);
-    }
-
-    public static String getDateOfBirth() {
-        return getString(R.string.settings_profile_dob_key, "");
-    }
-
-
-    public static void setSelectedGender(String gender) {
-        setString(R.string.settings_profile_gender_key, gender);
-    }
-
-    public static String getSelectedGender() {
-        return getString(R.string.settings_profile_gender_key, "");
-    }
-
-    public static boolean isLeaderboardInformationShared() {
-        return getBoolean(R.string.settings_profile_leaderboard_share_key, false);
-    }
-
-    public static void setLeaderboardInformationShared(boolean isShared) {
-        setBoolean(R.string.settings_profile_leaderboard_share_key, isShared);
-    }
-
+    } 
+    
     public static String getBarometerSensorAddress() {
         return getString(R.string.settings_sensor_bluetooth_pressure_key, getBluetoothSensorAddressNone());
     }
