@@ -1,4 +1,5 @@
 package de.dennisguse.opentracks.settings;
+
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,13 +9,13 @@ import android.text.InputFilter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.preference.CheckBoxPreference;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import java.io.File;
@@ -22,12 +23,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import de.dennisguse.opentracks.R;
-import android.app.DatePickerDialog;
-import java.util.Calendar;
-import java.util.Locale;
-
-
 
 public class ProfileSettingsFragment extends PreferenceFragmentCompat {
     ImageViewPreference imageViewPreference;
@@ -59,46 +56,6 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         });
 
         handleProfilePicture();
-        Preference dobPreference = findPreference(getString(R.string.settings_profile_dob_key));
-        if (dobPreference != null) {
-            dobPreference.setOnPreferenceClickListener(preference -> {
-                showDatePickerDialog(dobPreference);
-                return true;
-            });
-
-            updateDateOfBirthPreferenceSummary(dobPreference);
-        }
-
-        ListPreference genderPreference = findPreference(getString(R.string.settings_profile_gender_key));
-
-        String selectedGenderValue = PreferencesUtils.getSelectedGender();
-        genderPreference.setSummary(selectedGenderValue);
-
-        genderPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            // Save the selected gender to SharedPreferences
-            PreferencesUtils.setSelectedGender((String) newValue);
-
-            // Update summary with selected gender
-            preference.setSummary((String) newValue);
-            return true;
-        });
-
-        CheckBoxPreference leaderboardSharePreference = findPreference(getString(R.string.settings_profile_leaderboard_share_key));
-        leaderboardSharePreference.setSummary(leaderboardSharePreference.isChecked()
-                ? getString(R.string.settings_profile_leaderboard_share_summary_on)
-                : getString(R.string.settings_profile_leaderboard_share_summary_off));
-
-        leaderboardSharePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            boolean isChecked = (boolean) newValue;
-            preference.setSummary(isChecked
-                    ? getString(R.string.settings_profile_leaderboard_share_summary_on)
-                    : getString(R.string.settings_profile_leaderboard_share_summary_off));
-
-            PreferencesUtils.setBoolean(R.string.settings_profile_leaderboard_share_key, isChecked);
-
-            return true;
-        });
-
     }
 
     @Override
@@ -195,57 +152,5 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         }
 
         return b;
-    }
-
-
-    private void showDatePickerDialog(Preference dobPreference) {
-        Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
-        int currentMonth = calendar.get(Calendar.MONTH);
-        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, monthOfYear, dayOfMonth) -> {
-            Calendar selectedCalendar = Calendar.getInstance();
-            selectedCalendar.set(year, monthOfYear, dayOfMonth);
-
-            // Calculate 18 years ago
-            Calendar eighteenYearsAgo = Calendar.getInstance();
-            eighteenYearsAgo.add(Calendar.YEAR, -18);
-
-            // Calculate 120 years ago
-            Calendar hundredtwentyYearsAgo = Calendar.getInstance();
-            hundredtwentyYearsAgo.add(Calendar.YEAR, -120);
-
-            // Check if the selected date is not in the future and greater or equal to 18 years ago
-            if (selectedCalendar.compareTo(calendar) <= 0) {
-                if (selectedCalendar.compareTo(eighteenYearsAgo) >= 0) {
-                    Toast.makeText(requireContext(), "Please select a valid date (at least 18 years ago)", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (selectedCalendar.compareTo(hundredtwentyYearsAgo) >= 0) {
-                        // Save the selected date of birth to SharedPreferences
-                        String dob = String.format(Locale.getDefault(), "%02d/%02d/%04d", monthOfYear + 1, dayOfMonth, year);
-                        PreferencesUtils.setDateOfBirth(dob);
-
-                        // Update summary with selected date of birth
-                        dobPreference.setSummary(dob);
-                    } else {
-                        Toast.makeText(requireContext(), "Please select a valid date (no more than 120 years ago)", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            } else {
-                // Show a toast indicating that the selected date is invalid
-                Toast.makeText(requireContext(), "Please select a valid date (not today or in the future)", Toast.LENGTH_SHORT).show();
-            }
-        }, currentYear, currentMonth, currentDay);
-
-        datePickerDialog.show();
-    }
-
-
-    private void updateDateOfBirthPreferenceSummary(Preference dobPreference) {
-        String dob = PreferencesUtils.getDateOfBirth();
-        if (dob != null && !dob.isEmpty()) {
-            dobPreference.setSummary(dob);
-        }
     }
 }
