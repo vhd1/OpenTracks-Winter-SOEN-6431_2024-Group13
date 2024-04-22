@@ -378,7 +378,7 @@ limitations under the License.
     <string name="waxing_notification_text_months">It\'s been %1$d months since your last ski waxing.</string>
 
 
-    <string name="settings_sensors_title">Bluetooth Sensors</string>
+<string name="settings_sensors_title">Bluetooth Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
 
 
@@ -464,23 +464,9 @@ limitations under the License.
     <string name="settings_profile_profile_picture_title">Profile picture</string>
     <string name="settings_profile_profile_picture_key">profilePicture</string>
     <string name="settings_profile_profile_picture_nickname">profilePictureNickname</string>
-    <string name="settings_profile_dob_key">dob_key</string>
-    <string name="settings_profile_dob_title">Date of Birth</string>
-    <string name="settings_profile_dob_dialog_title">Select Date of Birth</string>
-    <string name="settings_profile_dob_dialog_message">Please select your date of birth</string>
-    <string name="settings_profile_gender_key">gender</string>
-    <string name="settings_profile_gender">Gender</string>
-    <string name="default_gender_value">Select Gender</string>
-    <string name="settings_profile_leaderboard_share_key">settings_profile_leaderboard_share</string>
-    <string name="settings_profile_leaderboard_share_title">Allow information Sharing</string>
-    <string name="settings_profile_leaderboard_share_summary_on">You have agreed to share information in the leaderboard.</string>
-    <string name="settings_profile_leaderboard_share_summary_off">You have not agreed to share information in the leaderboard.</string>
-
-
-
 
     <!-- Run RRelated Data -->
-    <string name="settings_announcements_average_slope_run">Average slope</string>
+    <string name="settings_announcements_average_slope_run">Average slope</string>  
     <string name="settings_announcements_max_speed_run">Max speed/run</string>
     <string name="settings_announcements_run_average_speed">Run Average Speed</string>
 
@@ -488,15 +474,15 @@ limitations under the License.
     <!-- Recording Related Data -->
     <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
 
-    <string name="settings_announcements_time_skied_recording">Time skied/recording</string>
-
+	  <string name="settings_announcements_time_skied_recording">Time skied/recording</string>
+    
 
 
     <string name="settings_announcements_average_speed_recording">Average speed/recording</string>
 
     <string name="settings_announcements_max_slope">Max slope</string>
     <string name="settings_announcements_average_slope_recording">Average slope</string>
-
+    
 
 
 
@@ -807,7 +793,7 @@ limitations under the License.
     <string name="custom_record_length_key">custom_record_length</string>
 
     <string name="default_Date_Key">1 Sep</string>
-
+ 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -285,34 +285,8 @@ public class PreferencesUtils {
 
     public static String getNickName(){
         return getString(R.string.settings_profile_nickname_key, null);
-    }
-
-    public static void setDateOfBirth(String dob) {
-        setString(R.string.settings_profile_dob_key, dob);
-    }
-
-    public static String getDateOfBirth() {
-        return getString(R.string.settings_profile_dob_key, "");
-    }
-
-
-    public static void setSelectedGender(String gender) {
-        setString(R.string.settings_profile_gender_key, gender);
-    }
-
-    public static String getSelectedGender() {
-        return getString(R.string.settings_profile_gender_key, "");
-    }
-
-    public static boolean isLeaderboardInformationShared() {
-        return getBoolean(R.string.settings_profile_leaderboard_share_key, false);
-    }
-
-    public static void setLeaderboardInformationShared(boolean isShared) {
-        setBoolean(R.string.settings_profile_leaderboard_share_key, isShared);
-    }
-
-
+    } 
+    
     public static String getBarometerSensorAddress() {
         return getString(R.string.settings_sensor_bluetooth_pressure_key, getBluetoothSensorAddressNone());
     }
