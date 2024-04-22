@@ -200,18 +200,44 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
 
     private void showDatePickerDialog(Preference dobPreference) {
         Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year1, monthOfYear, dayOfMonth) -> {
-            // Save the selected date of birth to SharedPreferences
-            String dob = String.format(Locale.getDefault(), "%02d/%02d/%04d", monthOfYear + 1, dayOfMonth, year1);
-            PreferencesUtils.setDateOfBirth(dob);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar selectedCalendar = Calendar.getInstance();
+            selectedCalendar.set(year, monthOfYear, dayOfMonth);
 
-            // Update summary with selected date of birth
-            dobPreference.setSummary(dob);
-        }, year, month, day);
+            // Calculate 18 years ago
+            Calendar eighteenYearsAgo = Calendar.getInstance();
+            eighteenYearsAgo.add(Calendar.YEAR, -18);
+
+            // Calculate 120 years ago
+            Calendar hundredtwentyYearsAgo = Calendar.getInstance();
+            hundredtwentyYearsAgo.add(Calendar.YEAR, -120);
+
+            // Check if the selected date is not in the future and greater or equal to 18 years ago
+            if (selectedCalendar.compareTo(calendar) <= 0) {
+                if (selectedCalendar.compareTo(eighteenYearsAgo) >= 0) {
+                    Toast.makeText(requireContext(), "Please select a valid date (at least 18 years ago)", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (selectedCalendar.compareTo(hundredtwentyYearsAgo) >= 0) {
+                        // Save the selected date of birth to SharedPreferences
+                        String dob = String.format(Locale.getDefault(), "%02d/%02d/%04d", monthOfYear + 1, dayOfMonth, year);
+                        PreferencesUtils.setDateOfBirth(dob);
+
+                        // Update summary with selected date of birth
+                        dobPreference.setSummary(dob);
+                    } else {
+                        Toast.makeText(requireContext(), "Please select a valid date (no more than 120 years ago)", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else {
+                // Show a toast indicating that the selected date is invalid
+                Toast.makeText(requireContext(), "Please select a valid date (not today or in the future)", Toast.LENGTH_SHORT).show();
+            }
+        }, currentYear, currentMonth, currentDay);
+
         datePickerDialog.show();
     }
 
