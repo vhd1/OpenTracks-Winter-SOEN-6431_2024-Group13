@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="gender_array">
+        <item>Men</item>
+        <item>Women</item>
+        <item>Cisgender Men</item>
+        <item>Transgender Men</item>
+        <item>Cisgender Women</item>
+        <item>Transgender Women</item>
+        <item>Non-binary</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="gender_array_values">
+        <item>Men</item>
+        <item>Women</item>
+        <item>Cisgender Men</item>
+        <item>Transgender Men</item>
+        <item>Cisgender Women</item>
+        <item>Transgender Women</item>
+        <item>Non-binary</item>
+        <item>Other</item>
+
+    </string-array>
 
 
     <string-array name="time_periods">
