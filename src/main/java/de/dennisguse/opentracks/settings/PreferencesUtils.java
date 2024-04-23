@@ -143,6 +143,15 @@ public class PreferencesUtils {
         return sharedPreferences.getBoolean(getKey(keyId), defaultValue);
     }
 
+    public static String getWeight() {
+        return getString(R.string.settings_profile_Weight_key,"" );
+    }
+
+    public static void setWeight(String newWeight) {
+        setString(R.string.settings_profile_Weight_key, newWeight);
+    }
+
+
     static int getInt(int keyId, int defaultValue) {
         try {
             return sharedPreferences.getInt(getKey(keyId), defaultValue);

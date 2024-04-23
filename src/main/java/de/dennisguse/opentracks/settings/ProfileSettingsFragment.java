@@ -8,6 +8,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
+import android.text.Spanned;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -27,6 +28,8 @@ import de.dennisguse.opentracks.R;
 import android.app.DatePickerDialog;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 
@@ -140,8 +143,41 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         weightInput.setOnBindEditTextListener(editText -> {
             editText.setSingleLine(true);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
-            editText.setHint("KG");
+            editText.setHint("Enter your weight in kilograms (e.g., 70.5)");
+
+            // Create and set an InputFilter to allow up to two decimal points
+            InputFilter filter = new InputFilter() {
+                final int maxDigitsBeforeDecimalPoint = 3;
+                final int maxDigitsAfterDecimalPoint = 1;
+
+                @Override
+                public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                    if (source.equals("")) { // for backspace
+                        return null;
+                    }
+                    String result = dest.subSequence(0, dstart) + source.toString() + dest.subSequence(dend, dest.length());
+                    if (!result.matches("[0-9]{1," + maxDigitsBeforeDecimalPoint + "}+((\\.[0-9]{0," + maxDigitsAfterDecimalPoint + "})?)||(\\.)?")) {
+                        return "";
+                    }
+                    return null;
+                }
+            };
+            editText.setFilters(new InputFilter[]{filter});
+        });
+
+        // Listener for validating the weight input when the user saves it
+        weightInput.setOnPreferenceChangeListener((preference, newValue) -> {
+            try {
+                double weight = Double.parseDouble((String) newValue);
+                if (weight < 20 || weight > 200) {
+                    Toast.makeText(getContext(), "Please enter a weight between 20 and 200 kilograms", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                Toast.makeText(getContext(), "Invalid weight entered. Please enter a numerical value.", Toast.LENGTH_LONG).show();
+                return false;
+            }
+            return true;
         });
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
