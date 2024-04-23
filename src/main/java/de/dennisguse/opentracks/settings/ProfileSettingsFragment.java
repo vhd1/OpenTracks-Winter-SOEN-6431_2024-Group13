@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -132,6 +133,16 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             // Update summary with saved selected country
             countryPreference.setSummary(selectedCountryValue);
         }
+
+
+        EditTextPreference weightInput = findPreference(getString(R.string.settings_profile_Weight_key));
+        weightInput.setDialogTitle(getString(R.string.settings_profile_weight_dialog_title));
+        weightInput.setOnBindEditTextListener(editText -> {
+            editText.setSingleLine(true);
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
+            editText.setHint("KG");
+        });
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
