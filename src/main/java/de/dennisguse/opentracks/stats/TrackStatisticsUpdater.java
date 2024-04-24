@@ -23,6 +23,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Run;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
@@ -40,6 +41,7 @@ public class TrackStatisticsUpdater {
     private static final String TAG = TrackStatisticsUpdater.class.getSimpleName();
 
     private final TrackStatistics trackStatistics;
+    private SessionManager sessionManager;
 
     private float averageHeartRateBPM;
     private Duration totalHeartRateDuration = Duration.ZERO;
@@ -82,6 +84,14 @@ public class TrackStatisticsUpdater {
 
     public void addTrackPoints(List<TrackPoint> trackPoints) {
         trackPoints.stream().forEachOrdered(this::addTrackPoint);
+        List<Run> runs = RunAnalyzer.identifyRuns(sessionManager.getSessionId(), trackPoints); // Identify runs
+        RunAnalyzer.calculateMaxSpeedPerRun(runs); // Calculate max speed for each run
+        RunAnalyzer.calculateAvgSpeedStatistics(runs); // Calculate avg speed for each run
+        // Add runs to the session
+        for (Run run : runs) {
+            currentSegment.setMaximumSpeedPerRun((run.getMaxSpeed()));
+            currentSegment.setAverageSpeedPerRun(run.getAverageSpeed());
+        }
     }
 
     /**
