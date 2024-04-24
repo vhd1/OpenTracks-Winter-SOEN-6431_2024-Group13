@@ -66,7 +66,8 @@ public class TrackStatistics {
 
     // Slope % between this point and the previous point
     private Float slopePercent_m;
-
+    private Speed maximumSpeedPerRun;
+    private Speed averageSpeedPerRun;
 
     /**
      * Total time user spent for waiting for chairlift
@@ -125,6 +126,8 @@ public class TrackStatistics {
         slopePercent_m = other.slopePercent_m;
         totalChairliftWaitingTime=other.totalChairliftWaitingTime;
         endOfRunCounter=other.endOfRunCounter;
+        maximumSpeedPerRun = other.maximumSpeedPerRun;
+        averageSpeedPerRun=other.averageSpeedPerRun;
     }
 
     @VisibleForTesting
@@ -216,7 +219,6 @@ public class TrackStatistics {
         setTotalAltitudeGain(null);
         setTotalAltitudeLoss(null);
         setSlopePercent(null);
-
         setTotalChairliftWaitingTime(Duration.ofSeconds(0));
         resetEndOfRunCounter();
 
@@ -337,7 +339,7 @@ public class TrackStatistics {
         return Speed.max(maxSpeed, getAverageMovingSpeed());
     }
 
-    public void setMaxSpeed(Speed maxSpeed) {
+    public void  setMaxSpeed(Speed maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
@@ -426,6 +428,21 @@ public class TrackStatistics {
     public boolean hasSlope() {
         return slopePercent_m != null;
     }
+    public Speed getMaximumSpeedPerRun() {
+        return maximumSpeedPerRun;
+    }
+
+    public void setMaximumSpeedPerRun(Speed maximumSpeedPerRun) {
+        this.maximumSpeedPerRun = maximumSpeedPerRun;
+    }
+    public Speed getAverageSpeedPerRun() {
+        return averageSpeedPerRun;
+    }
+
+    public void setAverageSpeedPerRun(Speed speed) {
+        this.averageSpeedPerRun = speed;
+
+    }
 
     // Method to calculate the total skiing duration for the current day
 //    public Duration getTotalSkiingDuration() {
@@ -492,6 +509,8 @@ public class TrackStatistics {
         return "TrackStatistics { Start Time: " + getStartTime() + "; Stop Time: " + getStopTime()
                 + "; Total Distance: " + getTotalDistance() + "; Total Time: " + getTotalTime()
                 + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
+                + "; Maximum Speed Per Run: " + getMaximumSpeedPerRun()
+                + "; Average Speed Per Run: " + getAverageSpeedPerRun()
                 + "; Min Altitude: " + getMinAltitude() + "; Max Altitude: " + getMaxAltitude()
                 + "; Altitude Gain: " + getTotalAltitudeGain()
                 + "; Altitude Loss: " + getTotalAltitudeLoss()
