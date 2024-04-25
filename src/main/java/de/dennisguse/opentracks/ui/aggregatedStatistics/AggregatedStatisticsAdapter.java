@@ -23,7 +23,6 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.SeasonStats.SeasonStatActivity;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.daySpecificStats.DaySpecificActivity;
-import de.dennisguse.opentracks.ui.aggregatedStatistics.daystatistics.DayStatisticsActivity;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -111,24 +110,15 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
                     v.getContext().startActivity(intent);
                 }
             });
-
-            viewBinding.calendarButton.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Context context = viewBinding.getRoot().getContext();
-                    Intent intent = new Intent(context, DaySpecificActivity.class);
-                }
-            });
-
-            viewBinding.dayStatisticsBtn.setOnClickListener(new View.OnClickListener() {
+            
+            /*viewBinding.dayStatisticsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Context context = viewBinding.getRoot().getContext();
                     Intent intent = new Intent(context, DayStatisticsActivity.class);
                     context.startActivity(intent);
                 }
-            });
+            });*/
         }
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {

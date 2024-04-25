@@ -1,4 +1,5 @@
 package de.dennisguse.opentracks;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
+import de.dennisguse.opentracks.ui.aggregatedStatistics.daySpecificStats.DaySpecificActivity;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.daystatistics.DayStatisticsActivity;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 
@@ -19,6 +28,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     private Date selectedDate;
     private Calendar calendar = Calendar.getInstance();
+    public static final String EXTRA_TRACK_DATE = "track_date";
 
 
     @Override
@@ -39,26 +49,18 @@ public class CalendarActivity extends AppCompatActivity {
                 }
             });
             dateSelectButton.setOnClickListener((View v)->{
-                Intent intent = new Intent(v.getContext(), ElevationAndSpeedActivity.class);;
+                Context context = v.getContext();
+                Intent intent = new Intent(context, DaySpecificActivity.class);
+
                 if(extras!=null && Objects.equals(extras.getString("Display Fields"), "Elevation and Speed")){
                     intent = new Intent(v.getContext(), ElevationAndSpeedActivity.class);
-                } else{
-                    intent = new Intent(v.getContext(), RunsAndLiftsActivity.class);
                 }
-                calendar.setTime(selectedDate);
-                int year = calendar.get(Calendar.YEAR) - 1900;
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                intent.putExtra("Year", year);
-                intent.putExtra("Year", month);
-                intent.putExtra("Day", day);
 
+                calendar.setTime(selectedDate);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                String dateString = dateFormat.format(selectedDate);
+                intent.putExtra(EXTRA_TRACK_DATE, dateString);
                 v.getContext().startActivity(intent);
-//                Bundle extras = getIntent().getExtras();
-//                if (extras != null) {
-//                    String value = extras.getString("key");
-//                    //The key argument here must match that used in the other activity
-//                }
             });
     }
 

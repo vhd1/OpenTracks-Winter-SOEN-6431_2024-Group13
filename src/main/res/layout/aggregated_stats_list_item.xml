@@ -251,54 +251,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aggregated_stats_horizontal_line" />
 
+    <View
+        android:id="@+id/list_of_seasons_horizontal_line"
+        style="@style/HorizontalLine"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/list_of_seasons_btn234" />
+
     <Button
         android:id="@+id/runs_and_lifts_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="8dp"
         android:text="Runs and lifts"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_horizontal_line" />
+        app:layout_constraintTop_toBottomOf="@id/list_of_seasons_horizontal_line" />
+
+    <View
+        android:id="@+id/runs_and_lifts_button_horizontal_line"
+        style="@style/HorizontalLine"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/runs_and_lifts_button" />
 
     <Button
         android:id="@+id/elevation_and_speed_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="8dp"
         android:text="Elevation and speed"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_horizontal_line" />
-
-    <View
-        android:id="@+id/elevation_and_speed_horizontal_line"
-        style="@style/HorizontalLine"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@id/guideline1"
-        app:layout_constraintEnd_toStartOf="@id/guideline3"
-        app:layout_constraintTop_toBottomOf="@id/elevation_and_speed_button" />
-
-    <Button
-        android:id="@+id/calendar_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/day_specific_calendar"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/elevation_and_speed_button" />
-
-    <View
-        android:id="@+id/calendar_btn_horizontal_line"
-        style="@style/HorizontalLine"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@id/guideline1"
-        app:layout_constraintEnd_toStartOf="@id/guideline3"
-        app:layout_constraintTop_toBottomOf="@id/calendar_button" />
+        app:layout_constraintTop_toBottomOf="@id/runs_and_lifts_button_horizontal_line" />
 
     <TextView
         android:id="@+id/textView2"
