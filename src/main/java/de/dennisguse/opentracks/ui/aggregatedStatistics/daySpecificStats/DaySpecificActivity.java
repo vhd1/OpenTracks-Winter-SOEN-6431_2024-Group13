@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import de.dennisguse.opentracks.AbstractActivity;
-import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Track;
@@ -28,13 +26,13 @@ public class DaySpecificActivity extends AbstractActivity {
     private DaySpecificActivityBinding viewBinding;
     private static final String TAG = DaySpecificActivity.class.getSimpleName();
     public static final String EXTRA_TRACK_DATE = "track_date";
-    private Date activityDate;
+    private String activityDate;
     private ContentProviderUtils contentProviderUtils;
     private Track.Id trackId;
     private List<TrackSegment> trackSegments;
     private DaySpecificAdapter dataAdapter;
 
-    private String fallbackDate = "2024-03-09";
+    private final String fallBackDate = "2024-03-09";
 
 
     @Override
@@ -49,7 +47,7 @@ public class DaySpecificActivity extends AbstractActivity {
         dataAdapter = new DaySpecificAdapter(this, viewBinding.segmentList);
         dataAdapter.swapData(trackSegments);
         viewBinding.segmentList.setAdapter(dataAdapter);
-        viewBinding.segmentListToolbar.setTitle(fallbackDate);
+        viewBinding.segmentListToolbar.setTitle(activityDate);
     }
 
     @Override
@@ -101,26 +99,25 @@ public class DaySpecificActivity extends AbstractActivity {
 
     private void showNoTracksFoundToast() {
         finish();
-        Toast.makeText(DaySpecificActivity.this, "No Tracks found for date: " + fallbackDate + "\n Please import GPX file from Moodle", Toast.LENGTH_LONG).show();
+        Toast.makeText(DaySpecificActivity.this, "No Tracks found for date: " + activityDate + "\n Please import GPX file from Moodle", Toast.LENGTH_LONG).show();
     }
-    private Date getFallbackDate() {
+    private Date getDateFromString(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(fallbackDate, formatter);
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     private void handleIntent(Intent intent) {
-        Date dateFromCalendar = intent.getParcelableExtra(EXTRA_TRACK_DATE);
-        if (dateFromCalendar == null) {
+        activityDate = intent.getStringExtra(EXTRA_TRACK_DATE);
+        if (activityDate == null) {
             Log.e(TAG, DaySpecificActivity.class.getSimpleName() + " needs EXTRA_TRACK_ID.");
 
             // None provided, we will assume a specific date on our own
-            activityDate = getFallbackDate();
-        } else {
-            activityDate = dateFromCalendar;
+            activityDate = this.fallBackDate;
         }
 
-        Track track = contentProviderUtils.getTrack(activityDate);
+        Date dayOfActivity = getDateFromString(activityDate);
+        Track track = contentProviderUtils.getTrack(dayOfActivity);
         if (track == null) {
             showNoTracksFoundToast();
         } else {
