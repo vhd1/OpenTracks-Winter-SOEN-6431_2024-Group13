@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.ImageButton;
+
 
 import androidx.fragment.app.Fragment;
 
@@ -16,54 +19,92 @@ import de.dennisguse.opentracks.R;
  */
 public class ChairsStatFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_SEASON_NAME = "seasonName";
+    private static final String ARG_SEASON_DAYS = "days";
+    private static final String ARG_SEASON_TALLEST_CHAIR = "tallestChair";
+    private static final String ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED = "totalNumberOfDaysChairliftUsed";
+    private static final String[] ARG_SEASON_FAVORITE_CHAIRS = {"favoriteChair1", "favoriteChair2", "favoriteChair3", "favoriteChair4", "favoriteChair5"};
+    private static final String ARG_MOST_COMMON_TRAIL="mostCommonTrail";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mMostCommonTrail;
+    private String mSeasonName;
+
+    private String mDays;
+    private String mTallestChair;
+    private String mTotalDaysChairliftUsed;
+    private String[] mFavoriteChairs = new String[5];
 
     public ChairsStatFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChairsStatFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChairsStatFragment newInstance(String param1, String param2) {
+    public static ChairsStatFragment newInstance(String seasonName,String mostCommonTrail, String days, String tallestChair, String totalDaysChairliftUsed, String[] favoriteChairs) {
         ChairsStatFragment fragment = new ChairsStatFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_SEASON_NAME, seasonName);
+        args.putString(ARG_SEASON_DAYS, days);
+        args.putString(ARG_SEASON_TALLEST_CHAIR, tallestChair);
+        args.putString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED, totalDaysChairliftUsed);        
+        args.putString(ARG_MOST_COMMON_TRAIL,mostCommonTrail);
+        for(int i = 0; i < 5; i++){
+            args.putString(ARG_SEASON_FAVORITE_CHAIRS[i], favoriteChairs[i]);
+        }
+
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chairs_stat, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_chairs_stat, container, false);
+        if (getArguments() != null) {
+            mSeasonName = getArguments().getString(ARG_SEASON_NAME);
+            mDays = getArguments().getString(ARG_SEASON_DAYS);
+            mTallestChair = getArguments().getString(ARG_SEASON_TALLEST_CHAIR);
+            mTotalDaysChairliftUsed = getArguments().getString(ARG_SEASON_TOTAL_DAYS_CHAIRLIFT_USED);
+            mMostCommonTrail=getArguments().getString(ARG_MOST_COMMON_TRAIL);
+            for (int i = 0; i < 5; i++) {
+                mFavoriteChairs[i] = getArguments().getString(ARG_SEASON_FAVORITE_CHAIRS[i]);
+            }
+        }
 
-    public void setArguments(Bundle args) {
-        this.setArguments(args);
+        TextView seasonNameTextView = view.findViewById(R.id.seasonNameTextView);
+        TextView daysTextView = view.findViewById(R.id.days_tv);
+        TextView tallestChairTextView = view.findViewById(R.id.tallestChair_tv);
+        TextView totalDaysChairliftUsedTextView = view.findViewById(R.id.totalDaysChairliftUsed_tv);
+        TextView mostCommonTrail= view.findViewById(R.id.name_of_common_trail);
+        TextView favoriteChairsTextView1 = view.findViewById(R.id.favChairTextView1);
+        TextView favoriteChairsTextView2 = view.findViewById(R.id.favChairTextView2);
+        TextView favoriteChairsTextView3 = view.findViewById(R.id.favChairTextView3);
+        TextView favoriteChairsTextView4 = view.findViewById(R.id.favChairTextView4);
+        TextView favoriteChairsTextView5 = view.findViewById(R.id.favChairTextView5);
+
+         // Find the ImageButton by its ID
+         ImageButton backButton = view.findViewById(R.id.imageButton);
+                 // Set OnClickListener to handle the click event
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity to go back to the previous one
+                getActivity().finish();
+            }
+        });
+
+        if (seasonNameTextView != null && mSeasonName != null) {
+            seasonNameTextView.setText(mSeasonName);
+            daysTextView.setText(mDays);
+            tallestChairTextView.setText(mTallestChair);
+            totalDaysChairliftUsedTextView.setText(mTotalDaysChairliftUsed);            
+            mostCommonTrail.setText(mMostCommonTrail);
+            favoriteChairsTextView1.setText(mFavoriteChairs[0]);
+            favoriteChairsTextView2.setText(mFavoriteChairs[1]);
+            favoriteChairsTextView3.setText(mFavoriteChairs[2]);
+            favoriteChairsTextView4.setText(mFavoriteChairs[3]);
+            favoriteChairsTextView5.setText(mFavoriteChairs[4]);
+
+        }
+        return view;
     }
+    
 }

@@ -320,7 +320,8 @@ public class TrackDataHub {
             return;
         }
 
-        TrackPoint.Id lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
+        TrackPoint.Id lastTrackPointId = null; // Update this line with your code to obtain the last track point ID
+
         int samplingFrequency = -1;
 
 
@@ -388,8 +389,6 @@ public class TrackDataHub {
 
         listeners.stream().forEach(Listener::onNewTrackPointsDone);
     }
-
-
 
     /**
      * Resets the track points sampling states.
@@ -467,3 +466,4 @@ public class TrackDataHub {
         }
     }
 }
+

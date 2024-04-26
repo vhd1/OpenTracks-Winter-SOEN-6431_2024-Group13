@@ -815,7 +815,11 @@ limitations under the License.
     <string name="custom_record_length_key">custom_record_length</string>
 
     <string name="default_Date_Key">1 Sep</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="total_number_of_days_chair_lift_used">Total number of days chair lift used</string>
+    <string name="tallest_chair_lift_m">Vertical M</string>
+    <string name="days">Days</string>
+    <string name="season_totals">Season Totals</string>
+    <string name="season_name">Season Name</string>
+    <string name="name_of_common_trail">Cote 71</string>
+    <string name="season_common_trail">Season Common Trail</string>
 </resources>
