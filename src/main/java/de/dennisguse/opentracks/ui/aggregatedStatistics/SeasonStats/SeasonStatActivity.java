@@ -47,6 +47,10 @@ public class SeasonStatActivity extends AppCompatActivity {
         int[] MaxAltitude = new int[4];
         int[] TallestRun = new int[4];
         double[] LongestRun = new double[4];
+        int[] TallestChair = new int[4];
+        int[] TotalDaysChairliftUsed = new int[4];
+        String[] MostCommonTrail = new String[4];
+        String[][] FavoriteChairs = new String[4][5];
 
         ArrayList<DummySeason> seasonArrayList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -64,8 +68,14 @@ public class SeasonStatActivity extends AppCompatActivity {
             TallestRun[i] = (int) (random.nextDouble() * 100);
             MaxAltitude[i] = (int) (random.nextDouble() * 5000);
             LongestRun[i] = random.nextDouble() * 10;
+            TallestChair[i] = random.nextInt(1000) ;
+            TotalDaysChairliftUsed[i] = random.nextInt(100);
+            MostCommonTrail[i] = "Trail " + random.nextInt(42);
+            for (int j = 0; j < 5; j++) {
+                FavoriteChairs[i][j] = "Chair No." + random.nextInt(10);
+            }
 
-            seasonArrayList.add(new DummySeason(seasonNames[i], Integer.parseInt(Days[i]), Runs[i], Resort[i], VerticalM[i], DistanceKM[i], Active[i], MaxSpeed[i], MaxAltitude[i], TallestRun[i], LongestRun[i]));
+            seasonArrayList.add(new DummySeason(seasonNames[i], Integer.parseInt(Days[i]), Runs[i], Resort[i], VerticalM[i], DistanceKM[i], Active[i], MaxSpeed[i], MaxAltitude[i], TallestRun[i], LongestRun[i], TallestChair[i], TotalDaysChairliftUsed[i], MostCommonTrail[i], FavoriteChairs[i]));
         }
 
         SeasonListAdapter listAdapter = new SeasonListAdapter(SeasonStatActivity.this, seasonArrayList);
@@ -88,9 +98,9 @@ public class SeasonStatActivity extends AppCompatActivity {
                 intent.putExtra("tallestRun",seasonArrayList.get(position).tallestRun);
                 intent.putExtra("longestRun",seasonArrayList.get(position).longestRun);
                 intent.putExtra("tallestChair",seasonArrayList.get(position).tallestChair);
-                intent.putExtra("favoriteChairs",seasonArrayList.get(position).favoriteChairs);
-                intent.putExtra("totalNumberOfDaysChairliftUsed",seasonArrayList.get(position).totalNumberOfDaysChairliftUsed);
+                intent.putExtra("totalDaysChairliftUsed",seasonArrayList.get(position).totalDaysChairliftUsed);
                 intent.putExtra("mostCommonTrail",seasonArrayList.get(position).mostCommonTrail);
+                intent.putExtra("favoriteChairs",seasonArrayList.get(position).favoriteChairs);
                 startActivity(intent);
             }
         });
@@ -99,7 +109,6 @@ public class SeasonStatActivity extends AppCompatActivity {
 
 //This class is each item in the list class which in our case is seasons. this is a dummy class just to have items You should use seasons in the code not ListItem class.
 class DummySeason {
-    int totalNumberOfDaysChairliftUsed;
     String seasonName;
     int days;
     int runs;
@@ -111,13 +120,12 @@ class DummySeason {
     int max_alt;
     int tallestRun;
     double longestRun;
-
     int tallestChair;
-    String[] favoriteChairs;
+    int totalDaysChairliftUsed;
     String mostCommonTrail;
+    String[] favoriteChairs;
 
-
-    public DummySeason(String mostCommonTrail,String seasonName, int days, int runs, int resort, int vertical_m, double distance, String active, double max_Speed, int max_alt, int tallestRun, double longestRun, int tallestChair, String[] favoriteChairs, int totalNumberOfDaysChairliftUsed) {
+    public DummySeason(String seasonName, int days, int runs, int resort, int vertical_m, double distance, String active, double max_Speed, int max_alt, int tallestRun, double longestRun, int tallestChair, int totalDaysChairliftUsed, String mostCommonTrail, String[] favoriteChairs) {
         this.seasonName = seasonName;
         this.days = days;
         this.runs = runs;
@@ -129,9 +137,9 @@ class DummySeason {
         this.max_alt = max_alt;
         this.tallestRun = tallestRun;
         this.longestRun = longestRun;
-        this.favoriteChairs = favoriteChairs;
         this.tallestChair = tallestChair;
-        this.totalNumberOfDaysChairliftUsed = totalNumberOfDaysChairliftUsed;
-        this.mostCommonTrail= mostCommonTrail;
+        this.totalDaysChairliftUsed = totalDaysChairliftUsed;
+        this.mostCommonTrail = mostCommonTrail;
+        this.favoriteChairs = favoriteChairs;
     }
 }

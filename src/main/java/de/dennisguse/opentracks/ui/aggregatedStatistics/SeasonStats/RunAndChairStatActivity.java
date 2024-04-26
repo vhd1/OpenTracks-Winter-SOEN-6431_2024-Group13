@@ -91,11 +91,9 @@ public class RunAndChairStatActivity extends AppCompatActivity {
                 distance = Integer.toString((int)intent.getDoubleExtra("distance", -1.0));
                 max_Speed = Integer.toString((int)intent.getDoubleExtra("max_Speed", -1.0));
                 longestRun = Integer.toString((int)intent.getDoubleExtra("longestRun", -1.0));
-                totalNumberOfDaysChairliftUsed = Integer.toString((int)intent.getDoubleExtra("totalNumberOfDaysChairliftUsed",-1));
-
             }
             // Pass the string as an argument if the fragment is RunsStatFragment
-            fragmentTransaction.replace(R.id.frame_nav_season, RunsStatFragment.newInstance(seasonName, days, runs, resort, vertical_m, distance, active, max_Speed, max_alt, tallestRun, longestRun), totalNumberOfDaysChairliftUsed);
+            fragmentTransaction.replace(R.id.frame_nav_season, RunsStatFragment.newInstance(seasonName, days, runs, resort, vertical_m, distance, active, max_Speed, max_alt, tallestRun, longestRun));
         } else {
             Intent intent = this.getIntent();
             String seasonName = "123";
@@ -103,12 +101,12 @@ public class RunAndChairStatActivity extends AppCompatActivity {
             String tallestChair = "123";
             String totalDaysChairliftUsed = "123";
             String mostCommonTrail = "123";
-            String[] favoriteChairs = new String[5];
+            String[] favoriteChairs = {"favourite1", "favourite2", "favourite3", "favourite4", "favourite5"};
             if (intent != null){
                 seasonName = intent.getStringExtra("seasonName");
                 days = Integer.toString(intent.getIntExtra("days",-1));
                 tallestChair = Integer.toString(intent.getIntExtra("tallestChair", -1));
-                totalDaysChairliftUsed = Integer.toString(intent.getIntExtra("totalNumberOfDaysChairliftUsed",-1));
+                totalDaysChairliftUsed = Integer.toString(intent.getIntExtra("totalDaysChairliftUsed",-1));
                 mostCommonTrail = intent.getStringExtra("mostCommonTrail");
                 favoriteChairs = intent.getStringArrayExtra("favoriteChairs");
             }
