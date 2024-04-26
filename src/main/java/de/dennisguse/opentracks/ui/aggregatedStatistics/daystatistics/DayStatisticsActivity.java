@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.databinding.StatisticsPerDayBinding;
 
@@ -19,6 +22,8 @@ public class DayStatisticsActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewBinding = StatisticsPerDayBinding.inflate(getLayoutInflater());
+
+        setCurrentDate();
 
         // Assuming you have waitTimes data available here
         List<Integer> waitTimes = new ArrayList<>();
@@ -87,6 +92,13 @@ public class DayStatisticsActivity extends AbstractActivity {
     public void setTotalWaitLabel(List<Integer> waitTimes) {
         String totalWaitTime = calculateTotalWaitTime(waitTimes);
         viewBinding.statsAverageWaitTimeValue.setText(totalWaitTime);
+    }
+
+    public void setCurrentDate() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d'\"' MMMM', 'HH:mm");
+        String formattedDateTime = dateTime.format(formatter);
+        viewBinding.statsStartDatetimeValue.setText(formattedDateTime);
     }
 
 }
