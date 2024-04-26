@@ -97,16 +97,36 @@ public class DaySpecificActivity extends AbstractActivity {
         }
     }
 
+    /**
+     * This method is responsible for displaying a toast message indicating that no tracks were found
+     * for the specific date of the activity. It finishes the current activity and displays the toast
+     * message with information about the date and a suggestion to import a GPX file from Moodle.
+     */
     private void showNoTracksFoundToast() {
         finish();
         Toast.makeText(DaySpecificActivity.this, "No Tracks found for date: " + activityDate + "\n Please import GPX file from Moodle", Toast.LENGTH_LONG).show();
     }
+    /**
+     * Converts a string representation of a date to a Date object.
+     *
+     * @param dateString A string representing the date in the format "yyyy-MM-dd".
+     * @return A Date object representing the parsed date.
+     */
     private Date getDateFromString(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+    /**
+     * Handles the intent received by the activity, extracting the date of the track from it.
+     * If the date is not provided in the intent extras, it falls back to a default date.
+     * Then, it retrieves the track for the given date from the content provider.
+     * If no track is found, it displays a toast message indicating no tracks were found.
+     * Otherwise, it sets the trackId for further use.
+     *
+     * @param intent The Intent containing the date information.
+     */
     private void handleIntent(Intent intent) {
         activityDate = intent.getStringExtra(EXTRA_TRACK_DATE);
         if (activityDate == null) {
@@ -125,6 +145,11 @@ public class DaySpecificActivity extends AbstractActivity {
         }
     }
 
+    /**
+     * Inflates the layout for the activity using view binding and returns the root view.
+     *
+     * @return The root view of the inflated layout.
+     */
     @Override
     protected View getRootView() {
         viewBinding = DaySpecificActivityBinding.inflate(getLayoutInflater());
