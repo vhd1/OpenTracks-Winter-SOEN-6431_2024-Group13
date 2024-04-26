@@ -69,7 +69,13 @@ public class CalendarActivity extends AppCompatActivity {
         this.selectedDate = date;
     }
 
+    /**
+     * Retrieves the currently selected date.
+     *
+     * @return The currently selected date.
+     */
     public Date getSelectedDate(){
+        // Assuming selectedDate is a member variable, return its value
         return selectedDate;
     }
 }
