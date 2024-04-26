@@ -21,6 +21,7 @@ import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.databinding.AggregatedStatsListItemBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
+import de.dennisguse.opentracks.stats.EnhancedTrackStatistics;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.SeasonStats.SeasonStatActivity;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.daySpecificStats.DaySpecificActivity;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -28,6 +29,7 @@ import de.dennisguse.opentracks.util.StringUtils;
 public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private AggregatedStatistics aggregatedStatistics;
+    private EnhancedTrackStatistics enhancedTrackStatistics;
     private final Context context;
 
     public AggregatedStatisticsAdapter(Context context, AggregatedStatistics aggregatedStatistics) {
@@ -193,17 +195,19 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
             }
 
 //            for the time duration of skiing
-//            if (activityType.equals("skiing")){
-//
-//                viewBinding.totalSkiingDurationTextView.setVisibility(View.VISIBLE);
-//                viewBinding.aggregatedStatsSkiingDurationLabel.setVisibility(View.VISIBLE);
-//
-//                if (aggregatedStatistic.getTrackStatistics().getTotalSkiingDuration(LocalDate date) == null) {
-//                    viewBinding.totalSkiingDurationTextView.setText("00:00:00");
-//                } else {
-//                    viewBinding.totalSkiingDurationTextView.setText(String.valueOf(aggregatedStatistic.getTrackStatistics().getTotalSkiingDuration()));
-//                }
-//            }
+            if (activityType.equals("skiing")){
+
+                viewBinding.totalSkiingDurationTextView.setVisibility(View.VISIBLE);
+                viewBinding.aggregatedStatsSkiingDurationLabel.setVisibility(View.VISIBLE);
+                viewBinding.aggregatedStatsSkiingDurationLabel.setText("TOTAL TIME SKIING");
+                if (aggregatedStatistic.durationTIme() == null) {
+                    viewBinding.totalSkiingDurationTextView.setText("00:00:00");
+                } else {
+//                    long temp = aggregatedStatistic.getTrackStatistics().getTotalTime().getSeconds() - aggregatedStatistic.getTrackStatistics().getMovingTime().getSeconds();
+//                    System.out.println(enhancedTrackStatistics.getTimeOnChairlift());
+                    viewBinding.totalSkiingDurationTextView.setText(String.valueOf(aggregatedStatistic.getTrackStatistics().getSkiingDuration().getSeconds()));
+                }
+            }
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {

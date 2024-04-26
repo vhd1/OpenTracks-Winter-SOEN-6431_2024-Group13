@@ -48,6 +48,10 @@ public class TrackStatistics {
     private Instant startTime;
     // The track stop time.
     private Instant stopTime;
+    private Duration skiingDuration = Duration.ZERO;
+
+    // Timestamp of the last track point where skiing started
+    public static Instant skiingStartTime;
 
     private Distance totalDistance;
     // Updated when new points are received, may be stale.
@@ -177,6 +181,7 @@ public class TrackStatistics {
         totalTime = totalTime.plus(other.totalTime);
         movingTime = movingTime.plus(other.movingTime);
         maxSpeed = Speed.max(maxSpeed, other.maxSpeed);
+        skiingDuration = skiingDuration.plus(other.skiingDuration);
         if (other.altitudeExtremities.hasData()) {
             altitudeExtremities.update(other.altitudeExtremities.getMin());
             altitudeExtremities.update(other.altitudeExtremities.getMax());
@@ -240,6 +245,25 @@ public class TrackStatistics {
     public void setStartTime(Instant startTime) {
         this.startTime = startTime;
         setStopTime(startTime);
+    }
+    public Duration getSkiingDuration(){
+        return skiingDuration;
+    }
+    public void setSkiingDuration(Duration skiingDuration) {
+        this.skiingDuration = skiingDuration;
+    }
+
+    // Method to reset skiing duration
+    public void resetSkiingDuration() {
+        this.skiingDuration = Duration.ZERO;
+    }
+    public Instant getSkiingStartTime() {
+        return skiingStartTime;
+    }
+
+    // Setter method for skiingStartTime
+    public void setSkiingStartTime(Instant skiingStartTime) {
+        this.skiingStartTime = skiingStartTime;
     }
 
     public Instant getStopTime() {
