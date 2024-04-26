@@ -118,6 +118,7 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
                 public void onClick(View v) {
                     Context context = viewBinding.getRoot().getContext();
                     Intent intent = new Intent(context, DaySpecificActivity.class);
+                    context.startActivity(intent);
                 }
             });
 

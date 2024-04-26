@@ -143,6 +143,45 @@ public class PreferencesUtils {
         return sharedPreferences.getBoolean(getKey(keyId), defaultValue);
     }
 
+    public static String getHeight() {
+        String savedHeight = getString(R.string.settings_profile_height_key,"" );
+        if (TextUtils.isEmpty(savedHeight)) {
+            return savedHeight;
+        }
+        double height = Double.parseDouble(savedHeight);
+        boolean isUsingMeterDefault = getUnitSystem().equals(UnitSystem.METRIC) || getUnitSystem().equals(UnitSystem.IMPERIAL_METER);
+        boolean isSavedHeightInMeter = getHeightUnit().equals(UnitSystem.METRIC.toString()) || getHeightUnit().equals(UnitSystem.IMPERIAL_METER.toString());
+        if (isUsingMeterDefault == isSavedHeightInMeter) {
+            return savedHeight;
+        }
+
+        if (isUsingMeterDefault) {
+            // Convert from feet to meter
+            return String.format("%.2f", height * 0.3048);
+        } else {
+            // Convert from meter to feet
+            return String.format("%.2f", height / 0.3048);
+        }
+    }
+
+    public static double getHeightInNumber() {
+        return Double.parseDouble(getHeight());
+    }
+
+    public static void setHeight(String newHeight) {
+        setString(R.string.settings_profile_height_key, newHeight);
+    }
+
+    private static String getHeightUnit() {
+        // 5.7ft
+        // 1.7m
+        return getString(R.string.settings_profile_height_unit_key, "");
+    }
+
+    public static void setHeightUnit(UnitSystem newHeightUnit) {
+        setString(R.string.settings_profile_height_unit_key, newHeightUnit.toString());
+    }
+
     static int getInt(int keyId, int defaultValue) {
         try {
             return sharedPreferences.getInt(getKey(keyId), defaultValue);

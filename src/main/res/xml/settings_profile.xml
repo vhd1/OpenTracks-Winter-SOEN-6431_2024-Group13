@@ -12,6 +12,12 @@
         android:key="@string/settings_profile_nickname_key"
         android:title="@string/settings_profile_nickname"
         app:useSimpleSummaryProvider="true" />
+    
+    <EditTextPreference
+        android:inputType="text"
+        android:key="@string/settings_profile_height_key"
+        android:title="@string/settings_profile_height"
+     />
 
     <ListPreference
         android:key="@string/settings_profile_country_key"
