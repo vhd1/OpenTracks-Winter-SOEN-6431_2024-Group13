@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.dennisguse.opentracks.CalendarActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
@@ -20,12 +21,16 @@ import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.databinding.AggregatedStatsListItemBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
+import de.dennisguse.opentracks.stats.EnhancedTrackStatistics;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.SeasonStats.SeasonStatActivity;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.daySpecificStats.DaySpecificActivity;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.daystatistics.DayStatisticsActivity;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private AggregatedStatistics aggregatedStatistics;
+    private EnhancedTrackStatistics enhancedTrackStatistics;
     private final Context context;
 
     public AggregatedStatisticsAdapter(Context context, AggregatedStatistics aggregatedStatistics) {
@@ -91,6 +96,33 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
                     context.startActivity(intent);
                 }
             });
+
+            viewBinding.runsAndLiftsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), CalendarActivity.class);
+                    intent.putExtra("Display Fields", "Runs and Lifts");
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+            viewBinding.dayStatisticsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = viewBinding.getRoot().getContext();
+                    Intent intent = new Intent(context, DayStatisticsActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+
+            viewBinding.elevationAndSpeedButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), CalendarActivity.class);
+                    intent.putExtra("Display Fields", "Elevation and Speed");
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
@@ -149,6 +181,35 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
             viewBinding.aggregatedStatsDistanceUnit.setText(parts.second);
 
             viewBinding.aggregatedStatsTime.setText(StringUtils.formatElapsedTime(aggregatedStatistic.getTrackStatistics().getMovingTime()));
+
+            if (activityType.equals("skiing")){
+                viewBinding.aggregatedStatsSlopePercentLabel.setVisibility(View.VISIBLE);
+                viewBinding.aggregatedStatsSlopePercent.setVisibility(View.VISIBLE);
+                viewBinding.aggregatedStatsSlopePercentUnit.setVisibility(View.VISIBLE);
+
+                if (aggregatedStatistic.getTrackStatistics().getSlopePercent() == null) {
+                    viewBinding.aggregatedStatsSlopePercent.setText("0");
+                } else {
+                    viewBinding.aggregatedStatsSlopePercent.setText(String.valueOf(aggregatedStatistic.getTrackStatistics().getSlopePercent()));
+                }
+                viewBinding.aggregatedStatsSlopePercentLabel.setText("Average Slope %");
+                viewBinding.aggregatedStatsSlopePercentUnit.setText("%");
+            }
+
+//            for the time duration of skiing
+            if (activityType.equals("skiing")){
+
+                viewBinding.totalSkiingDurationTextView.setVisibility(View.VISIBLE);
+                viewBinding.aggregatedStatsSkiingDurationLabel.setVisibility(View.VISIBLE);
+                viewBinding.aggregatedStatsSkiingDurationLabel.setText("TOTAL TIME SKIING");
+                if (aggregatedStatistic.durationTIme() == null) {
+                    viewBinding.totalSkiingDurationTextView.setText("00:00:00");
+                } else {
+//                    long temp = aggregatedStatistic.getTrackStatistics().getTotalTime().getSeconds() - aggregatedStatistic.getTrackStatistics().getMovingTime().getSeconds();
+//                    System.out.println(enhancedTrackStatistics.getTimeOnChairlift());
+                    viewBinding.totalSkiingDurationTextView.setText(String.valueOf(aggregatedStatistic.getTrackStatistics().getSkiingDuration().getSeconds()));
+                }
+            }
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {

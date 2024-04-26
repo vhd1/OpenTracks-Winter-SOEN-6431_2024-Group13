@@ -68,6 +68,51 @@
             android:defaultValue="@bool/voice_announce_lap_heart_rate_default"
             android:key="@string/voice_announce_lap_heart_rate_key"
             android:title="@string/settings_announcements_lap_heart_rate" />
+
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_announcements_recording_title">
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_max_speed_recording_default"
+            android:key="@string/voice_announce_max_speed_recording_key"
+            android:title="@string/settings_announcements_max_speed_recording" />
+
+			
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_time_skied_recording_default"
+            android:key="@string/voice_announce_time_skied_recording_key"
+            android:title="@string/settings_announcements_time_skied_recording" />
+
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_max_speed_recording_default"
+            android:title="@string/settings_announcements_average_speed_recording"
+            app:key="@string/voice_announce_average_speed_recording_key" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_max_slope_default"
+            android:key="@string/voice_announce_max_slope_key"
+            android:title="@string/settings_announcements_max_slope" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_max_slope_default"
+            android:title="@string/settings_announcements_average_slope_recording"
+            app:key="@string/voice_announce_average_slope_recording_key" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_announcements_run_title">
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_run_average_speed_default"
+            android:key="@string/voice_announce_run_average_speed_key"
+            android:title="@string/settings_announcements_run_average_speed" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_average_slope_run_default"
+            android:title="@string/settings_announcements_average_slope_run"
+            app:key="@string/voice_announce_average_slope_run_key" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_max_speed_run_default"
+            android:key="@string/voice_announce_max_speed_run_key"
+            android:title="@string/settings_announcements_max_speed_run" />
+    </PreferenceCategory>
 </PreferenceScreen>

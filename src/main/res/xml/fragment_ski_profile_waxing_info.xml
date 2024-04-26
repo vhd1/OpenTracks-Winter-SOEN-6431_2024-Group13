@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Waxing info">
+        <EditTextPreference
+            android:key="waxing_interval"
+            android:title="Waxing Interval (km)"
+            android:summary="Enter the waxing interval for the skis (in km)"
+            android:dialogTitle="Enter Waxing Interval"
+            android:inputType="numberDecimal"
+            android:defaultValue="30" />
+        <ListPreference
+            android:key="type_of_wax"
+            android:title="Wax Type"
+            android:summary="Type of wax being used"
+            android:entries="@array/waxing_types"
+            android:entryValues="@array/waxing_types"
+            android:defaultValue="none"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Last Waxing Date">
+        <Preference
+            android:key="last_waxing_date"
+            android:title="Select Date"
+            android:summary="Tap to select the last waxing date"
+            />
+    </PreferenceCategory>
+    
+</PreferenceScreen>
