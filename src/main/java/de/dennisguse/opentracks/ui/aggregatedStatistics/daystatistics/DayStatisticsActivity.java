@@ -21,4 +21,12 @@ public class DayStatisticsActivity extends AbstractActivity {
         return viewBinding.getRoot();
     }
 
+    // the following code snippet is the corresponding code in the activity for back button
+    @Override
+    protected void onStart() {
+        super.onStart();
+        viewBinding.statsBackButton.setOnClickListener(v -> finish());
+    }
+
+
 }

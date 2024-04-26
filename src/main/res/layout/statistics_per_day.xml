@@ -321,5 +321,17 @@
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintTop_toBottomOf="@id/stats_distance_barrier" />
 
+        <!--add a back button that takes to previous activity-->
+        <Button
+            android:id="@+id/stats_back_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/stats_end_horizontal_line" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
