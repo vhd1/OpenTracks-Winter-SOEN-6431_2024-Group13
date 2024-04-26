@@ -18,8 +18,9 @@ public class CalorieUserDetail {
     private int heartRate;
 
     Track track;
+
     public String getActivityType(){
-        return track.getActivityType().getId();
+        return track.getActivityType();
     }
 
     TrackStatistics trackStatistics;
@@ -30,15 +31,6 @@ public class CalorieUserDetail {
 
     public float getBPM(){
         return trackStatistics.getAverageHeartRate().getBPM();
-    }
-
-    // Constructor to initialize with dummy data
-    public CalorieUserDetail() {
-        this.height = 170;
-        this.weight = 70;
-        this.age = 30;
-        this.sport = "Running";
-        this.heartRate = 75;
     }
 
     // Getters and setters for height
@@ -63,9 +55,7 @@ public class CalorieUserDetail {
     // Getters and setters for age
     public int getAge() {
         String dob = PreferencesUtils.getDateOfBirth();
-        System.out.println(dob);
-
-        return age;
+        return calculateYears(dob);
     }
 
     public void setAge(int age) {
@@ -78,7 +68,7 @@ public class CalorieUserDetail {
     }
 
     public void setSport(String sport) {
-        this.sport = sport;
+        this.sport = getActivityType();
     }
 
     // Getters and setters for heart rate
@@ -114,4 +104,58 @@ public class CalorieUserDetail {
         return totalCalorieExpenditure;
     }
 
+    public double getCalorieComputationTest(double height, double weight,String dob,String sport) {
+        int age = calculateYears(dob);
+        // Calculate Basal Metabolic Rate (BMR)
+        double bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        double activityLevelMultiplier;
+        switch (sport) {
+            case "Running":
+                activityLevelMultiplier = 1.55; 
+                break;
+	        case "Biking" :activityLevelMultiplier = 1.75;
+		        break;
+	        case "RoadBiking " :activityLevelMultiplier = 2.00;
+		        break;
+	        case "MountainBiking" :activityLevelMultiplier = 2.55;
+		        break;
+            default:
+                activityLevelMultiplier = 1.55; 
+                break;
+        }
+        
+        double totalCalorieExpenditure = bmr * activityLevelMultiplier;
+        return totalCalorieExpenditure;
+    }
+
+    // Utility method to convert weight from various units to kilograms
+    private double convertHeight(double value, String unit) {
+        switch (unit.toLowerCase()) {
+            case "feet":
+                return value * 0.3048; // Convert feet to meters
+            case "inches":
+                return value * 0.0254; // Convert inches to meters
+            default:
+                return value; // Assume input is already in meters
+        }
+    }
+
+    // Utility method to convert weight from various units to kilograms
+    private double convertWeight(double value, String unit) {
+        switch (unit.toLowerCase()) {
+            case "pounds":
+                return value * 0.453592; // Convert pounds to kilograms
+            default:
+                return value; // Assume input is already in kilograms
+        }
+    }
+
+    private int calculateYears(String dobString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dob = LocalDate.parse(dobString, formatter);
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(dob, currentDate);
+        int years = period.getYears();
+        return years;
+    }
 }
