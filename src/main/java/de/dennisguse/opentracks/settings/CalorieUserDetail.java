@@ -11,8 +11,8 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 public class CalorieUserDetail {
-    private int height;
-    private int weight;
+    private double height;
+    private double weight;
     private int age;
     private String sport;
     private int heartRate;
@@ -42,25 +42,29 @@ public class CalorieUserDetail {
     }
 
     // Getters and setters for height
-    public int getHeight() {
+
+    public double getHeight() {
         return height;
     }
 
     public void setHeight(int height) {
-        this.height = height;
+        this.height = PreferencesUtils.getHeightInNumber();
     }
 
     // Getters and setters for weight
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
     public void setWeight(int weight) {
-        this.weight = weight;
+        this.weight = PreferencesUtils.getWeightInNumber();
     }
 
     // Getters and setters for age
     public int getAge() {
+        String dob = PreferencesUtils.getDateOfBirth();
+        System.out.println(dob);
+
         return age;
     }
 
