@@ -60,7 +60,7 @@ public class ImageViewPreference extends Preference {
             File f = new File(getContext().getFilesDir(), getContext().getString(R.string.settings_profile_profile_picture_key));
             b = BitmapFactory.decodeStream(new FileInputStream(f));
         } catch (FileNotFoundException ex) {
-            Toast.makeText(getContext(), "Cannot find image", Toast.LENGTH_SHORT).show();
+            // DO nothing
         }
 
         return b;
