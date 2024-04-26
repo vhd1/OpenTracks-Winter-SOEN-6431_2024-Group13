@@ -10,13 +10,26 @@ public final class WeatherInformation implements Parcelable {
 
     private Track.Id id;
     private double temperature;
+    private double windSpeed;
+
+    private double humidity;
+    private String windDirection;
 
     public WeatherInfo(double temperature) {
         this.temperature = temperature;
     }
+    public WeatherInfo(double temperature, double windSpeed, double humidity, String windDirection) {
+        this.temperature = temperature;
+        this.windSpeed = windSpeed;
+        this.humidity = humidity;
+        this.windDirection = windDirection;
+    }
 
     protected WeatherInfo(Parcel in) {
         temperature = in.readDouble();
+        windSpeed = in.readDouble();
+        humidity = in.readDouble();
+        windDirection = in.readString();
     }
 
     public static final Creator<WeatherInfo> CREATOR = new Creator<WeatherInfo>() {
@@ -48,11 +61,37 @@ public final class WeatherInformation implements Parcelable {
         this.temperature = temperature;
     }
 
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(double windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
+    }
+
     @NonNull
     @Override
     public String toString() {
         return "WeatherInfo{" +
                 "temperature=" + temperature +
+                ", windSpeed=" + windSpeed +
+                ", windDirection=" + windDirection +
                 '}';
     }
 
@@ -64,5 +103,7 @@ public final class WeatherInformation implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeDouble(temperature);
+        parcel.writeDouble(windSpeed);
+        parcel.writeString(windDirection);
     }
 }
