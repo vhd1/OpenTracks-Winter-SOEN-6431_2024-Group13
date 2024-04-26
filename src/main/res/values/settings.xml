@@ -15,6 +15,8 @@
 
     <string name="settings_ui_key" translatable="false">settingsUI</string>
 
+    <string name="settings_ski_profile_key" translatable="false">settingsSkiProfile</string>
+
     <string name="settings_gps_key" translatable="false">settingsGps</string>
 
     <string name="settings_sensors_key" translatable="false">settingsSensorsGps</string>
@@ -260,8 +262,42 @@
     <string name="voice_announce_lap_heart_rate_key" translatable="false">voiceAnnounceLapHeartRate</string>
     <bool name="voice_announce_lap_heart_rate_default" translatable="false">false</bool>
 
-    <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
+
+    <!-- Recording related data -->
+    <string name="voice_announce_max_slope_key">voiceAnnounceMaxSlope</string>
+    <bool name="voice_announce_max_slope_default" translatable="false">true</bool>
+
+    <string name="voice_announce_max_speed_recording_key">voiceAnnounceMaxSpeedRecording</string>
+    <bool name="voice_announce_max_speed_recording_default" translatable="false">true</bool>
+	
+	<!-- Recording related data -->
+    <string name="voice_announce_time_skied_recording_key">voiceAnnounceTimeSkiedRecording</string>
+    <bool name="voice_announce_time_skied_recording_default" translatable="false">true</bool>
+
+
+    <string name="voice_announce_average_speed_recording_key">voiceAnnounceAverageSlopeRecording</string>
+    <bool name="voice_announce_average_speed_recording_default" translatable="false">true</bool>
+
+    <string name="voice_announce_average_slope_recording_key">voiceAnnounceAverageSlopeRecording</string>
+    <bool name="voice_announce_average_slope_recording_default" translatable="false">true</bool>
+
+    <string name="voice_announce_average_slope_run_key">voiceAnnounceAverageSlopeRun</string>
+    <bool name="voice_announce_average_slope_run_default" translatable="false">true</bool>
+  
+  
+  
+    <!-- Run related data -->
+
+    <string name="voice_announce_run_average_speed_key" translatable="false">voiceAnnounceRunAverageSpeed</string>
+    <bool name="voice_announce_run_average_speed_default" translatable="false">false</bool>
+
+    <string name="voice_announce_max_speed_run_key">voiceAnnounceMaxSpeedRun</string>
+    <bool name="voice_announce_max_speed_run_default" translatable="false">true</bool>
+
+
+
     <!-- See TrackFileFormat -->
+    <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
     <string name="export_trackfileformat_default" translatable="false">KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES</string>
 
     <string name="import_prevent_reimport_key" translatable="false">preventReimportTrackKey</string>
@@ -425,5 +461,35 @@
     </integer-array>
 
     <string name="prefs_last_version_key" translatable="false">lastVersionKey</string>
+
+    <!-- Default value for automatic record discarding -->
+    <string name="auto_discard_default">true</string>
+    <string name="auto_discard_key">auto_discard_switch</string> <!-- Update the key -->
+    <string name="auto_discard_title">Automatically discard records</string> <!-- Update the title -->
+    <string name="auto_discard_summary">Enable automatic record discarding</string> <!-- Update the summary -->
+
+    <!-- Default value for record length preference -->
+    <string name="record_length_key">record_length_list</string> <!-- Update the key -->
+    <string name="record_length_options">record_length_list</string> <!-- Update the options -->
+    <string name="record_length_default">5</string> <!-- Update the default value -->
+    <string name="record_length_title">Record Length</string> <!-- Update the title -->
+    <string name="record_length_summary">Select the duration for each record</string> <!-- Update the summary -->
+
+    <!-- Array of record length options -->
+    <string-array name="record_length_options">
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>20 seconds</item>
+        <item>Custom</item> <!-- Include the "Custom" option -->
+    </string-array>
+
+    <!-- Array of corresponding record length values -->
+    <string-array name="record_length_values">
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>-1</item> <!-- Add a placeholder value for "Custom" -->
+    </string-array>
+
 
 </resources>

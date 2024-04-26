@@ -14,18 +14,33 @@ import androidx.fragment.app.FragmentTransaction;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.ActivityRunAndChairStatBinding;
+import de.dennisguse.opentracks.databinding.FragmentRunsStatBinding;
 
 public class RunAndChairStatActivity extends AppCompatActivity {
 
     ActivityRunAndChairStatBinding binding;
+    FragmentRunsStatBinding fragmentRunsStatBinding;
 
+    /**
+     * Called when the activity is starting. This is where most initialization should go: calling setContentView(int) to
+     * inflate the activity's UI, initializing views, and starting up any processes that will be required by the activity.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this
+     *                             Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     *                             Note: Otherwise, it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRunAndChairStatBinding.inflate(getLayoutInflater());
+        fragmentRunsStatBinding = FragmentRunsStatBinding.inflate(getLayoutInflater());
 
         EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
+
+        replaceFragment(new RunsStatFragment());
+
+
         binding.bottomNavigationViewSeasons.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.runs_frag) {
                 replaceFragment(new RunsStatFragment());
@@ -42,23 +57,27 @@ public class RunAndChairStatActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment The fragment to replace the current fragment with.
+     */
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragment instanceof RunsStatFragment) {
             Intent intent = this.getIntent();
-            String seasonName = "123";
-            String days = "123";
-            String runs = "123";
-            String resort = "123";
-            String vertical_m = "123";
-            String distance = "123";
-            String active= "123";
-            String max_Speed="123";
-            String max_alt="123";
-            String tallestRun="123";
-            String longestRun="123";
-            String totalNumberOfDaysChairliftUsed = "123";
+            String seasonName = "Summer 2024";
+            String days = "12";
+            String runs = "12";
+            String resort = "2";
+            String vertical_m = "10024";
+            String distance = "231";
+            String active= "12";
+            String max_Speed="6.3";
+            String max_alt="10.45";
+            String tallestRun="9.31";
+            String longestRun="25";
             if (intent != null){
 
                 seasonName = intent.getStringExtra("seasonName");

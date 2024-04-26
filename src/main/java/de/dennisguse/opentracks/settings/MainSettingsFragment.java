@@ -30,6 +30,11 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
 
+        findPreference(getString(R.string.settings_ski_profile_key)).setOnPreferenceClickListener(preference -> {
+            ((SettingsActivity) getActivity()).openScreen(getString(R.string.settings_ski_profile_key));
+            return true;
+        });
+
         findPreference(getString(R.string.settings_gps_key)).setOnPreferenceClickListener(preference -> {
             ((SettingsActivity) getActivity()).openScreen(getString(R.string.settings_gps_key));
             return true;

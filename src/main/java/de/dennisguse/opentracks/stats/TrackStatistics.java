@@ -48,6 +48,10 @@ public class TrackStatistics {
     private Instant startTime;
     // The track stop time.
     private Instant stopTime;
+    private Duration skiingDuration = Duration.ZERO;
+
+    // Timestamp of the last track point where skiing started
+    public static Instant skiingStartTime;
 
     private Distance totalDistance;
     // Updated when new points are received, may be stale.
@@ -58,10 +62,49 @@ public class TrackStatistics {
     private Speed maxSpeed;
     private Float totalAltitudeGain_m = null;
     private Float totalAltitudeLoss_m = null;
+
     // The average heart rate seen on this track
     private HeartRate avgHeartRate = null;
 
     private boolean isIdle;
+
+    // Slope % between this point and the previous point
+    private Float slopePercent_m;
+    private Speed maximumSpeedPerRun;
+    private Speed averageSpeedPerRun;
+
+    /**
+     * Total time user spent for waiting for chairlift
+     */
+    private Duration totalChairliftWaitingTime;
+
+    /**
+     * this function can be used to fetch Total Chairlift Waiting time for display in UI
+     * */
+    public Duration getTotalChairliftWaitingTime() {
+        return totalChairliftWaitingTime;
+    }
+
+    public void setTotalChairliftWaitingTime(Duration totalChairliftWaitingTime) {
+        this.totalChairliftWaitingTime = totalChairliftWaitingTime;
+    }
+
+    /**
+     * this counter is to check how many continuous trackpoints the user is stagnant near lower base of track.
+     * once the threshold of this counter is reached, we start adding the parsed time to totalChairliftWaitingTime until counter is again reset.
+     */
+    private int endOfRunCounter;
+
+    public int getEndOfRunCounter() {
+        return this.endOfRunCounter;
+    }
+    public void incrementEndOfRunCounter() {
+         this.endOfRunCounter++;
+    }
+
+    public void resetEndOfRunCounter() {
+        this.endOfRunCounter = 0;
+    }
 
     public TrackStatistics() {
         reset();
@@ -84,6 +127,11 @@ public class TrackStatistics {
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
         avgHeartRate = other.avgHeartRate;
         isIdle = other.isIdle;
+        slopePercent_m = other.slopePercent_m;
+        totalChairliftWaitingTime=other.totalChairliftWaitingTime;
+        endOfRunCounter=other.endOfRunCounter;
+        maximumSpeedPerRun = other.maximumSpeedPerRun;
+        averageSpeedPerRun=other.averageSpeedPerRun;
     }
 
     @VisibleForTesting
@@ -133,6 +181,7 @@ public class TrackStatistics {
         totalTime = totalTime.plus(other.totalTime);
         movingTime = movingTime.plus(other.movingTime);
         maxSpeed = Speed.max(maxSpeed, other.maxSpeed);
+        skiingDuration = skiingDuration.plus(other.skiingDuration);
         if (other.altitudeExtremities.hasData()) {
             altitudeExtremities.update(other.altitudeExtremities.getMin());
             altitudeExtremities.update(other.altitudeExtremities.getMax());
@@ -155,6 +204,9 @@ public class TrackStatistics {
                 totalAltitudeLoss_m += other.totalAltitudeLoss_m;
             }
         }
+
+        totalChairliftWaitingTime = totalChairliftWaitingTime.plus(other.totalChairliftWaitingTime);
+        endOfRunCounter+= other.endOfRunCounter;
     }
 
     public boolean isInitialized() {
@@ -171,6 +223,9 @@ public class TrackStatistics {
         setMaxSpeed(Speed.zero());
         setTotalAltitudeGain(null);
         setTotalAltitudeLoss(null);
+        setSlopePercent(null);
+        setTotalChairliftWaitingTime(Duration.ofSeconds(0));
+        resetEndOfRunCounter();
 
         isIdle = false;
     }
@@ -190,6 +245,25 @@ public class TrackStatistics {
     public void setStartTime(Instant startTime) {
         this.startTime = startTime;
         setStopTime(startTime);
+    }
+    public Duration getSkiingDuration(){
+        return skiingDuration;
+    }
+    public void setSkiingDuration(Duration skiingDuration) {
+        this.skiingDuration = skiingDuration;
+    }
+
+    // Method to reset skiing duration
+    public void resetSkiingDuration() {
+        this.skiingDuration = Duration.ZERO;
+    }
+    public Instant getSkiingStartTime() {
+        return skiingStartTime;
+    }
+
+    // Setter method for skiingStartTime
+    public void setSkiingStartTime(Instant skiingStartTime) {
+        this.skiingStartTime = skiingStartTime;
     }
 
     public Instant getStopTime() {
@@ -289,7 +363,7 @@ public class TrackStatistics {
         return Speed.max(maxSpeed, getAverageMovingSpeed());
     }
 
-    public void setMaxSpeed(Speed maxSpeed) {
+    public void  setMaxSpeed(Speed maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
@@ -367,6 +441,76 @@ public class TrackStatistics {
         this.totalAltitudeLoss_m = totalAltitudeLoss_m;
     }
 
+    public Float getSlopePercent() {
+        return slopePercent_m;
+    }
+
+    public void setSlopePercent(Float slopePercent) {
+        this.slopePercent_m = slopePercent;
+    }
+
+    public boolean hasSlope() {
+        return slopePercent_m != null;
+    }
+    public Speed getMaximumSpeedPerRun() {
+        return maximumSpeedPerRun;
+    }
+
+    public void setMaximumSpeedPerRun(Speed maximumSpeedPerRun) {
+        this.maximumSpeedPerRun = maximumSpeedPerRun;
+    }
+    public Speed getAverageSpeedPerRun() {
+        return averageSpeedPerRun;
+    }
+
+    public void setAverageSpeedPerRun(Speed speed) {
+        this.averageSpeedPerRun = speed;
+
+    }
+
+    // Method to calculate the total skiing duration for the current day
+//    public Duration getTotalSkiingDuration() {
+//        return getTotalSkiingDuration(LocalDate.now());
+//    }
+//
+//    // Method to calculate the total skiing duration for a specific date
+//    public Duration getTotalSkiingDuration(LocalDate date) {
+//        Duration time = TrackImporter.getTotalSkiingDuration(date);
+//
+//        return TrackImporter.totalSkiingDuration;
+//    }
+//
+//    // Method to determine if skiing is detected between two track points
+//    private boolean isSkiingSegment(TrackPoint startPoint, TrackPoint endPoint) {
+//        // Thresholds to determine skiing activity
+//        double altitudeChangeThreshold = 10.0; // Meters
+//        double speedThreshold = 5.0; // Meters per second
+//        long timeThresholdInSeconds = 50; // Seconds
+//
+//        // Check if altitude change is significant
+//        double altitudeChange = Math.abs(startPoint.getAltitude().toM() - endPoint.getAltitude().toM());
+//        if (altitudeChange < altitudeChangeThreshold) {
+//            return false; // Altitude change not significant, likely not skiing
+//        }
+//
+//        // Calculate total distance
+////        double totalDistance = startPoint.distanceTo(endPoint).toKM();
+//
+//        // Calculate total time (in seconds)
+//        long totalTimeInSeconds = Duration.between(startPoint.getTime(), endPoint.getTime()).getSeconds();
+//
+//        // Calculate average speed
+////        double averageSpeed = totalDistance / totalTimeInSeconds;
+//
+//        // Check if average speed is above the speed threshold
+//        return totalTimeInSeconds >= timeThresholdInSeconds;
+//    }
+//
+//    // Method to check if two Instant objects belong to the same LocalDate
+//    private boolean isSameDate(Instant instant, LocalDate date) {
+//        return instant.atZone(ZoneId.systemDefault()).toLocalDate().isEqual(date);
+//    }
+//
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addTotalAltitudeLoss(float loss_m) {
         if (totalAltitudeLoss_m == null) {
@@ -389,8 +533,12 @@ public class TrackStatistics {
         return "TrackStatistics { Start Time: " + getStartTime() + "; Stop Time: " + getStopTime()
                 + "; Total Distance: " + getTotalDistance() + "; Total Time: " + getTotalTime()
                 + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
+                + "; Maximum Speed Per Run: " + getMaximumSpeedPerRun()
+                + "; Average Speed Per Run: " + getAverageSpeedPerRun()
                 + "; Min Altitude: " + getMinAltitude() + "; Max Altitude: " + getMaxAltitude()
                 + "; Altitude Gain: " + getTotalAltitudeGain()
-                + "; Altitude Loss: " + getTotalAltitudeLoss() + "}";
+                + "; Altitude Loss: " + getTotalAltitudeLoss()
+                + "; Slope%: " + getSlopePercent() + "}";
     }
 }
+

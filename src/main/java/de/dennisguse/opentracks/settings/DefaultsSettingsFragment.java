@@ -2,13 +2,17 @@ package de.dennisguse.opentracks.settings;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.NumberPicker;
+import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import androidx.preference.SwitchPreferenceCompat;
 import androidx.preference.PreferenceManager;
 
 import java.text.DateFormatSymbols;
@@ -18,11 +22,18 @@ import java.util.Locale;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import android.util.Log;
+
 
 public class DefaultsSettingsFragment extends PreferenceFragmentCompat implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     // Used to forward update from ChooseActivityTypeDialogFragment; TODO Could be replaced with LiveData.
     private ActivityTypePreference.ActivityPreferenceDialog activityPreferenceDialog;
+    private SwitchPreferenceCompat autoDiscardSwitch;
+    private ListPreference recordLengthList;
+
+
+    private int minDuration = 5;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
@@ -35,12 +46,43 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
             showCustomDatePickerDialog(); // Call method to show the dialog
             return true;
         }
+        else if (preference.getKey().equals(getString(R.string.custom_activity_add))) {
+            showAddCustomActivityDialog();
+            return true;
+        }
         return super.onPreferenceTreeClick(preference);
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_defaults);
+        autoDiscardSwitch = findPreference(getString(R.string.auto_discard_key));
+        recordLengthList = findPreference(getString(R.string.record_length_options));
+
+        autoDiscardSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean autoDiscardEnabled = (boolean) newValue;
+            recordLengthList.setEnabled(autoDiscardEnabled);
+            Log.d("DefaultsSettingsFragment", "Auto-Discard preference changed: " + autoDiscardEnabled);
+
+            // Save the new value to SharedPreferences
+            updateAutoDiscardSwitch(autoDiscardEnabled);
+
+            return true;
+        });
+
+        recordLengthList.setOnPreferenceChangeListener((preference, newValue) -> {
+            int selectedLength = Integer.parseInt((String) newValue);
+            minDuration = selectedLength;
+            Log.d("DefaultsSettingsFragment", "minDuration: " + minDuration);
+            Log.d("DefaultsSettingsFragment", "Record Length preference changed: " + selectedLength + " seconds");
+
+            // Save the new value to SharedPreferences
+            updateRecordLengthList(selectedLength);
+
+            return true;
+        });
+
+
     }
 
     @Override
@@ -165,7 +207,6 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
 
 
 
-
     private int getMaxDayOfMonth(int month) {
         // Get the maximum day for the given month
         Calendar calendar = Calendar.getInstance();
@@ -198,4 +239,31 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
             activityPreferenceDialog.updateUI(activityType);
         }
     }
+
+    // Method to update autoDiscardSwitch preference
+    private void updateAutoDiscardSwitch(boolean autoDiscardEnabled) {
+        PreferencesUtils.setBoolean(R.string.auto_discard_key, autoDiscardEnabled);
+    }
+
+    // Method to update recordLengthList preference
+    private void updateRecordLengthList(int selectedLength) {
+        PreferencesUtils.setString(R.string.record_length_default, String.valueOf(selectedLength));
+    }
+    private void showAddCustomActivityDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        builder.setTitle(R.string.custom_activity_add)
+                .setView(input)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    String activityName = input.getText().toString().trim();
+                    if (!activityName.isEmpty()) {
+                        PreferencesUtils.addCustomActivity(getActivity(), activityName);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel())
+                .show();
+    }
+
 }
