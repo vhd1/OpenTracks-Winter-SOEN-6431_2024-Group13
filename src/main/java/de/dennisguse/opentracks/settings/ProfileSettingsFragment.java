@@ -130,13 +130,19 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(maxNicknameLength) });
         });
 
+        UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
+        // Set up height input
         EditTextPreference heightInput = findPreference(getString(R.string.settings_profile_height_key));
-        heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title));
+        boolean isUsingMeter = unitSystem.equals(UnitSystem.METRIC) || unitSystem.equals(UnitSystem.IMPERIAL_METER);
+        String heightUnit = isUsingMeter ? "m" : "ft";
+        heightInput.setSummary(PreferencesUtils.getHeight() + " " + heightUnit);
+        heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title) + " (" + heightUnit + ")");
         heightInput.setOnBindEditTextListener(editText -> {
             editText.setSingleLine(true);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             // Set the hint directly on the EditText object
-            editText.setHint("Enter your height in feet (e.g., 5.5)");
+            editText.setHint("Enter your height in " + heightUnit);
+            editText.setText(PreferencesUtils.getHeight());
 
             // Create and set an InputFilter to allow up to two decimal points
             InputFilter filter = new InputFilter() {
@@ -154,6 +160,7 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
                     }
                     return null;
                 }
+
             };
             editText.setFilters(new InputFilter[]{filter});
         });
@@ -162,14 +169,19 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         heightInput.setOnPreferenceChangeListener((preference, newValue) -> {
             try {
                 double height = Double.parseDouble((String) newValue);
-                if (height < 2 || height > 8) {
-                    Toast.makeText(getContext(), "Please enter a height between 2 and 8 feet", Toast.LENGTH_LONG).show();
+                if (height <= 0) {
+                    Toast.makeText(getContext(), "Please enter a valid height", Toast.LENGTH_LONG).show();
                     return false;
                 }
             } catch (NumberFormatException e) {
                 Toast.makeText(getContext(), "Invalid height entered. Please enter a numerical value.", Toast.LENGTH_LONG).show();
                 return false;
             }
+
+            // Set the height unit when saved
+            PreferencesUtils.setHeightUnit(unitSystem);
+            PreferencesUtils.setHeight(newValue.toString());
+            preference.setSummary(newValue + " " + heightUnit);
             return true;
         });
         
