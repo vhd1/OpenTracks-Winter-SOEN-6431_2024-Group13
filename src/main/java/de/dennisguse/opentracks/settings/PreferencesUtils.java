@@ -94,9 +94,6 @@ public class PreferencesUtils {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener);
     }
 
-
-
-
     public static String getDefaultActivityTypeLocalized() {
         return getString(R.string.default_activity_key, resources.getString(R.string.default_activity_default));
     }
@@ -145,7 +142,6 @@ public class PreferencesUtils {
     private static boolean getBoolean(int keyId, boolean defaultValue) {
         return sharedPreferences.getBoolean(getKey(keyId), defaultValue);
     }
-
 
     public static String getHeight() {
         String savedHeight = getString(R.string.settings_profile_height_key,"" );
@@ -254,7 +250,6 @@ public class PreferencesUtils {
     public static boolean isPublicAPIDashboardEnabled() {
         return getBoolean(R.string.publicapi_dashboard_enabled_key, resources.getBoolean(R.bool.publicapi_dashboard_enabled_default));
     }
-
 
     public static boolean shouldShowIntroduction() {
         return getBoolean(R.string.show_introduction_screen_key, resources.getBoolean(R.bool.show_introduction_screen_default));
