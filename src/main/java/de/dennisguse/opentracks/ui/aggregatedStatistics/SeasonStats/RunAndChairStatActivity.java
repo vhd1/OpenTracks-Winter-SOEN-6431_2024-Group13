@@ -114,4 +114,10 @@ public class RunAndChairStatActivity extends AppCompatActivity {
         }
         fragmentTransaction.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        // Perform the default back button behavior (e.g., navigate back)
+        super.onBackPressed();
+    }
 }

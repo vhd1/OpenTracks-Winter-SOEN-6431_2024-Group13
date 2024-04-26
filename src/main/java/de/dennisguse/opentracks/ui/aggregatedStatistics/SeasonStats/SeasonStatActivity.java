@@ -105,6 +105,11 @@ public class SeasonStatActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
 
 //This class is each item in the list class which in our case is seasons. this is a dummy class just to have items You should use seasons in the code not ListItem class.

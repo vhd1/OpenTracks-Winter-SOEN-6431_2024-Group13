@@ -13,6 +13,8 @@
         tools:context=".ui.aggregatedStatistics.SeasonStats.RunAndChairStatActivity">
 
         <!-- Season Name TextView -->
+
+        <!-- Season Totals TextView -->
         <TextView
             android:id="@+id/seasonNameTextView"
             android:layout_width="match_parent"
@@ -24,10 +26,10 @@
             android:textSize="24dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Season Totals TextView -->
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
@@ -208,7 +210,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/CommainTrail"
+            android:id="@+id/season_common_trail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Seasons Common Trail"
@@ -216,39 +218,41 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/row11"
-
-            />
+            app:layout_constraintTop_toBottomOf="@+id/row11" />
 
         <LinearLayout
             android:id="@+id/row13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6sp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CommainTrail">
+            app:layout_constraintTop_toBottomOf="@id/season_common_trail">
 
-
-                <TextView
-                    android:id="@+id/mostCommonTrail_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Name Trail"
-                    android:textSize="16dp"
-                    android:layout_marginLeft="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/CommanTrail" />
-
-
-
-
-
-
-
+            <TextView
+                android:id="@+id/name_of_common_trail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:text="@string/name_of_common_trail"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/season_common_trail" />
 
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:background="@android:color/holo_blue_light"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="-8dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

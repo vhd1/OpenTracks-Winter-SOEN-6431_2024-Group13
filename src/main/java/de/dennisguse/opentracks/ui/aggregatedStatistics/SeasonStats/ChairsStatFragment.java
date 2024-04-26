@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ImageButton;
+
 
 import androidx.fragment.app.Fragment;
 
@@ -71,12 +73,23 @@ public class ChairsStatFragment extends Fragment {
         TextView daysTextView = view.findViewById(R.id.days_tv);
         TextView tallestChairTextView = view.findViewById(R.id.tallestChair_tv);
         TextView totalDaysChairliftUsedTextView = view.findViewById(R.id.totalDaysChairliftUsed_tv);
-        TextView mostCommonTrail= view.findViewById(R.id.mostCommonTrail_tv);
+        TextView mostCommonTrail= view.findViewById(R.id.name_of_common_trail);
         TextView favoriteChairsTextView1 = view.findViewById(R.id.favChairTextView1);
         TextView favoriteChairsTextView2 = view.findViewById(R.id.favChairTextView2);
         TextView favoriteChairsTextView3 = view.findViewById(R.id.favChairTextView3);
         TextView favoriteChairsTextView4 = view.findViewById(R.id.favChairTextView4);
         TextView favoriteChairsTextView5 = view.findViewById(R.id.favChairTextView5);
+
+         // Find the ImageButton by its ID
+         ImageButton backButton = view.findViewById(R.id.imageButton);
+                 // Set OnClickListener to handle the click event
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity to go back to the previous one
+                getActivity().finish();
+            }
+        });
 
         if (seasonNameTextView != null && mSeasonName != null) {
             seasonNameTextView.setText(mSeasonName);
@@ -93,4 +106,5 @@ public class ChairsStatFragment extends Fragment {
         }
         return view;
     }
+    
 }
