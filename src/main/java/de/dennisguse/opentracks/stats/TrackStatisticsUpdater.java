@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.stats;
 import androidx.annotation.NonNull;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Distance;
@@ -26,6 +27,7 @@ import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Run;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.viewmodels.GenericStatisticsViewHolder;
 
 /**
  * Updater for {@link TrackStatistics}.
@@ -80,6 +82,31 @@ public class TrackStatisticsUpdater {
         TrackStatistics stats = new TrackStatistics(trackStatistics);
         stats.merge(currentSegment);
         return stats;
+    }
+
+    // Flag to track whether the user is skiing
+    private boolean isSkiing = false;
+
+    // Duration spent skiing
+    private Duration skiingDuration = Duration.ZERO;
+
+    // Timestamp of the last track point where skiing started
+
+
+    // Threshold speed to consider as skiing (in meters per second)
+    private static final float SKIING_SPEED_THRESHOLD = 1.0f;
+
+    // Method to update skiing duration
+    private void updateSkiingDuration(TrackPoint trackPoint) {
+        if (isSkiing && (!trackPoint.hasSpeed() || trackPoint.getSpeed() == null || trackPoint.getSpeed().toMPS() < SKIING_SPEED_THRESHOLD)) {
+            // User has stopped skiing
+            skiingDuration = skiingDuration.plus(Duration.between(trackStatistics.getSkiingStartTime(), trackPoint.getTime()));
+            isSkiing = false;
+        } else if (!isSkiing && trackPoint.hasSpeed() && trackPoint.getSpeed() != null && trackPoint.getSpeed().toMPS() >= SKIING_SPEED_THRESHOLD) {
+            // User has started skiing
+            trackStatistics.setSkiingStartTime(trackPoint.getTime());
+            isSkiing = true;
+        }
     }
 
     public void addTrackPoints(List<TrackPoint> trackPoints) {
@@ -171,6 +198,7 @@ public class TrackStatisticsUpdater {
             if (trackPoint.hasSpeed()) {
                 updateSpeed(trackPoint);
             }
+            updateSkiingDuration(trackPoint);
 
             // Update current Slope= Change in Distance / Change in Altitude
             if (movingDistance != null) {
@@ -185,6 +213,7 @@ public class TrackStatisticsUpdater {
 
         lastTrackPoint = trackPoint;
     }
+
 
     /**
      * This function can be used to check if current trackpoint is of type waiting for chairlift.
