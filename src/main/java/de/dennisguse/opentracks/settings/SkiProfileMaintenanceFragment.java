@@ -6,9 +6,12 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -62,9 +65,10 @@ public class SkiProfileMaintenanceFragment extends PreferenceFragmentCompat {
         // Access sharpening data from preferences
         double sharpeningInterval = Double.parseDouble(sharedPreferences.getString("sharpening_interval", "30"));
         long lastSharpeningTime = getSharpeningTimeFromSharedPrefs(sharedPreferences, "last_sharpening_date");
+        double totalDistanceSum = new DatabaseHelper(getContext()).getTotalDistanceSum(lastSharpeningTime);
 
         // Calculate km skied, % of interval reached, months since last sharpening
-        double kmSkied = retrieveKmSkied(lastSharpeningTime);
+        double kmSkied = totalDistanceSum;
         int monthsSinceSharpening = calculateMonthsSince(lastSharpeningTime);
         double intervalPercent = (double) kmSkied / sharpeningInterval * 100;
 
@@ -78,37 +82,6 @@ public class SkiProfileMaintenanceFragment extends PreferenceFragmentCompat {
             showSharpeningNotification(intervalPercent, monthsSinceSharpening);
         }
     }
-
-    private double retrieveKmSkied(long last_date){
-        // Utilizing TracksColumns for consistent URI construction
-        String authority = BuildConfig.APPLICATION_ID + ".content";
-        Uri tracksUri = Uri.parse(TracksColumns.CONTENT_URI.toString());
-
-        // Construct selection clause based on your preference (milliseconds or string)
-        String selection = null;
-        String[] selectionArgs = null;
-        Instant instant = Instant.ofEpochMilli(last_date);
-
-        selection = TracksColumns.STARTTIME + " > ?";
-        selectionArgs = new String[]{instant.toString()};
-
-        // Uncomment Option 2 if you prefer string comparison (consider potential format issues)
-
-        ContentResolver contentResolver = getContext().getContentResolver();
-        Cursor cursor = contentResolver.query(tracksUri, null, selection, selectionArgs, null);
-
-        double totalDistanceSum = 0.0f;
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                float totalDistance = cursor.getFloat(cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE));
-                totalDistanceSum += totalDistance;
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-        return totalDistanceSum;
-    }
-
 
     private void showSharpeningNotification(double intervalPercent, int monthsSinceSharpening) {
 
@@ -149,9 +122,10 @@ public class SkiProfileMaintenanceFragment extends PreferenceFragmentCompat {
         // Access sharpening data from preferences
         double waxingInterval = Double.parseDouble(sharedPreferences.getString("waxing_interval", "30"));
         long lastWaxingTime = getSharpeningTimeFromSharedPrefs(sharedPreferences, "last_waxing_date");
+        double totalDistanceSum = new DatabaseHelper(getContext()).getTotalDistanceSum(lastWaxingTime);
 
         // Calculate km skied, % of interval reached, months since last sharpening
-        double kmSkied = 60;
+        double kmSkied = totalDistanceSum;
         int monthsSinceSharpening = calculateMonthsSince(lastWaxingTime);
         double intervalPercent = (double) kmSkied / waxingInterval * 100;
 
@@ -224,4 +198,57 @@ public class SkiProfileMaintenanceFragment extends PreferenceFragmentCompat {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
         return dateFormat.format(new Date(timestamp));
     }
+}
+
+class DatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String DATABASE_NAME = "database.db";
+    private static final String TABLE_NAME = "tracks";
+    private static final String COLUMN_TOTAL_DISTANCE = "totaldistance";
+    private static final String COLUMN_DATE = "starttime";
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    public double getTotalDistanceSum(long sharpeningLastDateMillis) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double sum = 0;
+
+        // Construct the SQL query with a WHERE clause to filter rows based on the date
+        String query = "SELECT " + COLUMN_TOTAL_DISTANCE + " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_DATE + " > ?";
+
+        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(sharpeningLastDateMillis) });
+        if (cursor != null) {
+            try {
+                int totalDistanceIndex = cursor.getColumnIndexOrThrow(COLUMN_TOTAL_DISTANCE);
+                if (cursor.moveToFirst()) {
+                    do {
+                        sum += cursor.getDouble(totalDistanceIndex);
+                    } while (cursor.moveToNext());
+                }
+            } catch (IllegalArgumentException e) {
+                // Handle the case where the column doesn't exist
+                e.printStackTrace();
+            } finally {
+                cursor.close();
+            }
+        }
+        db.close();
+        return sum;
+    }
+
 }
