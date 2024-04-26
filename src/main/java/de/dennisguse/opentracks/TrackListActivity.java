@@ -65,6 +65,7 @@ import de.dennisguse.opentracks.ui.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
+import de.dennisguse.opentracks.settings.CalorieUserDetail;
 
 /**
  * An activity displaying a list of tracks.
@@ -149,6 +150,10 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
         requestRequiredPermissions();
+
+        CalorieUserDetail calorieUser = new CalorieUserDetail();
+        double calorieValue = calorieUser.getCalorieComputationTest(170,70,"14/04/1997","Running");
+        Log.d("Calorie Test", "Computed Calorie: " + String.valueOf(calorieValue));
 
         recordingStatusConnection = new TrackRecordingServiceConnection(bindChangedCallback);
 
