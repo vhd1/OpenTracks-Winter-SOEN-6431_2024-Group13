@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings_ski_profile_title">
+    <EditTextPreference
+        android:inputType="text"
+        android:key="@string/settings_ski_profile_name_key"
+        android:title="@string/settings_ski_profile_name"
+        app:useSimpleSummaryProvider="true"
+        app:summary="Enter your name"/>
+
+    <EditTextPreference
+        android:inputType="phone"
+        android:key="@string/settings_ski_profile_phone_key"
+        android:title="@string/settings_ski_profile_phone"
+        app:useSimpleSummaryProvider="true"
+        app:summary="Enter your phone number"/>
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="Country"
+        android:title="Country"
+        app:useSimpleSummaryProvider="true"
+        app:summary="Enter your country"/>
+    
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="Province"
+        android:title="Province"
+        app:useSimpleSummaryProvider="true"
+        app:summary="Enter your province"/>
+
+    <ListPreference
+        android:defaultValue="ski_type"
+        android:entries="@array/ski_type"
+        android:entryValues="@array/ski_type"
+        android:key="ski_type"
+        android:title="Type of Skiing"
+        app:summary="Choose the type of skiing" />
+
+    <Preference
+        android:key="@string/ski_profile_sharpening_info_title"
+        android:summary="Information related to sharpening skis"
+        android:title="Sharpening Information" />
+
+    <Preference
+        android:key="@string/ski_profile_waxing_info_title"
+        android:summary="Waxing related information of skis"
+        android:title="Waxing Information" />
+
+    <Preference
+        android:key="@string/ski_profile_ski_maintenance_title"
+        android:title="Ski Maintenance"
+        android:summary="Check sharpening and waxing progress" />
+
+    <Preference
+        android:key="@string/ski_profile_statistics_title"
+        android:summary="Number of Waxing/Sharpening activities performed on Ski"
+        android:title="Maintenance Statistics" />
+
+    
+    
+
+</PreferenceScreen>

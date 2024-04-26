@@ -201,6 +201,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             trackId = new Track.Id(cursor.getLong(idIndex));
 
             int iconId = activityType.getIconDrawableId();
+            String activity_id = activityType.getId();
             int iconDesc = R.string.image_track;
 
             boolean isRecordingThisTrackRecording = trackId.equals(recordingStatus.trackId());
@@ -213,6 +214,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewBinding.trackListItemIcon.setContentDescription(context.getString(iconDesc));
 
             viewBinding.trackListItemName.setText(name);
+            viewBinding.trackListItemActivity.setText(activity_id);
 
             String timeDistanceText = ListItemUtils.getTimeDistanceText(context, unitSystem, isRecordingThisTrackRecording, totalTime, totalDistance, markerCount);
             viewBinding.trackListItemTimeDistance.setText(timeDistanceText);

@@ -248,6 +248,7 @@ limitations under the License.
     <string name="generic_dismiss">Dismiss</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
+    <string name="gps_status">GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
     <string name="gps_wait_for_signal">Waiting for GPS signal</string>
     <string name="gps_disabled_msg">GPS disabled</string>
@@ -347,8 +348,35 @@ limitations under the License.
     <string name="settings_ui_title">User Interface</string>
     <string name="settings_ui_summary">Appearance, Recording Layout, Theme</string>
 
+    <string name="settings_ski_profile_title">Ski Profile</string>
+    <string name="settings_ski_profile_summary">Favorite Ski Resorts, Sharpening Info, Waxing Info, Ski Info, Statistics</string>
+    <string name="settings_ski_profile_name">Name</string>
+    <string name="settings_ski_profile_name_dialog_title">Name (max 20 char)</string>
+    <string name="settings_ski_profile_name_key" translatable="false">Name</string>
+    <string name="settings_ski_profile_phone">Phone</string>
+    <string name="settings_ski_profile_phone_dialog_title">Enter your phone number</string>
+    <string name="settings_ski_profile_phone_error">Phone number must contain at least 10 digits</string>
+    <string name="settings_ski_profile_phone_key" translatable="false">Phone</string>
+
+
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
+
+    <string name="ski_profile_statistics_title">Ski Maintenance Statistics</string>
+    <string name="ski_profile_sharpening_info_title">Sharpening information</string>
+    <string name="ski_profile_waxing_info_title">Waxing information</string>
+    <string name="ski_profile_ski_maintenance_title">Ski Maintenance</string>
+    <string name="km_skied_format">You\'ve skied %.1f km.</string>
+    <!--    Notification for sharpening and waxing-->
+    <string name="sharpening_notification_title_interval">Time for Ski Sharpening!</string>
+    <string name="sharpening_notification_text_interval">%1$.1f%% of your sharpening interval has been reached.</string>
+    <string name="sharpening_notification_title_months">It\'s been a while since your last sharpening.</string>
+    <string name="sharpening_notification_text_months">It\'s been %1$d months since your last ski sharpening.</string>
+    <string name="waxing_notification_title_interval">Time for Ski Waxing!</string>
+    <string name="waxing_notification_text_interval">%1$.1f%% of your waxing interval has been reached.</string>
+    <string name="waxing_notification_title_months">It\'s been a while since your last waxing.</string>
+    <string name="waxing_notification_text_months">It\'s been %1$d months since your last ski waxing.</string>
+
 
     <string name="settings_sensors_title">Bluetooth Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
@@ -359,6 +387,9 @@ limitations under the License.
 
     <string name="settings_announcements_statistics_title">Statistics Announcements</string>
     <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
+
+    <string name="settings_announcements_recording_title">Announcements After Recording</string>
+    <string name="settings_announcements_run_title">Announcements After Run</string>
 
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_import_export_summary">Import, Export, Auto Export</string>
@@ -407,6 +438,11 @@ limitations under the License.
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
+    <string name="add_custom_activity_title">Custom Activity</string>
+    <string name="add_custom_activity_summary">Define your custom Activity</string>
+    <string name="custom_activity_add">Enter Custom Activity</string>
+    <string name="key_custom_activities">custom_activities_key</string>
+
 
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Lap length</string>
@@ -423,11 +459,56 @@ limitations under the License.
     <string name="settings_profile_nickname">Nickname</string>
     <string name="settings_profile_nickname_dialog_title">Nickname (max 20 char)</string>
     <string name="settings_profile_nickname_key" translatable="false">nickname</string>
+    <string name="settings_profile_weight">Weight</string>
+    <string name="settings_profile_weight_dialog_title">Weight</string>
+    <string name="settings_profile_weight_key" translatable="false">weight</string>
+    <string name="settings_profile_weight_unit_key" translatable="false">weightUnit</string>
+    <string name="settings_profile_height">Height</string>
+    <string name="settings_profile_height_dialog_title">Height</string>
+    <string name="settings_profile_height_key" translatable="false">height</string>
+    <string name="settings_profile_height_unit_key" translatable="false">heightUnit</string>
     <string name="settings_profile_country">Country</string>
     <string name="settings_profile_country_key" translatable="false">country</string>
+    <string name="settings_profile_profile_picture_title">Profile picture</string>
+    <string name="settings_profile_profile_picture_key">profilePicture</string>
+    <string name="settings_profile_profile_picture_nickname">profilePictureNickname</string>
+    <string name="settings_profile_dob_key">dob_key</string>
+    <string name="settings_profile_dob_title">Date of Birth</string>
+    <string name="settings_profile_dob_dialog_title">Select Date of Birth</string>
+    <string name="settings_profile_dob_dialog_message">Please select your date of birth</string>
+    <string name="settings_profile_gender_key">gender</string>
+    <string name="settings_profile_gender">Gender</string>
+    <string name="default_gender_value">Select Gender</string>
+    <string name="settings_profile_leaderboard_share_key">settings_profile_leaderboard_share</string>
+    <string name="settings_profile_leaderboard_share_title">Allow information Sharing</string>
+    <string name="settings_profile_leaderboard_share_summary_on">You have agreed to share information in the leaderboard.</string>
+    <string name="settings_profile_leaderboard_share_summary_off">You have not agreed to share information in the leaderboard.</string>
+
+
+
+
+    <!-- Run RRelated Data -->
+    <string name="settings_announcements_average_slope_run">Average slope</string>
+    <string name="settings_announcements_max_speed_run">Max speed/run</string>
+    <string name="settings_announcements_run_average_speed">Run Average Speed</string>
+
+
+    <!-- Recording Related Data -->
+    <string name="settings_announcements_max_speed_recording">Max speed/recording</string>
+
+    <string name="settings_announcements_time_skied_recording">Time skied/recording</string>
+
+
+
+    <string name="settings_announcements_average_speed_recording">Average speed/recording</string>
+
+    <string name="settings_announcements_max_slope">Max slope</string>
+    <string name="settings_announcements_average_slope_recording">Average slope</string>
+
+
+
 
     <!-- Custom Layout -->
-
 
     <string name="custom_layout_list_title">Layouts</string>
     <string name="custom_layout_list_edit_name">Type layout\'s name to add</string>
@@ -537,6 +618,7 @@ limitations under the License.
     <!-- Aggregated Statistics -->
     <string name="aggregated_stats_empty_message">Record your first track to see aggregated statistics</string>
     <string name="aggregated_stats_filter_no_results">There are not activities for the specified filter</string>
+    <string name="aggregate_stats">Aggregate Stats</string>
     <!-- Interval List -->
     <string name="interval_list_empty_message">There are not any interval yet</string>
     <!-- Unit -->
@@ -555,6 +637,11 @@ limitations under the License.
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <!-- Value -->
+    <!-- Day-Specific Stats -->
+    <string name="day_specific_calendar">Calendar</string>
+    <string name="day_specific_title">Day Specific Run/Lift</string>
+    <string name="segment_name_run">Run</string>
+    <!-- Day-Specific Activities -->
 
     <string name="value_integer_feet_excellent_gps">%1$d ft (excellent GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (recommended)</string>
@@ -723,6 +810,10 @@ limitations under the License.
     <string name="always">Always</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+    <string name="custom_record_length_summary">Enter custom record length in seconds</string>
+    <string name="custom_record_length_title">Custom Record Length</string>
+    <string name="custom_record_length_key">custom_record_length</string>
+
     <string name="default_Date_Key">1 Sep</string>
     <string name="total_number_of_days_chair_lift_used">Total number of days chair lift used</string>
     <string name="tallest_chair_lift_m">Tallest Chair Lift Height</string>

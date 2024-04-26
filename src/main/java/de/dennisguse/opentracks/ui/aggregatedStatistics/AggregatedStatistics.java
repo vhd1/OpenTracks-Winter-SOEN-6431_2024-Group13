@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.ui.aggregatedStatistics;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +79,9 @@ public class AggregatedStatistics {
         void add(TrackStatistics statistics) {
             trackStatistics.merge(statistics);
             countTracks++;
+        }
+        public Duration durationTIme(){
+            return trackStatistics.getTotalTime();
         }
     }
 }

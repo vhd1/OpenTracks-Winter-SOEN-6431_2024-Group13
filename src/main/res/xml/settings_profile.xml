@@ -3,16 +3,56 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/settings_profile_title">
+    <de.dennisguse.opentracks.settings.ImageViewPreference
+        android:key="@string/settings_profile_profile_picture_key"
+        android:layout="@layout/profile_picture_layout" />
+
     <EditTextPreference
         android:inputType="text"
         android:key="@string/settings_profile_nickname_key"
         android:title="@string/settings_profile_nickname"
         app:useSimpleSummaryProvider="true" />
+    
+    <EditTextPreference
+        android:inputType="text"
+        android:key="@string/settings_profile_height_key"
+        android:title="@string/settings_profile_height" />
+
+    <EditTextPreference
+        android:inputType="text"
+        android:key="@string/settings_profile_weight_key"
+        android:title="@string/settings_profile_weight" />
+        
 
     <ListPreference
         android:key="@string/settings_profile_country_key"
         android:title="@string/settings_profile_country"
         android:entries="@array/countries_array"
         android:defaultValue="@string/default_country_value"
-        android:entryValues="@array/countries_array_values" />/>
+        android:entryValues="@array/countries_array_values" />
+
+    <Preference
+        android:key="@string/settings_profile_dob_key"
+        android:title="@string/settings_profile_dob_title"
+        />
+    <ListPreference
+        android:key="@string/settings_profile_gender_key"
+        android:title="@string/settings_profile_gender"
+        android:entries="@array/gender_array"
+        android:defaultValue="@string/default_gender_value"
+        android:entryValues="@array/gender_array_values" />
+    <CheckBoxPreference
+        android:key="@string/settings_profile_leaderboard_share_key"
+        android:title="@string/settings_profile_leaderboard_share_title"
+        android:summaryOn="@string/settings_profile_leaderboard_share_summary_on"
+        android:summaryOff="@string/settings_profile_leaderboard_share_summary_off"
+        android:defaultValue="false"
+        android:singleLine="false"
+        android:lines="2"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        />
+
+
+    />
 </PreferenceScreen>
