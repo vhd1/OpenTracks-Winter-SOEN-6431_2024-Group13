@@ -143,6 +143,76 @@ public class PreferencesUtils {
         return sharedPreferences.getBoolean(getKey(keyId), defaultValue);
     }
 
+    public static String getWeight() {
+        String savedWeight = getString(R.string.settings_profile_weight_key,"" );
+        if (TextUtils.isEmpty(savedWeight)) {
+            return savedWeight;
+        }
+        double weight = Double.parseDouble(savedWeight);
+        boolean isUsingKgDefault = getUnitSystem().equals(UnitSystem.METRIC);
+        boolean isSavedHeightInKg = getHeightUnit().equals(UnitSystem.METRIC.toString());
+        if (isUsingKgDefault == isSavedHeightInKg) {
+            return savedWeight;
+        }
+
+        if (isUsingKgDefault) {
+            // Convert from lb to kg
+            return String.format("%.2f", weight * 0.45359237);
+        } else {
+            // Convert from kg to lb
+            return String.format("%.2f", weight / 0.45359237);
+        }
+    }
+
+    public static double getWeightInNumber() {
+        return Double.parseDouble(getWeight());
+    }
+
+    public static void setWeight(String newWeight) {
+        setString(R.string.settings_profile_weight_key, newWeight);
+    }
+
+    public static void setWeightUnit(UnitSystem newWeightUnit) {
+        setString(R.string.settings_profile_weight_unit_key, newWeightUnit.toString());
+    }
+
+    public static String getHeight() {
+        String savedHeight = getString(R.string.settings_profile_height_key,"" );
+        if (TextUtils.isEmpty(savedHeight)) {
+            return savedHeight;
+        }
+        double height = Double.parseDouble(savedHeight);
+        boolean isUsingMeterDefault = getUnitSystem().equals(UnitSystem.METRIC) || getUnitSystem().equals(UnitSystem.IMPERIAL_METER);
+        boolean isSavedHeightInMeter = getHeightUnit().equals(UnitSystem.METRIC.toString()) || getHeightUnit().equals(UnitSystem.IMPERIAL_METER.toString());
+        if (isUsingMeterDefault == isSavedHeightInMeter) {
+            return savedHeight;
+        }
+
+        if (isUsingMeterDefault) {
+            // Convert from feet to meter
+            return String.format("%.2f", height * 0.3048);
+        } else {
+            // Convert from meter to feet
+            return String.format("%.2f", height / 0.3048);
+        }
+    }
+
+    public static double getHeightInNumber() {
+        return Double.parseDouble(getHeight());
+    }
+
+    public static void setHeight(String newHeight) {
+        setString(R.string.settings_profile_height_key, newHeight);
+    }
+
+    private static String getHeightUnit() {
+        return getString(R.string.settings_profile_height_unit_key, "");
+    }
+
+    public static void setHeightUnit(UnitSystem newHeightUnit) {
+        setString(R.string.settings_profile_height_unit_key, newHeightUnit.toString());
+    }
+
     static int getInt(int keyId, int defaultValue) {
         try {
             return sharedPreferences.getInt(getKey(keyId), defaultValue);
@@ -285,8 +355,33 @@ public class PreferencesUtils {
 
     public static String getNickName(){
         return getString(R.string.settings_profile_nickname_key, null);
-    } 
-    
+    }
+
+    public static void setDateOfBirth(String dob) {
+        setString(R.string.settings_profile_dob_key, dob);
+    }
+
+    public static String getDateOfBirth() {
+        return getString(R.string.settings_profile_dob_key, "");
+    }
+
+
+    public static void setSelectedGender(String gender) {
+        setString(R.string.settings_profile_gender_key, gender);
+    }
+
+    public static String getSelectedGender() {
+        return getString(R.string.settings_profile_gender_key, "");
+    }
+
+    public static boolean isLeaderboardInformationShared() {
+        return getBoolean(R.string.settings_profile_leaderboard_share_key, false);
+    }
+
+    public static void setLeaderboardInformationShared(boolean isShared) {
+        setBoolean(R.string.settings_profile_leaderboard_share_key, isShared);
+    }
+
     public static String getBarometerSensorAddress() {
         return getString(R.string.settings_sensor_bluetooth_pressure_key, getBluetoothSensorAddressNone());
     }
@@ -492,7 +587,7 @@ public class PreferencesUtils {
     public static boolean shouldVoiceAnnounceMaxSlope() {
         return getBoolean(R.string.voice_announce_max_slope_key, true);
     }
-    
+
     @VisibleForTesting
     public static void setVoiceAnnounceMaxSlope(boolean value) {
         setBoolean(R.string.voice_announce_max_slope_key, value);
@@ -507,12 +602,12 @@ public class PreferencesUtils {
     public static void setVoiceAnnounceMaxSpeedRecording(boolean value) {
         setBoolean(R.string.voice_announce_max_speed_recording_key, value);
     }
-	
+
 	// recoding related setting helper methods
     public static boolean shouldVoiceAnnounceTimeSkiedRecording() {
         return getBoolean(R.string.voice_announce_time_skied_recording_key, true);
     }
-	
+
 	@VisibleForTesting
     public static void setVoiceAnnounceTimeSkiedRecording(boolean value) {
         setBoolean(R.string.voice_announce_time_skied_recording_key, value);
@@ -969,6 +1064,10 @@ public class PreferencesUtils {
         setString(R.string.settings_profile_country_key, selectedCountry);
     }
 
+    public static String getProfileNickname() {
+        return getString(R.string.settings_profile_nickname_key, "");
+    }
+
     public static void addCustomActivity(Context context, String activityName) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String existingActivities = prefs.getString(context.getString(R.string.key_custom_activities), "");
@@ -983,8 +1082,5 @@ public class PreferencesUtils {
         String activitiesString = prefs.getString(context.getString(R.string.key_custom_activities), "");
         return Arrays.asList(activitiesString.split(";"));
     }
-
-
-
 
 }
