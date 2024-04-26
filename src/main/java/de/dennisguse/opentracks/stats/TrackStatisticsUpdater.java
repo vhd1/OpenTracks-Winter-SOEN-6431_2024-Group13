@@ -19,15 +19,12 @@ package de.dennisguse.opentracks.stats;
 import androidx.annotation.NonNull;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
-import de.dennisguse.opentracks.data.models.Run;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.viewmodels.GenericStatisticsViewHolder;
 
 /**
  * Updater for {@link TrackStatistics}.
@@ -43,7 +40,6 @@ public class TrackStatisticsUpdater {
     private static final String TAG = TrackStatisticsUpdater.class.getSimpleName();
 
     private final TrackStatistics trackStatistics;
-    private SessionManager sessionManager;
 
     private float averageHeartRateBPM;
     private Duration totalHeartRateDuration = Duration.ZERO;
@@ -84,41 +80,8 @@ public class TrackStatisticsUpdater {
         return stats;
     }
 
-    // Flag to track whether the user is skiing
-    private boolean isSkiing = false;
-
-    // Duration spent skiing
-    private Duration skiingDuration = Duration.ZERO;
-
-    // Timestamp of the last track point where skiing started
-
-
-    // Threshold speed to consider as skiing (in meters per second)
-    private static final float SKIING_SPEED_THRESHOLD = 1.0f;
-
-    // Method to update skiing duration
-    private void updateSkiingDuration(TrackPoint trackPoint) {
-        if (isSkiing && (!trackPoint.hasSpeed() || trackPoint.getSpeed() == null || trackPoint.getSpeed().toMPS() < SKIING_SPEED_THRESHOLD)) {
-            // User has stopped skiing
-            skiingDuration = skiingDuration.plus(Duration.between(trackStatistics.getSkiingStartTime(), trackPoint.getTime()));
-            isSkiing = false;
-        } else if (!isSkiing && trackPoint.hasSpeed() && trackPoint.getSpeed() != null && trackPoint.getSpeed().toMPS() >= SKIING_SPEED_THRESHOLD) {
-            // User has started skiing
-            trackStatistics.setSkiingStartTime(trackPoint.getTime());
-            isSkiing = true;
-        }
-    }
-
     public void addTrackPoints(List<TrackPoint> trackPoints) {
         trackPoints.stream().forEachOrdered(this::addTrackPoint);
-        List<Run> runs = RunAnalyzer.identifyRuns(sessionManager.getSessionId(), trackPoints); // Identify runs
-        RunAnalyzer.calculateMaxSpeedPerRun(runs); // Calculate max speed for each run
-        RunAnalyzer.calculateAvgSpeedStatistics(runs); // Calculate avg speed for each run
-        // Add runs to the session
-        for (Run run : runs) {
-            currentSegment.setMaximumSpeedPerRun((run.getMaxSpeed()));
-            currentSegment.setAverageSpeedPerRun(run.getAverageSpeed());
-        }
     }
 
     /**
@@ -144,13 +107,6 @@ public class TrackStatisticsUpdater {
 
         if (trackPoint.hasAltitudeLoss()) {
             currentSegment.addTotalAltitudeLoss(trackPoint.getAltitudeLoss());
-        }
-
-        // this function will always be called for all trackpoints to check if it is waiting for chairlift
-        // and also modify values for the check according to current trackpoint.
-        if (isWaitingForChairlift(trackPoint)){
-            Duration passedDuration = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
-            currentSegment.setTotalChairliftWaitingTime(currentSegment.getTotalChairliftWaitingTime().plus(passedDuration));
         }
 
         //Update absolute (GPS-based) altitude
@@ -198,12 +154,6 @@ public class TrackStatisticsUpdater {
             if (trackPoint.hasSpeed()) {
                 updateSpeed(trackPoint);
             }
-            updateSkiingDuration(trackPoint);
-
-            // Update current Slope= Change in Distance / Change in Altitude
-            if (movingDistance != null) {
-                updateSlopePercent(trackPoint, movingDistance);
-            }
         }
 
         if (trackPoint.isSegmentManualEnd()) {
@@ -212,38 +162,6 @@ public class TrackStatisticsUpdater {
         }
 
         lastTrackPoint = trackPoint;
-    }
-
-
-    /**
-     * This function can be used to check if current trackpoint is of type waiting for chairlift.
-     * It returns true if it is waiting at lower end of the track for more than 5 trackpoints.
-     * else it increments the counter if it is still at lower end of track.
-     * */
-    private boolean isWaitingForChairlift(TrackPoint trackPoint) {
-        // indicates altitude difference allowed in case of small change elevation change while waiting in queue for chairlift
-        final float minimumAltitudeChangeAllowed = 0.2f;
-        final float minimumDeviationAllowedFromLowestAltitude = 1f;
-        final int thresholdTrackpointsForNoMovement=5;
-
-        float altitudeGain = trackPoint.hasAltitudeGain()? trackPoint.getAltitudeGain(): 0f;
-        float altitudeLoss = trackPoint.hasAltitudeLoss()? trackPoint.getAltitudeLoss(): 0f;
-        float currentAltitudeChange = Math.max(altitudeGain, altitudeLoss);
-
-
-        if (currentAltitudeChange<=minimumAltitudeChangeAllowed
-                && trackPoint.getAltitude()!=null
-                && Math.abs(currentSegment.getMinAltitude()-trackPoint.getAltitude().toM())<=minimumDeviationAllowedFromLowestAltitude){
-            currentSegment.incrementEndOfRunCounter();
-            if (currentSegment.getEndOfRunCounter()>=thresholdTrackpointsForNoMovement){
-                return true;
-            }
-        } else {
-            currentSegment.resetEndOfRunCounter();
-            return false;
-        }
-
-        return false;
     }
 
     private void reset(TrackPoint trackPoint) {
@@ -269,36 +187,6 @@ public class TrackStatisticsUpdater {
         if (currentSpeed.greaterThan(currentSegment.getMaxSpeed())) {
             currentSegment.setMaxSpeed(currentSpeed);
         }
-    }
-
-    /**
-     * Updates the slope percent assuming the user has moved
-     */
-    private void updateSlopePercent(@NonNull TrackPoint trackPoint, Distance distanceMoved) {
-        Float altituteChanged = null;
-
-        // absolute (GPS-based) altitude
-        if (altituteChanged == null && trackPoint.hasAltitude() && lastTrackPoint != null) {
-            altituteChanged = (float) (trackPoint.getAltitude().toM() - lastTrackPoint.getAltitude().toM());
-        }
-
-        if (altituteChanged == null) {
-            if (trackPoint.hasAltitudeGain()) {
-                altituteChanged = trackPoint.getAltitudeGain();
-            } else if (trackPoint.hasAltitudeLoss()) {
-                altituteChanged = -trackPoint.getAltitudeLoss();
-            }
-        }
-
-        if (altituteChanged == null) {
-            return;
-        }
-
-        // Slope = Change in Distance / Change in Altitude
-        Float slopePercentChangedBetweenPoints = (float) ((altituteChanged / distanceMoved.toM()) * 100);
-        Float prevAggregatedSlopePercent = currentSegment.hasSlope() ? currentSegment.getSlopePercent() : 0;
-        Float aggregatedSlopePercent = prevAggregatedSlopePercent + slopePercentChangedBetweenPoints;
-        currentSegment.setSlopePercent(aggregatedSlopePercent);
     }
 
     @NonNull

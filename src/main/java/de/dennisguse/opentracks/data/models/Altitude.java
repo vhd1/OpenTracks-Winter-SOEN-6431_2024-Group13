@@ -15,7 +15,7 @@ public abstract class Altitude {
     public double toM() {
         return altitude_m;
     }
-
+    
     public abstract int getLabelId();
 
     public static class WGS84 extends Altitude {
@@ -49,14 +49,7 @@ public abstract class Altitude {
             return new EGM2008(altitude_m);
         }
     }
-    public int compare(Altitude rhs) {
-        if (this.altitude_m > rhs.altitude_m) {
-            return 1;
-        } else if (this.altitude_m > rhs.altitude_m) {
-            return 0;
-        }
-        return -1;
-    }
+
     @NonNull
     @Override
     public String toString() {
@@ -65,3 +58,4 @@ public abstract class Altitude {
                 '}';
     }
 }
+

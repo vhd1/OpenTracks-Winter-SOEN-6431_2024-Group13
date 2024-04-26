@@ -24,7 +24,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -79,7 +78,7 @@ public class PreferencesUtils {
     public static void initPreferences(final Context context, final Resources resources) {
         PreferencesUtils.resources = resources;
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        setDefaultActivityLocalized(context.getString(R.string.activity_type_skiing));
+
         PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
     }
 
@@ -141,76 +140,6 @@ public class PreferencesUtils {
 
     private static boolean getBoolean(int keyId, boolean defaultValue) {
         return sharedPreferences.getBoolean(getKey(keyId), defaultValue);
-    }
-
-    public static String getWeight() {
-        String savedWeight = getString(R.string.settings_profile_weight_key,"" );
-        if (TextUtils.isEmpty(savedWeight)) {
-            return savedWeight;
-        }
-        double weight = Double.parseDouble(savedWeight);
-        boolean isUsingKgDefault = getUnitSystem().equals(UnitSystem.METRIC);
-        boolean isSavedHeightInKg = getHeightUnit().equals(UnitSystem.METRIC.toString());
-        if (isUsingKgDefault == isSavedHeightInKg) {
-            return savedWeight;
-        }
-
-        if (isUsingKgDefault) {
-            // Convert from lb to kg
-            return String.format("%.2f", weight * 0.45359237);
-        } else {
-            // Convert from kg to lb
-            return String.format("%.2f", weight / 0.45359237);
-        }
-    }
-
-    public static double getWeightInNumber() {
-        return Double.parseDouble(getWeight());
-    }
-
-    public static void setWeight(String newWeight) {
-        setString(R.string.settings_profile_weight_key, newWeight);
-    }
-
-    public static void setWeightUnit(UnitSystem newWeightUnit) {
-        setString(R.string.settings_profile_weight_unit_key, newWeightUnit.toString());
-    }
-
-    public static String getHeight() {
-        String savedHeight = getString(R.string.settings_profile_height_key,"" );
-        if (TextUtils.isEmpty(savedHeight)) {
-            return savedHeight;
-        }
-        double height = Double.parseDouble(savedHeight);
-        boolean isUsingMeterDefault = getUnitSystem().equals(UnitSystem.METRIC) || getUnitSystem().equals(UnitSystem.IMPERIAL_METER);
-        boolean isSavedHeightInMeter = getHeightUnit().equals(UnitSystem.METRIC.toString()) || getHeightUnit().equals(UnitSystem.IMPERIAL_METER.toString());
-        if (isUsingMeterDefault == isSavedHeightInMeter) {
-            return savedHeight;
-        }
-
-        if (isUsingMeterDefault) {
-            // Convert from feet to meter
-            return String.format("%.2f", height * 0.3048);
-        } else {
-            // Convert from meter to feet
-            return String.format("%.2f", height / 0.3048);
-        }
-    }
-
-    public static double getHeightInNumber() {
-        return Double.parseDouble(getHeight());
-    }
-
-    public static void setHeight(String newHeight) {
-        setString(R.string.settings_profile_height_key, newHeight);
-    }
-
-    private static String getHeightUnit() {
-        return getString(R.string.settings_profile_height_unit_key, "");
-    }
-
-    public static void setHeightUnit(UnitSystem newHeightUnit) {
-        setString(R.string.settings_profile_height_unit_key, newHeightUnit.toString());
     }
 
     static int getInt(int keyId, int defaultValue) {
@@ -290,18 +219,6 @@ public class PreferencesUtils {
         setBoolean(R.string.show_introduction_screen_key, introduction);
     }
 
-    public static boolean shouldDiscardRecord(int recordDuration) {
-        boolean autoDiscardEnabled = getBoolean(R.string.auto_discard_key, false);
-        int selectedLength = Integer.parseInt(getString(R.string.record_length_default, "0"));
-        int customLength = Integer.parseInt(getString(R.string.custom_record_length_key, "5"));
-        Log.d("DefaultsSettingsFragment", "Auto discard enabled: " + autoDiscardEnabled);
-        Log.d("DefaultsSettingsFragment", "Selected record length: " + selectedLength);
-        Log.d("DefaultsSettingsFragment", "Custom record length: " + customLength);
-        Log.d("DefaultsSettingsFragment", "Record duration: " + recordDuration);
-
-        return autoDiscardEnabled && (recordDuration < selectedLength|| recordDuration < customLength);
-    }
-
     public static UnitSystem getUnitSystem() {
         final String STATS_UNIT_DEFAULT = resources.getString(R.string.stats_units_default);
 
@@ -355,33 +272,8 @@ public class PreferencesUtils {
 
     public static String getNickName(){
         return getString(R.string.settings_profile_nickname_key, null);
-    }
-
-    public static void setDateOfBirth(String dob) {
-        setString(R.string.settings_profile_dob_key, dob);
-    }
-
-    public static String getDateOfBirth() {
-        return getString(R.string.settings_profile_dob_key, "");
-    }
-
-
-    public static void setSelectedGender(String gender) {
-        setString(R.string.settings_profile_gender_key, gender);
-    }
-
-    public static String getSelectedGender() {
-        return getString(R.string.settings_profile_gender_key, "");
-    }
-
-    public static boolean isLeaderboardInformationShared() {
-        return getBoolean(R.string.settings_profile_leaderboard_share_key, false);
-    }
-
-    public static void setLeaderboardInformationShared(boolean isShared) {
-        setBoolean(R.string.settings_profile_leaderboard_share_key, isShared);
-    }
-
+    } 
+    
     public static String getBarometerSensorAddress() {
         return getString(R.string.settings_sensor_bluetooth_pressure_key, getBluetoothSensorAddressNone());
     }
@@ -562,84 +454,6 @@ public class PreferencesUtils {
     public static void setVoiceAnnounceAverageHeartRate(boolean value) {
         setBoolean(R.string.voice_announce_average_heart_rate_key, value);
     }
-
-
-    public static boolean shouldVoiceAnnounceMaxSpeedRun() {
-        return getBoolean(R.string.voice_announce_max_speed_run_key, true);
-    }
-
-
-    @VisibleForTesting
-    public static void setVoiceAnnounceMaxSpeedRun(boolean value) {
-        setBoolean(R.string.voice_announce_max_speed_run_key, value);
-    }
-
-    public static boolean shouldVoiceAnnounceRunAverageSpeed() {
-        return getBoolean(R.string.voice_announce_run_average_speed_key, true);
-    }
-
-    @VisibleForTesting
-    public static void setVoiceAnnounceRunAverageSpeed(boolean value) {
-        setBoolean(R.string.voice_announce_run_average_speed_key, value);
-    }
-
-
-    public static boolean shouldVoiceAnnounceMaxSlope() {
-        return getBoolean(R.string.voice_announce_max_slope_key, true);
-    }
-
-    @VisibleForTesting
-    public static void setVoiceAnnounceMaxSlope(boolean value) {
-        setBoolean(R.string.voice_announce_max_slope_key, value);
-    }
-
-    // recoding related setting helper methods
-    public static boolean shouldVoiceAnnounceMaxSpeedRecording() {
-        return getBoolean(R.string.voice_announce_max_speed_recording_key, true);
-    }
-
-    @VisibleForTesting
-    public static void setVoiceAnnounceMaxSpeedRecording(boolean value) {
-        setBoolean(R.string.voice_announce_max_speed_recording_key, value);
-    }
-
-	// recoding related setting helper methods
-    public static boolean shouldVoiceAnnounceTimeSkiedRecording() {
-        return getBoolean(R.string.voice_announce_time_skied_recording_key, true);
-    }
-
-	@VisibleForTesting
-    public static void setVoiceAnnounceTimeSkiedRecording(boolean value) {
-        setBoolean(R.string.voice_announce_time_skied_recording_key, value);
-    }
-
-    //recording related data for average slope's helper methods for each recording
-    public static boolean shouldVoiceAnnounceAveragesloperecording() {
-        return getBoolean(R.string.voice_announce_average_slope_recording_key, true);
-    }
-    @VisibleForTesting
-    public static void setVoiceAnnounceAveragesloperecording(boolean value) {
-        setBoolean(R.string.voice_announce_average_slope_recording_key, value);
-
-    }
-    //recording related data for average slope's helper methods for each run
-    public static boolean shouldVoiceAnnounceAverageslopeRun() {
-        return getBoolean(R.string.voice_announce_average_slope_run_key, true);
-    }
-    @VisibleForTesting
-    public static void setVoiceAnnounceAverageslopeRun(boolean value) {
-        setBoolean(R.string.voice_announce_average_slope_run_key, value);
-
-    }
-
-    public static boolean shouldVoiceAnnounceAverageSpeedRecording() {
-        return getBoolean(R.string.voice_announce_average_speed_recording_key, true);
-    }
-    @VisibleForTesting
-    public static void setVoiceAnnounceAverageSpeedRecording(boolean value) {
-        setBoolean(R.string.voice_announce_average_speed_recording_key, value);
-    }
-
 
     public static Distance getRecordingDistanceInterval() {
         return Distance.of(getInt(R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal()));
@@ -1062,25 +876,6 @@ public class PreferencesUtils {
 
     public static void setSelectedCountry(final String selectedCountry) {
         setString(R.string.settings_profile_country_key, selectedCountry);
-    }
-
-    public static String getProfileNickname() {
-        return getString(R.string.settings_profile_nickname_key, "");
-    }
-
-    public static void addCustomActivity(Context context, String activityName) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String existingActivities = prefs.getString(context.getString(R.string.key_custom_activities), "");
-        if (!existingActivities.contains(activityName)) {
-            existingActivities += (existingActivities.isEmpty() ? "" : ";") + activityName;
-            prefs.edit().putString(context.getString(R.string.key_custom_activities), existingActivities).apply();
-        }
-    }
-
-    public static List<String> getCustomActivities(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String activitiesString = prefs.getString(context.getString(R.string.key_custom_activities), "");
-        return Arrays.asList(activitiesString.split(";"));
     }
 
 }

@@ -67,23 +67,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/OpenTracksTheme">
-
-        <activity
-            android:name=".ui.aggregatedStatistics.daySpecificStats.DaySpecificActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.aggregatedStatistics.daySpecificStats.DaySpecificActivity"
-            android:exported="false" />
         <activity
             android:name=".ui.aggregatedStatistics.SeasonStats.RunAndChairStatActivity"
             android:exported="false" />
         <activity
             android:name=".ui.aggregatedStatistics.SeasonStats.SeasonStatActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.aggregatedStatistics.daystatistics.DayStatisticsActivity"
-            android:exported="false" />
-      
         <activity
             android:name=".publicapi.StartRecording"
             android:exported="true"
@@ -114,7 +103,7 @@
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts"
-                />
+            />
         </activity>
 
         <activity android:name=".AboutActivity" />
@@ -352,9 +341,6 @@
 
         <activity android:name=".TrackRecordedActivity" />
         <activity android:name=".TrackStoppedActivity" />
-        <activity android:name=".ElevationAndSpeedActivity" />
-        <activity android:name=".RunsAndLiftsActivity" />
-        <activity android:name=".CalendarActivity" />
 
         <activity
             android:name=".TrackRecordingActivity"

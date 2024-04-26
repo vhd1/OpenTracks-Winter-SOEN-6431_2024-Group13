@@ -42,8 +42,6 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -197,7 +195,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             ActivityUtils.vibrate(this, 1000);
             updateGpsMenuItem(false, false);
             recordingStatusConnection.stopRecording(TrackListActivity.this);
-            viewBinding.trackListFabAction.setImageResource(R.drawable.start_button);
+            viewBinding.trackListFabAction.setImageResource(R.drawable.ic_baseline_record_24);
             viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.red_dark));
             return true;
         });
@@ -438,8 +436,8 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     private void setFloatButton() {
-        viewBinding.trackListFabAction.setImageResource(recordingStatus.isRecording() ? R.drawable.start_button : R.drawable.start_button);
-//        viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, recordingStatus.isRecording() ? R.color.opentracks : R.color.light_gray));
+        viewBinding.trackListFabAction.setImageResource(recordingStatus.isRecording() ? R.drawable.ic_baseline_stop_24 : R.drawable.ic_baseline_record_24);
+        viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, recordingStatus.isRecording() ? R.color.opentracks : R.color.red_dark));
     }
 
     private void onRecordingStatusChanged(RecordingStatus status) {
