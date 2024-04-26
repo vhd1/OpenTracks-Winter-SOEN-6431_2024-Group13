@@ -27,6 +27,7 @@ public class DayStatisticsActivity extends AbstractActivity {
         waitTimes.add(120); // 2 minutes in seconds
         waitTimes.add(480); // 8 minutes in seconds
         setShortestWaitLabel(waitTimes);
+        setTotalWaitLabel(waitTimes);
 
         setContentView(viewBinding.getRoot());
     }
@@ -67,8 +68,25 @@ public class DayStatisticsActivity extends AbstractActivity {
         viewBinding.statsShortestWaitValue.setText(shortestWaitTime);
     }
 
-    //generate the commit message for this file
+    // calculate the total wait time and set the label in the layout
+    private String calculateTotalWaitTime(List<Integer> waitTimes) {
+        if (waitTimes == null || waitTimes.isEmpty()) {
+            return "00:00:00"; // return default value if no wait times available
+        }
 
+        int totalWaitTime = waitTimes.stream().mapToInt(Integer::intValue).sum();
 
+        // convert the total wait time to a string in the format "HH:MM:SS"
+        int hours = totalWaitTime / 3600;
+        int minutes = (totalWaitTime % 3600) / 60;
+        int seconds = totalWaitTime % 60;
+
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public void setTotalWaitLabel(List<Integer> waitTimes) {
+        String totalWaitTime = calculateTotalWaitTime(waitTimes);
+        viewBinding.statsAverageWaitTimeValue.setText(totalWaitTime);
+    }
 
 }
