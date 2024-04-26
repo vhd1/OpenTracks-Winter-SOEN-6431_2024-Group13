@@ -135,7 +135,9 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
         EditTextPreference heightInput = findPreference(getString(R.string.settings_profile_height_key));
         boolean isUsingMeter = unitSystem.equals(UnitSystem.METRIC) || unitSystem.equals(UnitSystem.IMPERIAL_METER);
         String heightUnit = isUsingMeter ? "m" : "ft";
-        heightInput.setSummary(PreferencesUtils.getHeight() + " " + heightUnit);
+        if (!PreferencesUtils.getHeight().isEmpty()) {
+            heightInput.setSummary(PreferencesUtils.getHeight() + " " + heightUnit);
+        }
         heightInput.setDialogTitle(getString(R.string.settings_profile_height_dialog_title) + " (" + heightUnit + ")");
         heightInput.setOnBindEditTextListener(editText -> {
             editText.setSingleLine(true);
@@ -165,7 +167,7 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             editText.setFilters(new InputFilter[]{filter});
         });
 
-// Listener for validating the input when the user saves it
+        // Listener for validating the input when the user saves it
         heightInput.setOnPreferenceChangeListener((preference, newValue) -> {
             try {
                 double height = Double.parseDouble((String) newValue);
@@ -192,18 +194,25 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
             countryPreference.setSummary(selectedCountryValue);
         }
 
-
-        EditTextPreference weightInput = findPreference(getString(R.string.settings_profile_Weight_key));
-        weightInput.setDialogTitle(getString(R.string.settings_profile_weight_dialog_title));
+        // Set up weight input
+        EditTextPreference weightInput = findPreference(getString(R.string.settings_profile_weight_key));
+        boolean isUsingKg = unitSystem.equals(UnitSystem.METRIC);
+        String weightUnit = isUsingKg ? "kg" : "lb";
+        if (!PreferencesUtils.getWeight().isEmpty()) {
+            weightInput.setSummary(PreferencesUtils.getWeight() + " " + weightUnit);
+        }
+        weightInput.setDialogTitle(getString(R.string.settings_profile_weight_dialog_title) + " (" + weightUnit + ")");
         weightInput.setOnBindEditTextListener(editText -> {
             editText.setSingleLine(true);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-            editText.setHint("Enter your weight in kilograms (e.g., 70.5)");
+            // Set the hint directly on the EditText object
+            editText.setHint("Enter your weight in " + weightInput);
+            editText.setText(PreferencesUtils.getWeight());
 
             // Create and set an InputFilter to allow up to two decimal points
             InputFilter filter = new InputFilter() {
-                final int maxDigitsBeforeDecimalPoint = 3;
-                final int maxDigitsAfterDecimalPoint = 1;
+                final int maxDigitsBeforeDecimalPoint=3;
+                final int maxDigitsAfterDecimalPoint=2;
 
                 @Override
                 public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -216,22 +225,28 @@ public class ProfileSettingsFragment extends PreferenceFragmentCompat {
                     }
                     return null;
                 }
+
             };
             editText.setFilters(new InputFilter[]{filter});
         });
 
-        // Listener for validating the weight input when the user saves it
+        // Listener for validating the input when the user saves it
         weightInput.setOnPreferenceChangeListener((preference, newValue) -> {
             try {
-                double weight = Double.parseDouble((String) newValue);
-                if (weight < 20 || weight > 200) {
-                    Toast.makeText(getContext(), "Please enter a weight between 20 and 200 kilograms", Toast.LENGTH_LONG).show();
+                double height = Double.parseDouble((String) newValue);
+                if (height <= 0) {
+                    Toast.makeText(getContext(), "Please enter a valid weight", Toast.LENGTH_LONG).show();
                     return false;
                 }
             } catch (NumberFormatException e) {
                 Toast.makeText(getContext(), "Invalid weight entered. Please enter a numerical value.", Toast.LENGTH_LONG).show();
                 return false;
             }
+
+            // Set the height unit when saved
+            PreferencesUtils.setWeightUnit(unitSystem);
+            PreferencesUtils.setWeight(newValue.toString());
+            preference.setSummary(newValue + " " + weightUnit);
             return true;
         });
 

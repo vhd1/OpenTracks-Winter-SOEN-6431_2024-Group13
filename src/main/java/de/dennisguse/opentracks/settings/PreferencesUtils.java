@@ -144,11 +144,36 @@ public class PreferencesUtils {
     }
 
     public static String getWeight() {
-        return getString(R.string.settings_profile_Weight_key,"" );
+        String savedWeight = getString(R.string.settings_profile_weight_key,"" );
+        if (TextUtils.isEmpty(savedWeight)) {
+            return savedWeight;
+        }
+        double weight = Double.parseDouble(savedWeight);
+        boolean isUsingKgDefault = getUnitSystem().equals(UnitSystem.METRIC);
+        boolean isSavedHeightInKg = getHeightUnit().equals(UnitSystem.METRIC.toString());
+        if (isUsingKgDefault == isSavedHeightInKg) {
+            return savedWeight;
+        }
+
+        if (isUsingKgDefault) {
+            // Convert from lb to kg
+            return String.format("%.2f", weight * 0.45359237);
+        } else {
+            // Convert from kg to lb
+            return String.format("%.2f", weight / 0.45359237);
+        }
+    }
+
+    public static double getWeightInNumber() {
+        return Double.parseDouble(getWeight());
     }
 
     public static void setWeight(String newWeight) {
-        setString(R.string.settings_profile_Weight_key, newWeight);
+        setString(R.string.settings_profile_weight_key, newWeight);
+    }
+
+    public static void setWeightUnit(UnitSystem newWeightUnit) {
+        setString(R.string.settings_profile_weight_unit_key, newWeightUnit.toString());
     }
 
     public static String getHeight() {
@@ -181,8 +206,6 @@ public class PreferencesUtils {
     }
 
     private static String getHeightUnit() {
-        // 5.7ft
-        // 1.7m
         return getString(R.string.settings_profile_height_unit_key, "");
     }
 

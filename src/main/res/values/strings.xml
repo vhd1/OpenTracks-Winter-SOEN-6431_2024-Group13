@@ -461,7 +461,8 @@ limitations under the License.
     <string name="settings_profile_nickname_key" translatable="false">nickname</string>
     <string name="settings_profile_weight">Weight</string>
     <string name="settings_profile_weight_dialog_title">Weight</string>
-    <string name="settings_profile_Weight_key" translatable="false">Weight</string>
+    <string name="settings_profile_weight_key" translatable="false">weight</string>
+    <string name="settings_profile_weight_unit_key" translatable="false">weightUnit</string>
     <string name="settings_profile_height">Height</string>
     <string name="settings_profile_height_dialog_title">Height</string>
     <string name="settings_profile_height_key" translatable="false">height</string>

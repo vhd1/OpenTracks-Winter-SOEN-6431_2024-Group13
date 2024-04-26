@@ -16,14 +16,12 @@
     <EditTextPreference
         android:inputType="text"
         android:key="@string/settings_profile_height_key"
-        android:title="@string/settings_profile_height"
-     />
+        android:title="@string/settings_profile_height" />
 
     <EditTextPreference
         android:inputType="text"
-        android:key="@string/settings_profile_Weight_key"
-        android:title="@string/settings_profile_weight"
-        app:useSimpleSummaryProvider="true"/>
+        android:key="@string/settings_profile_weight_key"
+        android:title="@string/settings_profile_weight" />
         
 
     <ListPreference
