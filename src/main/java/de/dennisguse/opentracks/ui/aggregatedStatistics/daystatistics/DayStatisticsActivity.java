@@ -166,4 +166,20 @@ public class DayStatisticsActivity extends AbstractActivity {
         String skiiedKms = calculateSkiiedKms(distance);
         viewBinding.statsDistanceValue.setText(skiiedKms);
     }
+
+    private String calculateAvgSpeed(List<Integer> speedDetails) {
+        if (speedDetails == null || speedDetails.isEmpty()) {
+            return "0";
+        }
+
+        int avgSpeed = speedDetails.stream().mapToInt(Integer::intValue).sum() / speedDetails.size();
+        return avgSpeed + "";
+    }
+
+
+    public void setAvgSpeedLabel(List<Integer> speedDetails) {
+        String avgSpeed = calculateAvgSpeed(speedDetails);
+        viewBinding.statsAverageSpeedValue.setText(avgSpeed);
+    }
+
 }
