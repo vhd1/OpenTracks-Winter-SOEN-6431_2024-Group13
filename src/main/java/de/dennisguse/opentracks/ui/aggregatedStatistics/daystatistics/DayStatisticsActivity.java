@@ -79,6 +79,27 @@ public class DayStatisticsActivity extends AbstractActivity {
         viewBinding.statsShortestWaitValue.setText(shortestWaitTime);
     }
 
+    // calculate the longest wait time and label in the layout 
+    private String calculateLongestWaitTime(List<Integer> waitTimes) {
+        if (waitTimes == null || waitTimes.isEmpty()) {
+            return "00:00:00";
+        }
+
+        int longestWaitTime = Collections.max(waitTimes);
+
+        int hours = longestWaitTime / 3600;
+        int minutes = (longestWaitTime % 3600) / 60;
+        int seconds = longestWaitTime % 60;
+
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+
+    public void setLongestWaitLabel(List<Integer> waitTimes) {
+        String longestWaitTime = calculateLongestWaitTime(waitTimes);
+        viewBinding.statsLongestWaitValue.setText(longestWaitTime);
+    }
+    //end longest wait time
     // calculate the total wait time and set the label in the layout
     private String calculateTotalWaitTime(List<Integer> waitTimes) {
         if (waitTimes == null || waitTimes.isEmpty()) {
@@ -107,7 +128,6 @@ public class DayStatisticsActivity extends AbstractActivity {
         viewBinding.statsStartDatetimeValue.setText(formattedDateTime);
     }
 
-    //Total skieed Kilometers
     private String calculateSkiiedKms(List<Double> distance) {
         if (distance == null || distance.isEmpty()) {
             return "0.0";
@@ -116,6 +136,7 @@ public class DayStatisticsActivity extends AbstractActivity {
         Double skiiedkms = distance.stream().mapToDouble(Double::doubleValue).sum();
         return skiiedkms + "";
     }
+
 
     public void setSkiiedKmsLabel(List<Double> distance) {
         String skiiedKms = calculateSkiiedKms(distance);
