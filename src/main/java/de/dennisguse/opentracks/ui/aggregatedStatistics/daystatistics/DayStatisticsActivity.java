@@ -34,6 +34,13 @@ public class DayStatisticsActivity extends AbstractActivity {
         setShortestWaitLabel(waitTimes);
         setTotalWaitLabel(waitTimes);
 
+        List<Integer> speedDetails = new ArrayList<>();
+        speedDetails.add(15);
+        speedDetails.add(25);
+        speedDetails.add(30);
+        speedDetails.add(20);
+        setMaxSpeedLabel(speedDetails);
+
         List<Double> skiiedKms = new ArrayList<>();
         skiiedKms.add(10.5);
         skiiedKms.add(8.2);
@@ -100,6 +107,23 @@ public class DayStatisticsActivity extends AbstractActivity {
         viewBinding.statsLongestWaitValue.setText(longestWaitTime);
     }
     //end longest wait time
+    //Calculate Max speed in the layout
+    private String calculateMaxSpeed(List<Integer> speedDetails) {
+        if (speedDetails == null || speedDetails.isEmpty()) {
+            return "0";
+        }
+
+        int maxSpeed = Collections.max(speedDetails);
+
+        return maxSpeed + "";
+    }
+
+
+    public void setMaxSpeedLabel(List<Integer> speedDetails) {
+        String maxSpeed = calculateMaxSpeed(speedDetails);
+        viewBinding.statsMaxSpeedValue.setText(maxSpeed);
+    }
+    //end of max speed
     // calculate the total wait time and set the label in the layout
     private String calculateTotalWaitTime(List<Integer> waitTimes) {
         if (waitTimes == null || waitTimes.isEmpty()) {
