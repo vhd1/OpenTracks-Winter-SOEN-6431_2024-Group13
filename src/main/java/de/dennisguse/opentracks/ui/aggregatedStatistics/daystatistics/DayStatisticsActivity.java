@@ -107,6 +107,7 @@ public class DayStatisticsActivity extends AbstractActivity {
         viewBinding.statsStartDatetimeValue.setText(formattedDateTime);
     }
 
+    //Total skieed Kilometers
     private String calculateSkiiedKms(List<Double> distance) {
         if (distance == null || distance.isEmpty()) {
             return "0.0";
@@ -115,7 +116,6 @@ public class DayStatisticsActivity extends AbstractActivity {
         Double skiiedkms = distance.stream().mapToDouble(Double::doubleValue).sum();
         return skiiedkms + "";
     }
-
 
     public void setSkiiedKmsLabel(List<Double> distance) {
         String skiiedKms = calculateSkiiedKms(distance);
