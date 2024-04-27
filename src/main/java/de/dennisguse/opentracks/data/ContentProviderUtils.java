@@ -235,7 +235,7 @@ public class ContentProviderUtils {
     public Cursor searchTracks(String searchQuery) {
         // Needed, because MARKER_COUNT is a virtual column and has to be explicitly requested.
         // Used only be TrackListAdapter
-        final String[] PROJECTION = new String[]{
+        final String[] lPROJECTION = new String[]{
                 TracksColumns._ID,
                 TracksColumns.NAME,
                 TracksColumns.DESCRIPTION, //TODO Needed?
@@ -259,7 +259,7 @@ public class ContentProviderUtils {
             selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
         }
 
-        return contentResolver.query(TracksColumns.CONTENT_URI, PROJECTION, selection, selectionArgs, sortOrder);
+        return contentResolver.query(TracksColumns.CONTENT_URI, lPROJECTION, selection, selectionArgs, sortOrder);
     }
 
     public Track getTrack(@NonNull Track.Id trackId) {

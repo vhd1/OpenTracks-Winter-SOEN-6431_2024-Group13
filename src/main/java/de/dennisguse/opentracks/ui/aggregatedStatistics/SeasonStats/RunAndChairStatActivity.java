@@ -13,22 +13,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import de.dennisguse.opentracks.R;
-/*import de.dennisguse.opentracks.databinding.ActivityRunAndChairStatBinding;*/
+import de.dennisguse.opentracks.databinding.ActivityRunAndChairStatBinding;
 import de.dennisguse.opentracks.databinding.FragmentRunsStatBinding;
 
 public class RunAndChairStatActivity extends AppCompatActivity {
 
-    /*ActivityRunAndChairStatBinding binding;
+    ActivityRunAndChairStatBinding binding;
     FragmentRunsStatBinding fragmentRunsStatBinding;
 
-    *//**
+    /**
      * Called when the activity is starting. This is where most initialization should go: calling setContentView(int) to
      * inflate the activity's UI, initializing views, and starting up any processes that will be required by the activity.
      *
      * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this
      *                             Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
      *                             Note: Otherwise, it is null.
-     *//*
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +57,11 @@ public class RunAndChairStatActivity extends AppCompatActivity {
         });
     }
 
-    *//**
+    /**
      * Replaces the current fragment with the specified fragment.
      *
      * @param fragment The fragment to replace the current fragment with.
-     *//*
+     */
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -91,13 +91,33 @@ public class RunAndChairStatActivity extends AppCompatActivity {
                 distance = Integer.toString((int)intent.getDoubleExtra("distance", -1.0));
                 max_Speed = Integer.toString((int)intent.getDoubleExtra("max_Speed", -1.0));
                 longestRun = Integer.toString((int)intent.getDoubleExtra("longestRun", -1.0));
-
             }
             // Pass the string as an argument if the fragment is RunsStatFragment
-            fragmentTransaction.replace(R.id.frame_nav_season, ((RunsStatFragment) fragment).newInstance(seasonName, days, runs, resort, vertical_m, distance, active, max_Speed, max_alt, tallestRun, longestRun));
+            fragmentTransaction.replace(R.id.frame_nav_season, RunsStatFragment.newInstance(seasonName, days, runs, resort, vertical_m, distance, active, max_Speed, max_alt, tallestRun, longestRun));
         } else {
-            fragmentTransaction.replace(R.id.frame_nav_season, fragment);
+            Intent intent = this.getIntent();
+            String seasonName = "123";
+            String days = "123";
+            String tallestChair = "123";
+            String totalDaysChairliftUsed = "123";
+            String mostCommonTrail = "123";
+            String[] favoriteChairs = {"favourite1", "favourite2", "favourite3", "favourite4", "favourite5"};
+            if (intent != null){
+                seasonName = intent.getStringExtra("seasonName");
+                days = Integer.toString(intent.getIntExtra("days",-1));
+                tallestChair = Integer.toString(intent.getIntExtra("tallestChair", -1));
+                totalDaysChairliftUsed = Integer.toString(intent.getIntExtra("totalDaysChairliftUsed",-1));
+                mostCommonTrail = intent.getStringExtra("mostCommonTrail");
+                favoriteChairs = intent.getStringArrayExtra("favoriteChairs");
+            }
+            fragmentTransaction.replace(R.id.frame_nav_season, ChairsStatFragment.newInstance(seasonName, mostCommonTrail, days, tallestChair, totalDaysChairliftUsed, favoriteChairs));
         }
         fragmentTransaction.commit();
-    }*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Perform the default back button behavior (e.g., navigate back)
+        super.onBackPressed();
+    }
 }
