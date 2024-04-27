@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.databinding.StatisticsPerDayBinding;
 
@@ -20,6 +23,8 @@ public class DayStatisticsActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         viewBinding = StatisticsPerDayBinding.inflate(getLayoutInflater());
 
+        setCurrentDate();
+
         // Assuming you have waitTimes data available here
         List<Integer> waitTimes = new ArrayList<>();
         waitTimes.add(300); // 5 minutes in seconds
@@ -29,6 +34,19 @@ public class DayStatisticsActivity extends AbstractActivity {
         setShortestWaitLabel(waitTimes);
         setTotalWaitLabel(waitTimes);
 
+        List<Integer> speedDetails = new ArrayList<>();
+        speedDetails.add(15);
+        speedDetails.add(25);
+        speedDetails.add(30);
+        speedDetails.add(20);
+        setMaxSpeedLabel(speedDetails);
+
+        List<Double> skiiedKms = new ArrayList<>();
+        skiiedKms.add(10.5);
+        skiiedKms.add(8.2);
+        skiiedKms.add(15.7);
+        skiiedKms.add(12.3);
+        setSkiiedKmsLabel(skiiedKms);
         setContentView(viewBinding.getRoot());
     }
 
@@ -68,6 +86,44 @@ public class DayStatisticsActivity extends AbstractActivity {
         viewBinding.statsShortestWaitValue.setText(shortestWaitTime);
     }
 
+    // calculate the longest wait time and label in the layout 
+    private String calculateLongestWaitTime(List<Integer> waitTimes) {
+        if (waitTimes == null || waitTimes.isEmpty()) {
+            return "00:00:00";
+        }
+
+        int longestWaitTime = Collections.max(waitTimes);
+
+        int hours = longestWaitTime / 3600;
+        int minutes = (longestWaitTime % 3600) / 60;
+        int seconds = longestWaitTime % 60;
+
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+
+    public void setLongestWaitLabel(List<Integer> waitTimes) {
+        String longestWaitTime = calculateLongestWaitTime(waitTimes);
+        viewBinding.statsLongestWaitValue.setText(longestWaitTime);
+    }
+    //end longest wait time
+    //Calculate Max speed in the layout
+    private String calculateMaxSpeed(List<Integer> speedDetails) {
+        if (speedDetails == null || speedDetails.isEmpty()) {
+            return "0";
+        }
+
+        int maxSpeed = Collections.max(speedDetails);
+
+        return maxSpeed + "";
+    }
+
+
+    public void setMaxSpeedLabel(List<Integer> speedDetails) {
+        String maxSpeed = calculateMaxSpeed(speedDetails);
+        viewBinding.statsMaxSpeedValue.setText(maxSpeed);
+    }
+    //end of max speed
     // calculate the total wait time and set the label in the layout
     private String calculateTotalWaitTime(List<Integer> waitTimes) {
         if (waitTimes == null || waitTimes.isEmpty()) {
@@ -87,6 +143,45 @@ public class DayStatisticsActivity extends AbstractActivity {
     public void setTotalWaitLabel(List<Integer> waitTimes) {
         String totalWaitTime = calculateTotalWaitTime(waitTimes);
         viewBinding.statsAverageWaitTimeValue.setText(totalWaitTime);
+    }
+
+    public void setCurrentDate() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d'\"' MMMM', 'HH:mm");
+        String formattedDateTime = dateTime.format(formatter);
+        viewBinding.statsStartDatetimeValue.setText(formattedDateTime);
+    }
+
+    //Total skieed km
+    private String calculateSkiiedKms(List<Double> distance) {
+        if (distance == null || distance.isEmpty()) {
+            return "0.0";
+        }
+
+        Double skiiedkms = distance.stream().mapToDouble(Double::doubleValue).sum();
+        return skiiedkms + "";
+    }
+
+
+    public void setSkiiedKmsLabel(List<Double> distance) {
+        String skiiedKms = calculateSkiiedKms(distance);
+        viewBinding.statsDistanceValue.setText(skiiedKms);
+    }
+    //Total skiied km ended 
+    
+    private String calculateAvgSpeed(List<Integer> speedDetails) {
+        if (speedDetails == null || speedDetails.isEmpty()) {
+            return "0";
+        }
+
+        int avgSpeed = speedDetails.stream().mapToInt(Integer::intValue).sum() / speedDetails.size();
+        return avgSpeed + "";
+    }
+
+
+    public void setAvgSpeedLabel(List<Integer> speedDetails) {
+        String avgSpeed = calculateAvgSpeed(speedDetails);
+        viewBinding.statsAverageSpeedValue.setText(avgSpeed);
     }
 
 }
