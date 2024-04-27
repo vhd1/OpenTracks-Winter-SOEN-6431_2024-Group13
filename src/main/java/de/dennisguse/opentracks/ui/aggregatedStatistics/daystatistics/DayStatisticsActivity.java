@@ -34,6 +34,12 @@ public class DayStatisticsActivity extends AbstractActivity {
         setShortestWaitLabel(waitTimes);
         setTotalWaitLabel(waitTimes);
 
+        List<Double> skiiedKms = new ArrayList<>();
+        skiiedKms.add(10.5);
+        skiiedKms.add(8.2);
+        skiiedKms.add(15.7);
+        skiiedKms.add(12.3);
+        setSkiiedKmsLabel(skiiedKms);
         setContentView(viewBinding.getRoot());
     }
 
@@ -101,4 +107,18 @@ public class DayStatisticsActivity extends AbstractActivity {
         viewBinding.statsStartDatetimeValue.setText(formattedDateTime);
     }
 
+    private String calculateSkiiedKms(List<Double> distance) {
+        if (distance == null || distance.isEmpty()) {
+            return "0.0";
+        }
+
+        Double skiiedkms = distance.stream().mapToDouble(Double::doubleValue).sum();
+        return skiiedkms + "";
+    }
+
+
+    public void setSkiiedKmsLabel(List<Double> distance) {
+        String skiiedKms = calculateSkiiedKms(distance);
+        viewBinding.statsDistanceValue.setText(skiiedKms);
+    }
 }
