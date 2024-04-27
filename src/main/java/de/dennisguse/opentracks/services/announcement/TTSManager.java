@@ -152,17 +152,28 @@ public class TTSManager {
     }
 
     public void stop() {
+        // Shutdown the TextToSpeech engine after the current task is done
         if (tts != null) {
-            tts.shutdown();
-            tts = null;
-        }
+            Thread stopTTs = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // Wait until the speaking task is completed
+                    while (tts.isSpeaking()) {
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    // Shutdown the TextToSpeech engine after the current task is done
+                    tts.shutdown();
+                    tts = null;
+                }
+            });
 
-        if (ttsFallback != null) {
-            ttsFallback.release();
-            ttsFallback = null;
+            stopTTs.start();
         }
     }
-
     private void onTtsReady() {
         Locale locale = Locale.getDefault();
         int languageAvailability = tts.isLanguageAvailable(locale);

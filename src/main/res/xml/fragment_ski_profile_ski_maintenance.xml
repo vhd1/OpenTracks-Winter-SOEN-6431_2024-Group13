@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Sharpening Details">
+
+        <Preference
+            android:key="km_skied_since_sharpening"
+            android:title="KM skied since sharpening"/>
+
+        <Preference
+            android:key="sharpening_interval_percent"
+            android:title="Sharpening interval progress" />
+
+        <Preference
+            android:key="last_sharpening_date"
+            android:title="Last sharpening date" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Waxing Details">
+
+        <Preference
+            android:key="km_skied_since_waxing"
+            android:title="KM skied since waxing"
+            android:summary=""/>
+
+        <Preference
+            android:key="waxing_interval_percent"
+            android:title="Waxing interval progress" />
+
+        <Preference
+            android:key="last_waxing_date"
+            android:title="Last waxing date" />
+    </PreferenceCategory>
+</PreferenceScreen>
