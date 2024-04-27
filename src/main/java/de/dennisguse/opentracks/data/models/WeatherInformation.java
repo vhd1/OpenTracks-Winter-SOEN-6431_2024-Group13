@@ -15,32 +15,33 @@ public final class WeatherInformation implements Parcelable {
     private double humidity;
     private String windDirection;
 
-    public WeatherInfo(double temperature) {
+    public WeatherInformation(double temperature) {
         this.temperature = temperature;
     }
-    public WeatherInfo(double temperature, double windSpeed, double humidity, String windDirection) {
+
+    public WeatherInformation(double temperature, double windSpeed, double humidity, String windDirection) {
         this.temperature = temperature;
         this.windSpeed = windSpeed;
         this.humidity = humidity;
         this.windDirection = windDirection;
     }
 
-    protected WeatherInfo(Parcel in) {
+    protected WeatherInformation(Parcel in) {
         temperature = in.readDouble();
         windSpeed = in.readDouble();
         humidity = in.readDouble();
         windDirection = in.readString();
     }
 
-    public static final Creator<WeatherInfo> CREATOR = new Creator<WeatherInfo>() {
+    public static final Creator<WeatherInformation> CREATOR = new Creator<WeatherInformation>() {
         @Override
-        public WeatherInfo createFromParcel(Parcel in) {
-            return new WeatherInfo(in);
+        public WeatherInformation createFromParcel(Parcel in) {
+            return new WeatherInformation(in);
         }
 
         @Override
-        public WeatherInfo[] newArray(int size) {
-            return new WeatherInfo[size];
+        public WeatherInformation[] newArray(int size) {
+            return new WeatherInformation[size];
         }
     };
 
@@ -88,10 +89,11 @@ public final class WeatherInformation implements Parcelable {
     @NonNull
     @Override
     public String toString() {
-        return "WeatherInfo{" +
+        return "WeatherInformation{" +
                 "temperature=" + temperature +
                 ", windSpeed=" + windSpeed +
                 ", windDirection=" + windDirection +
+                ", humidity=" + humidity +
                 '}';
     }
 
